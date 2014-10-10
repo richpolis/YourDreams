@@ -1,0 +1,430 @@
+
+/* 
+    Created on  4/09/2014, 031849 PM
+    Author      Ricardo Alcantara <richpolis@gmail.com>
+*/
+
+@import 'nib'
+@import 'normalize' 
+
+box-sizing()
+	-webkit-box-sizing arguments
+	-moz-box-sizing arguments
+	box-sizing arguments
+	
+opacity(n)
+	opacity n
+	if support-for-ie
+		filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
+
+a
+	color #080808
+	text-decoration none
+	&:hover
+		color #080808
+		text-decoration none
+
+audio
+	margin 1em 0px
+
+body
+	font-size 16px
+
+figure
+	margin 0
+
+.barra-logo
+	height 2em
+	width 100%
+	background #C10BFD
+	box-shadow #080808
+	position relative
+	box-shadow 0 5px 10px 0 #080808
+	margin 4em 0 0
+	& .barra-interna-logo
+		position absolute
+		height 2em
+		width 50%
+		top 0px
+		right 0px
+		background #FD0B84
+
+
+.btn-ovalado
+	border-radius 25%
+	float right
+
+.centrar-contenido
+	padding 80px 100px
+
+.controles
+	font-size 1.5em
+
+.logo-chico
+	text-align center
+	margin 0
+	& img
+		height 3em
+
+.dialogo
+	margin-bottom .5em
+	& figure
+		margin 0
+
+.padding-izquierdo
+	padding-left 2em
+
+.sin-padding
+	padding none
+
+.relative 
+	position relative
+
+.remember-me
+	float right
+
+.usuario
+	position absolute
+	left 1em
+	top 1em
+	font-size 1.5em
+	z-index 1000
+
+.cerrarSession
+	position absolute
+	right 1em
+	top 1em
+	font-size 1.5em
+	z-index 1000
+
+
+.timeline
+	position relative;
+	width 100%
+	overflow hidden
+	margin 20px auto
+	& .bullet-redondo
+		height 10px
+		width 10px
+		border-radius 5px
+		display block
+		margin 5px auto 0px
+		&.sin-historia 
+			background white
+		&.con-historia
+			background #C10BFD
+	& ul.lista-timeline
+		position absolute
+		margin 0
+		padding 0
+		top 0px
+		left 0px
+		height 240px
+		font-size 0px
+		& li.item
+			display inline-block
+			vertical-align top
+			text-align center
+			& figure
+				margin 0
+				padding 0
+				& img
+					height 100px
+					width 100px
+				& figcaption
+					font-size 16px
+					text-align center
+					height 70px
+
+.redes-sociales
+	background url('../images/redes-sociales-mini.png')
+	display inline-block
+	vertical-align top
+	&.facebook
+		background-position -0px -0px 
+		width 55px 
+		height 55px
+	&.googleplus
+		background-position -165px -0px 
+		width 55px 
+		height 55px
+	&.twitter
+		background-position -55px -0px 
+		width 55px 
+		height 55px
+
+#logo
+	text-align center
+	width 100%
+	padding .5em
+	margin 0
+	position absolute
+	top 0px
+	left 0px
+	z-index 500
+	& img
+		height 3em
+
+#portada
+	text-align center
+	width 100%
+	padding 8em 0
+	margin 0
+	& img
+		width 100%
+
+.imagen-nino
+	text-align center
+	& figure
+		display block
+		margin  0px auto.5em
+
+.imagen-user
+	border-radius 50%
+	width 30px
+	height 30px
+
+.dialogo-papa-imagen
+.dialogo-nino-imagen
+	& img
+		width 100%
+		max-width 100px
+	
+
+.dreams
+	& button 
+		width 100%
+	& .historia
+		min-height 240px
+		margin-bottom 2em
+		padding 0px 2em
+		& .fecha
+			border-bottom 4px solid black
+			padding-left .5em
+			padding-bottom .2em
+		& .resumenDream
+			background #E5E5E5
+			border-radius 15px
+			position relative
+			box-shadow 1px 1px 0px #080808
+			min-height 100px
+			&:after
+				content ''
+				border-top 10px solid transparent
+				border-bottom 10px solid transparent
+				border-left 10px solid transparent
+				border-right 10px solid #E5E5E5
+				position absolute
+				left -20px
+				top 100%
+				margin-top -40px
+				z-index 3
+			& p
+				padding-left 1em
+		& .comentarios
+			border 1px solid #E5E5E5
+			min-height 200px
+			border-radius 15px
+			& .comentario
+				border-bottom 1px solid #E5E5E5
+				margin 0px 10px
+				font-size .8em
+				& div
+					line-height 100px
+					&.contenido
+						line-height 1.5rem
+						padding-top 2rem
+		& .contenidos
+			& p
+				padding 0px .5em
+			& .dialogo-papa
+				text-align center
+				& figure
+					margin 0
+			& .comentarioPapa
+			& .comentarioNino
+				background #E5E5E5
+				border-radius 15px
+				position relative
+				min-height 100px
+				padding .5em
+			& .comentarioPapa
+				box-shadow 1px 1px 0px #080808
+			& .comentarioNino
+				box-shadow -1px 1px 0px #080808
+				background #E5E5E5
+			& .comentarioPapa:after
+				content ''
+				border-top 10px solid transparent
+				border-bottom 10px solid transparent
+				border-left 10px solid transparent
+				border-right 10px solid #E5E5E5
+				position absolute
+				left -20px
+				top 100%
+				margin-top -40px
+				z-index 3
+			& .comentarioNino:after
+				content ''
+				border-top 10px solid transparent
+				border-bottom 10px solid transparent
+				border-left 10px solid #E5E5E5
+				border-right 10px solid transparent
+				position absolute
+				right -20px
+				top 100%
+				margin-top -40px
+				z-index 3
+				
+		
+
+/*
+	Recuperar
+*/
+
+.form-recuperar
+	position absolute 
+	top 200px
+	text-align center
+	height 200px
+	margin -100px 10% 0
+	border 2px solid black
+	width 80%
+	& .mensaje-form-recuperar
+		position absolute
+		top 50%
+		left 0px
+		z-index 3
+		color #080808
+		font-size 1em
+		font-weight normal
+		/*width 100%*/
+		text-align center
+		margin-top -1em
+		&.label
+			top 30%
+			margin-top 0px
+	& .formulario-form-recuperar
+		position absolute
+		top 50%
+		left 0px
+	&:after
+		content ''
+		border-top 10px solid #333
+		border-bottom 10px solid transparent
+		border-left 10px solid transparent
+		border-right 10px solid transparent
+		position absolute
+		bottom -20px
+		left 50%
+		margin-left -5px
+		z-index 3
+	& figure
+		position absolute 
+		padding 1em
+		bottom -75px
+		width 100%
+		text-align center
+		left 5px
+	& input
+		width 100%
+
+/* form buscador */
+
+.form-buscador
+	width 100%
+	& input[type="text"]
+		position relative
+		height auto
+		box-sizing border-box
+		padding .4em
+		font-size 1em
+		font-weight normal
+		
+.well
+	margin-bottom 0px
+
+/* form registro */
+
+.agregarNinos
+	background #CEDBDE
+	margin 0px .5em 1em 
+	padding 1em
+	& input[type="text"]
+		border none
+		background transparent
+		text-align center
+		padding .3em
+	& img.flecha
+		height 30px
+	
+		
+
+.form-registro
+	position relative
+	& figure
+		margin 0
+		padding 0
+	& #imagen-usuario
+		overflow hidden
+		& img
+		& figcaption
+			display inline-block
+			vertical-align middle
+		& figcaption
+			margin-left 2px
+	& input
+	& textarea
+		margin-bottom .2em
+		border 2px solid #080808
+	& .form-control 
+		position relative
+		height auto
+		box-sizing border-box
+		padding .6em
+		font-size 1em
+
+
+
+/*
+    Login
+*/
+
+.form-signin 
+	width 100%
+	padding 3em 1em 1em
+	margin 0 auto
+
+.form-signin .checkbox 
+	margin-bottom .9em
+	font-weight normal
+	
+
+
+.form-signin-heading 
+	text-align center
+	font-size 1.5em
+	& span
+		font-size .7em
+
+
+.form-signin .form-control 
+	position relative
+	height auto
+	box-sizing border-box
+	padding .6em
+	font-size 1em
+
+.form-signin .form-controlfocus 
+	z-index 2
+
+.form-signin input[type="text"]
+.form-signin input[type="password"] 
+	margin-bottom .4em
+	border 2px solid #080808
+
+
+@media screen and (max-width: 512px)
+	.imagen-nino
+		& img
+			width 100%

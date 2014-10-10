@@ -1,0 +1,6 @@
+/nbproject/private/
+/vendor/
+/web/uploads/
+/app/logs/
+/app/cache/
+/app/config/parameters.yml

@@ -1,0 +1,69 @@
+{% extends '::admin.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+    <h2>Hijo</h2>
+    <table class=" table table-striped"> 
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apodo</th>
+            <th>Biografia</th>
+            <th>Imagen</th>
+        </tr>
+     </thead>
+     <tbody>
+            <tr>
+                <td>{{entity.nombre}}</td>
+                <td>{{entity.apodo}}</td>
+                <td>{{entity.biografia}}</td>
+                <td><img src="/apps/babystory/web{{ entity.thumbnailWebPath }}" style="max-width: 120px;" /></td>
+            </tr>
+     </tbody>   
+    </table>      
+    <h1>Papa/Mama</h1>
+    <table class="record_properties table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ciudad</th>
+            </tr>
+            <tr>
+                <td>{{ entity.papa.id }}</td>
+                <td>{{ entity.papa.username }}</td>
+                <td>{{ entity.papa.email }}</td>
+                <td>{{ entity.papa.ciudad }}</td>
+            </tr>
+            <tr>
+                <th>Biografia</th>
+                <th colspan="2">Sermadre</th>
+                <th>Imagen</th>
+            </tr>
+            <tr>
+                <td>{{ entity.papa.biografia }}</td>
+                <td colspan="2">{{ entity.papa.serMadre }}</td>
+                <td><img src="/apps/babystory/web{{ entity.papa.thumbnailWebPath }}" style="max-width: 120px;" /></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+<p> &nbsp; </p>
+<div class="container text-center">            
+<ul class="record_actions list-inline">
+    <li>
+        <a href="{{ path('hijos') }}" class="btn btn-primary">
+            Regresar
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('hijos_edit', { 'id': entity.id }) }}" class="btn btn-success">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+</div>    
+{% endblock %}

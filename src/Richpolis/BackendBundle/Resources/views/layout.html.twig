@@ -1,0 +1,58 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+  <link rel="stylesheet" href="{{asset('css/main.css')}}">
+{% endblock %}
+
+{% block panel %}
+    <div class="container">
+        <div>
+            <div class="container">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="https://s3.amazonaws.com/media.jetstrap.com/fHMBWChrSHOKaZ4C9Jdm_icon.png">
+                            </td>
+                            <td>
+                                {% block titulo_seccion %}
+                                    <h3></h3>
+                                {% endblock %}
+                            </td>
+                            <td class="pull-right">
+                                <span id="name" style="color:#000;"><i class="fa fa-user"></i> <strong>Bienvenido(a), </strong> {{ app.user.username }}</span>
+                                <span id="sesion"><i class="fa fa-sign-out"></i> <a href="{{path('logout')}}">Cerrar sesion</a></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container">
+            <section id="page-title">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <h1>
+                        <i class="fa fa-cog"></i>
+                        Panel de Administracion
+                    </h1>
+                </div>
+            </section>
+        </div>
+    {% block body %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}  
+  <script src="{{asset('js/main.js')}}"></script>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            YourDreams 2014
+            <br>
+        </div>
+    </footer>    
+{% endblock %}    

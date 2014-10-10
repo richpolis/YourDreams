@@ -1,0 +1,70 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Apellido
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Activo
+            </th>
+             <th>
+                Ser padre/madre
+            </th>
+            <th>
+                Alta
+            </th>
+             <th>
+                Actualizacion
+            </th>
+            <th>
+                Permiso
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>
+                    {{ usuario.username }}
+                </td>
+                <td>
+                    {{ usuario.ciudad }}
+                </td>
+                <td>
+                    {{ usuario.email }}
+                </td>
+                <td>
+                    {% if usuario.sexo > 0 %}
+                        {{ usuario.stringSexo | raw }}
+                    {% else %}
+                        Indefinido
+                    {% endif %}    
+                </td>
+                <td>
+                    {{ usuario.biografia }}
+                </td>
+                <td>
+                    {{ usuario.serMadre }}
+                </td>
+                <td>
+                    {{ usuario.createdAt | date('d-m-Y') }}
+                </td>
+                <td>
+                    {{ usuario.updatedAt | date('d-m-Y') }}
+                </td>
+                <td>
+                    {{ usuario.rol[0]}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody> 
+</table>

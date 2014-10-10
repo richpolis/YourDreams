@@ -1,0 +1,33 @@
+{% extends '::admin.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Editar comentario</h1>
+    <form action="{{ path('comentarios_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <input name="_method" value="put" type="hidden"/>
+        {{ form_errors(form) }}
+         <fieldset>
+            <div class="form-group">
+                 {{ form_row(form.comentario) }}
+            </div>
+            <div class="form-group">
+                 {{ form_row(form.calificacion) }}
+            </div>
+             <div class="form-group">
+                 {{ form_row(form.usuario) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.dream) }}
+             </div>
+        </fieldset>
+        <hr/>
+        
+        <div class="container">
+        <a href="{{path('comentarios')}}" class="btn btn-success">Regresar</a>
+        <input type="submit" class="btn btn-primary" name="botonGuardar" id="botonGuardar" value="Guardar"/>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+</div>
+{% endblock %}
+

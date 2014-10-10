@@ -1,0 +1,17 @@
+frontend:
+    resource: "@FrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+dreams:
+    resource: "@DreamsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+usuarios:
+    resource: "@UsuariosBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

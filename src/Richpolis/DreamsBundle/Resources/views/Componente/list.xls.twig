@@ -1,0 +1,64 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Papa/Mama
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Apodo
+            </th>
+            <th>
+                Usar Apodo
+            </th>
+            <th>
+                Fecha nacimiento
+            </th>
+             <th>
+                Biografia
+            </th>
+            <th>
+                Alta
+            </th>
+             <th>
+                Actualizacion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hijo in hijos %}
+            <tr>
+                <td>
+                    {{ hijo.papa }}
+                </td>
+                <td>
+                    {{ hijo.nombre }}
+                </td>
+                <td>
+                    {{ hijo.apodo }}
+                </td>
+                <td>
+                    {% if hijo.usarApodo %}
+                        Si
+                    {% else %}
+                        No
+                    {% endif %}    
+                </td>
+                <td>
+                    {{ hijo.fechaNacimiento | date('d-m-Y') }}
+                </td>
+                <td>
+                    {{ hijo.biografia }}
+                </td>
+                <td>
+                    {{ hijo.createdAt | date('d-m-Y') }}
+                </td>
+                <td>
+                    {{ hijo.updatedAt | date('d-m-Y') }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody> 
+</table>

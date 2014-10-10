@@ -1,0 +1,43 @@
+{% extends '::admin.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Editar hijo</h1>
+    <form action="{{ path('hijos_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <input name="_method" value="put" type="hidden"/>
+        {{ form_errors(form) }}
+         <fieldset>
+            <legend>Datos personales</legend>
+             <div class="form-group">
+                 {{ form_row(form.nombre) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.apodo) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.usarApodo)}}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.fechaNacimiento) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.biografia) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.file) }}
+             </div>
+             <div class="form-group">
+                 {{ form_row(form.papa) }}
+             </div>
+        </fieldset>
+        <hr/>
+        
+        <div class="container">
+        <a href="{{path('hijos')}}" class="btn btn-success">Regresar</a>
+        <input type="submit" class="btn btn-primary" name="botonGuardar" id="botonGuardar" value="Guardar"/>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+</div>
+{% endblock %}
+
