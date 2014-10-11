@@ -18,17 +18,16 @@ class UsuarioRepository extends EntityRepository
         if(strlen($buscar)==0){
             $consulta = $em->createQuery('SELECT u '
                 . 'FROM UsuariosBundle:Usuario u '
-                . 'ORDER BY u.username ASC, u.ciudad ASC');
+                . 'ORDER BY u.nombre ASC, u.apellido ASC');
         }else{
             $consulta = $em->createQuery("SELECT u "
                 . "FROM UsuariosBundle:Usuario u "
-                . "WHERE u.username LIKE :username OR u.email LIKE :email OR u.ciudad LIKE :ciudad OR u.biografia LIKE :biografia "
-                . "ORDER BY u.username ASC, u.ciudad ASC");
+                . "WHERE u.nombre LIKE :nombre OR u.apellido LIKE :apellido OR u.email LIKE :email "
+                . "ORDER BY u.nombre ASC, u.apellido ASC");
             $consulta->setParameters(array(
-                'username' => "%".$buscar."%",
-                'email' => "%".$buscar."%",
-                'ciudad' => "%".$buscar."%",
-                'biografia' => "%".$buscar."%"
+                'nombre' => "%".$buscar."%",
+                'apellido' => "%".$buscar."%",
+                'email' => "%".$buscar."%"
             ));
         }
         return $consulta;

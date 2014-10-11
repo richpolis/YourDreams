@@ -48,9 +48,9 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($richpolis);
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $richpolis->getSalt());
         $richpolis->setPassword($passwordCodificado);
-	$richpolis->setNombre("Ricardo");
-	$richpolis->setApellido("Alcantara");
-	$richpolis->setGrupo($grupoAdmin);
+		$richpolis->setNombre("Ricardo");
+		$richpolis->setApellido("Alcantara");
+		$richpolis->setGrupo($grupoAdmin);
         $manager->persist($richpolis);
             
         // usuario Administrador
@@ -61,11 +61,11 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $encorder = $this->container->get('security.encoder_factory')->getEncoder($usuarioAdmin);
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $usuarioAdmin->getSalt());
         $usuarioAdmin->setPassword($passwordCodificado);
-	$usuarioAdmin->setNombre("Admin");
-	$usuarioAdmin->setApellido("YourDreams");
-	$richpolis->setGrupo($grupoAdmin);
+		$usuarioAdmin->setNombre("Admin");
+		$usuarioAdmin->setApellido("YourDreams");
+		$richpolis->setGrupo($grupoAdmin);
         $manager->persist($usuarioAdmin);
-	$manager->flush();
+		$manager->flush();
 		
 
         // usuario Normal
@@ -77,8 +77,8 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $usuarioNormal->getSalt());
         $usuarioNormal->setPassword($passwordCodificado);
         $usuarioNormal->setNombre("Usuario1");
-	$usuarioNormal->setApellido("YourDreams");
-	$richpolis->setGrupo($grupoUsuario);
+		$usuarioNormal->setApellido("YourDreams");
+		$richpolis->setGrupo($grupoUsuario);
         $manager->persist($usuarioNormal);
         $manager->flush();
     }

@@ -59,7 +59,6 @@ class DreamController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            $em->setClave(md5($entity->getId()));
             $em->flush();
 
             return $this->redirect($this->generateUrl('dreams_show', array('id' => $entity->getId())));

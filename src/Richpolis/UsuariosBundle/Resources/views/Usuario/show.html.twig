@@ -3,7 +3,6 @@
 {% block body -%}
     {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'usuarios' } %}
     <div class="container">
-        <form>
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -36,7 +35,7 @@
                             </tr>
                             <tr>
                                 <th>Activo: </th>
-                                <td>{{ (entity.isActive?:'Si':'No') }}</td>
+                                <td>{{ ((entity.isActive)?'Si':'No') }}</td>
                             </tr>
                             <tr>
                                 <td>Imagen: </td>
@@ -69,6 +68,5 @@
             </div>    
             <div class="container text-center">
             </div>
-        </form>
     </div>   
 {% endblock %}

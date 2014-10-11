@@ -7,16 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 
-/**
- * Backend controller.
- *
- * @Route("/admin")
- */
 class DefaultController extends Controller
 {
 
     /**
-     * @Route("/login", name="admin_login")
+     * @Route("/admin/login", name="admin_login")
      * @Template()
      */
     
@@ -48,7 +43,7 @@ class DefaultController extends Controller
     }
 	
     /**
-     * @Route("/login_check", name="admin_login_check")
+     * @Route("/admin/login_check", name="admin_login_check")
      */
     public function securityCheckAction()
     {
@@ -56,7 +51,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/logout", name="admin_logout")
+     * @Route("/admin/logout", name="admin_logout")
      */
     public function logoutAction()
     {

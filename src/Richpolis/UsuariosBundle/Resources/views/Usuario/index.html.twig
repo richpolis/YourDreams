@@ -3,16 +3,16 @@
 {% block body -%}
     {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'usuarios' } %}
     <div class="container">
-        <form action="{{path('usuarios')}}" method="POST">
+        
             <br>
             <div class="container">
-                <div class="form-group pull-left">
-                    <input placeholder="nombre, apellido" class="form-control" name="buscar"
-                           type="text">
-                </div>
-                <button type="submit" class="btn btn-default">
-                    Buscar
-                </button>
+				<form action="{{path('usuarios')}}" method="POST">
+					<div class="form-group pull-left">
+						<input placeholder="nombre, apellido" class="form-control" name="buscar"
+							   type="text">
+					</div>
+					<input type="submit" class="btn btn-default" value="Buscar"/>
+				</form>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -45,8 +45,9 @@
                                         {{usuario.apellido}}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('usuarios_show', { 'id' : usuario.id }) }}" class="btn btn-success btn-xs">Editar</a>
-                                        <a href="{{ url('usuarios_edit', { 'id' : usuario.id }) }}" class="btn btn-danger btn-xs">Eliminar</a>
+                                        <a href="{{ url('usuarios_edit', { 'id' : usuario.id }) }}" class="btn btn-success btn-xs">Editar</a>
+                                        <a href="{{ url('usuarios_show', { 'id' : usuario.id }) }}" class="btn btn-info btn-xs">Mostrar</a>
+										<!--a href="javascript: if (confirm('Desea elminar el sueño seleccionado?')) { location.href='{{ url('usuarios_delete', { 'id' : usuario.id }) }}';}" class="btn btn-danger btn-xs">Eliminar</a-->
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -55,13 +56,12 @@
                 </div>
             </div>
             <div class="container">
-                <a href="{{ path('usuarios_new') }}" class="btn btn-primary btn-sm pull-right">Nuevo Usuario</a>
+                <a href="{{ path('usuarios_new') }}" class="btn btn-info btn-sm pull-right">Nuevo Usuario</a>
                 <a href="{{ path('usuarios_export') }}" class="btn btn-default btn-sm pull-left">Exportar</a>
             </div>
             <div class="container text-center">
                 {{ knp_pagination_render(pagination) }}
             </div>
-        </form>
     </div>
 {% endblock %}
 

@@ -22,34 +22,38 @@ class DreamRepository extends EntityRepository
             if($usuario == null){
                 $consulta = $em->createQuery('SELECT h '
                     . 'FROM DreamsBundle:Dream h '
-                    . 'ORDER BY h.fecha ASC');
+                    . 'ORDER BY h.titulo ASC');
             }else{
                 $consulta = $em->createQuery("SELECT h "
                     . "FROM DreamsBundle:Dream h "
-                    . "WHERE h.usuario=:usuario  "    
-                    . "ORDER BY h.dream ASC");
+                    . "WHERE h.usuario=:usuario "    
+                    . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
-                    'usuario' => $usuario->getId(),
+                    'usuario' => $usuario->getId()
                 ));
             }
         }else{
             if($usuario == null){
                 $consulta = $em->createQuery("SELECT h "
                     . "FROM DreamsBundle:Dream h "
-                    . "WHERE h.dream LIKE :dream  "    
-                    . "ORDER BY h.dream ASC");
+                    . "WHERE h.titulo LIKE :titulo OR h.lugar LIKE :lugar OR h.dream LIKE :dream "    
+                    . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
-                    'dream' => "%".$buscar."%",
+					'titulo' => "%".$buscar."%",
+                	'lugar' => "%".$buscar."%",
+                	'dream' => "%".$buscar."%"
                 ));
             }else{
                 $consulta = $em->createQuery("SELECT h "
                     . "FROM DreamsBundle:Dream h "   
-                    . "WHERE h.dream LIKE :dream  "
-                    . "AND h.usuario=:usuario  "    
-                    . "ORDER BY h.dream ASC");
+                    . "WHERE h.titulo LIKE :dream  "
+                    . "AND h.usuario=:usuario AND (h.titulo LIKE :titulo OR h.lugar LIKE :lugar OR h.dream LIKE :dream) "    
+                    . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
-                    'dream' => "%".$buscar."%",
                     'usuario' => $usuario->getId(),
+					'titulo' => "%".$buscar."%",
+                	'lugar' => "%".$buscar."%",
+                	'dream' => "%".$buscar."%"
                 ));
             }
         }

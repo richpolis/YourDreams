@@ -3,7 +3,6 @@
 {% block body -%}
     {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'dreams' } %}
     <div class="container">
-        <form>
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -32,7 +31,7 @@
                             </tr>
                             <tr>
                                 <th>Compartir</th>
-                                <td>{{ (entity.compartir?:'Si':'No') }}</td>
+                                <td>{{ ((entity.compartir)?'Si':'No') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,6 +54,6 @@
             </div>    
             <div class="container text-center">
             </div>
-        </form>
-    </div>   
+    </div>
+	<br>
 {% endblock %}

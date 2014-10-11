@@ -1,12 +1,12 @@
 <div class="container">
     <ul class="nav nav-pills">
-        <li {%if tabActive == "users" %} class="active" {% endif %}>
-            <a href="#"> Usuarios</a>
+        <li {%if tabActive == "usuarios" %} class="active" {% endif %}>
+            <a href="{{path('usuarios')}}"> Usuarios</a>
         </li>
         <li {%if tabActive == "dreams" %} class="active" {% endif %}>
-            <a href="#"> Sueños</a>
+            <a href="{{path('dreams')}}"> Sueños</a>
         </li>
-        <li {%if tabActive == "reports" %} class="active" {% endif %}>
+        <li {%if tabActive == "reportes" %} class="active" {% endif %}>
             <a href="#">Reportes</a>
         </li>
     </ul>

@@ -156,7 +156,7 @@ class Usuario implements UserInterface, \Serializable
     }
     
     public function __toString() {
-        return $this->nombreCompleto();
+        return $this->getNombreCompleto();
     }
     
      public function getStringTipoGrupo(){
@@ -221,7 +221,7 @@ class Usuario implements UserInterface, \Serializable
      */
     public function serialize() {
         return \json_encode(
-                array($this->username, $this->password, $this->rol->toArray(), $this->salt, $this->id)
+                array($this->nombre, $this->apellido, $this->telefono, $this->email ,$this->isActive, $this->id)
         );
     }
 
@@ -229,7 +229,7 @@ class Usuario implements UserInterface, \Serializable
      * @param $serialized
      */
     public function unserialize($serialized) {
-        list($this->username, $this->password, $this->rol, $this->salt, $this->id) = \json_decode($serialized);
+        list($this->nombre, $this->apellido, $this->telefono, $this->email ,$this->isActive, $this->id) = \json_decode($serialized);
     }
     
 
@@ -825,4 +825,8 @@ class Usuario implements UserInterface, \Serializable
     {
         return $this->dreams;
     }
+	
+	public function getNombreCompleto(){
+		return $this->nombre . " " . $this->apellido;
+	}
 }

@@ -16,8 +16,8 @@ class DreamType extends AbstractType
     {
         $builder
             ->add('titulo')
-            ->add('dream')
-            ->add('lugar')
+            ->add('dream',null,array('label'=>'Descripción'))
+            ->add('lugar','text',array('required'=>false))
             ->add('compartir')
             ->add('usuario')
         ;

@@ -5,6 +5,7 @@ namespace Richpolis\UsuariosBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Richpolis\UsuariosBundle\Entity\Usuario;
 
 class UsuarioType extends AbstractType
 {
@@ -16,21 +17,27 @@ class UsuarioType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('apellido')
-            ->add('telefono')
+            ->add('apellido','text',array('required'=>false))
+            ->add('telefono','text',array('required'=>false))
             ->add('email')
-            ->add('password')
-            ->add('salt')
-            ->add('observaciones')
-            ->add('imagen')
+            ->add('password','password',array('required'=>false))
+            ->add('salt','hidden')
+            ->add('observaciones',null,array('required'=>false,'label'=>'Observaciones'))
+            ->add('imagen','hidden')
             ->add('isActive')
-            ->add('grupo')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('facebook_id')
-            ->add('facebook_access_token')
-            ->add('twitter_id')
-            ->add('twitter_access_token')
+            ->add('grupo','choice',array(
+                'label'=>'Grupo',
+                'empty_value'=>false,
+                'choices'=>Usuario::getArrayTipoGrupo(),
+                'preferred_choices'=>Usuario::getPreferedTipoGrupo(),
+                'attr'=>array(
+                    'class'=>'validate[required] form-control placeholder',
+                    'placeholder'=>'Grupo',
+                )))
+            ->add('facebook_id','hidden')
+            ->add('facebook_access_token','hidden')
+            ->add('twitter_id','hidden')
+            ->add('twitter_access_token','hidden')
         ;
     }
     

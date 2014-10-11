@@ -46,7 +46,7 @@ class UsuarioController extends Controller
             $usuario = $this->get('security.context')->getToken()->getUser();
             return array($usuario);
         }
-        return $this->redirect('login');
+        return $this->redirect('admin_login');
     }
     
     /**
@@ -227,6 +227,7 @@ class UsuarioController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+	
     /**
      * Deletes a Usuario entity.
      *
@@ -239,6 +240,29 @@ class UsuarioController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('UsuariosBundle:Usuario')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Usuario entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('usuarios'));
+    }
+	
+	/**
+     * Deletes a Usuario entity, puerta sensible, no recomendada.
+     *
+     * @Route("/{id}/delete", name="usuarios_get_delete")
+     * @Method("DELETE")
+     */
+    public function getDeleteAction(Request $request, $id)
+    {
+        if ($request->isMethod('DELETE')) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('UsuariosBundle:Usuario')->find($id);
 

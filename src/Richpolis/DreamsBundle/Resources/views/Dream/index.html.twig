@@ -3,16 +3,16 @@
 {% block body -%}
     {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'dreams' } %}
     <div class="container">
-        <form action="{{path('dreams')}}" method="POST">
+        
             <br>
             <div class="container">
+			  <form action="{{path('dreams')}}" method="POST">  
                 <div class="form-group pull-left">
-                    <input placeholder="nombre, apellido" class="form-control" name="buscar"
+                    <input placeholder="nombre del sueño, lugar, descripción" class="form-control" name="buscar"
                            type="text">
                 </div>
-                <button type="submit" class="btn btn-default">
-                    Buscar
-                </button>
+                <input type="submit" class="btn btn-default" value="Buscar" />
+				</form>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -45,8 +45,9 @@
                                         {{dream.usuario.nombre}}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('dreams_show', { 'id' : dream.id }) }}" class="btn btn-success btn-xs">Editar</a>
-                                        <a href="{{ url('dreams_edit', { 'id' : dream.id }) }}" class="btn btn-danger btn-xs">Eliminar</a>
+                                        <a href="{{ url('dreams_edit', { 'id' : dream.id }) }}" class="btn btn-success btn-xs">Editar</a>
+                                        <a href="{{ url('dreams_show', { 'id' : dream.id }) }}" class="btn btn-info btn-xs">Mostrar</a>
+										<!--a href="javascript: if (confirm('Desea elminar el sueño seleccionado?')) { location.href='{{ url('dreams_delete', { 'id' : dream.id }) }}';}" class="btn btn-danger btn-xs">Eliminar</a-->
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -61,7 +62,6 @@
             <div class="container text-center">
                 {{ knp_pagination_render(pagination) }}
             </div>
-        </form>
     </div>
 {% endblock %}
 
