@@ -5,9 +5,8 @@ namespace Richpolis\DreamsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Richpolis\DreamsBundle\Form\ComponenteType;
 
-class DreamType extends AbstractType
+class ComponenteType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,18 +15,12 @@ class DreamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo')
-            ->add('dream',null,array('label'=>'Descripción'))
-            ->add('lugar','text',array('required'=>false))
-            ->add('compartir')
-            ->add('usuario')
+            ->add('file','file',array('label'=>'Archivo'))    
+            ->add('tipo','hidden')
+            ->add('componente','hidden')
+            ->add('position','hidden')
+            ->add('dream','hidden')
         ;
-        $builder->add('archivos', 'collection', array(
-            'type'         => new ComponenteType(),
-            'allow_add'    => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-        ));
     }
     
     /**
@@ -36,7 +29,7 @@ class DreamType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Richpolis\DreamsBundle\Entity\Dream'
+            'data_class' => 'Richpolis\DreamsBundle\Entity\Componente'
         ));
     }
 
@@ -45,6 +38,6 @@ class DreamType extends AbstractType
      */
     public function getName()
     {
-        return 'richpolis_dreamsbundle_dream';
+        return 'richpolis_dreamsbundle_componente';
     }
 }
