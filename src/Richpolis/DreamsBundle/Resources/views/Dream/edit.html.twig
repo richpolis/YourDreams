@@ -1,38 +1,34 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block body %}
-    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'usuarios' } %}
+    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'dreams' } %}
     <div class="container">
-        <form action="{{ path('usuarios_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('dreams_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
             <input name="_method" value="put" type="hidden"/>
           <br>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title text-center">
-                Editar Usuario
+                Editar Sueño
               </h3>
             </div>
             <div class="panel-body">
               {{ form_errors(form) }}  
               <div class="form-group">
-                {{ form_widget(form.nombre,{'attr':{'class':'form-control','placeholder':'Nombre'}}) }}
+                {{ form_widget(form.titulo,{'attr':{'class':'form-control','placeholder':'Sueño'}}) }}
               </div>
               <div class="form-group">
-                {{ form_widget(form.apellido,{'attr':{'class':'form-control','placeholder':'Apellido'}}) }}
+                {{ form_widget(form.lugar,{'attr':{'class':'form-control','placeholder':'Lugar'}}) }}
               </div>
               <div class="form-group">
+                {{ form_row(form.dream,{'attr':{'class':'form-control','placeholder':'Descripcion'}}) }}
               </div>
+              
               <div class="form-group">
-                {{ form_widget(form.telefono,{'attr':{'class':'form-control','placeholder':'Celular'}}) }}
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.email,{'attr':{'class':'form-control','placeholder':'Email'}}) }}
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.password,{'attr':{'class':'form-control','placeholder':'Password'}}) }}
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.grupo,{'attr':{'class':'form-control','placeholder':'Permisos'}}) }}
+                <label class="checkbox">
+                  {{ form_widget(form.compartir) }}
+                  Visible por otros?
+                </label>  
               </div>
               <div class="form-group">
               </div>
@@ -41,18 +37,12 @@
               <div class="form-group">
               </div>
               <div class="form-group">
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.isActive,{'attr':{'class':'form-control','placeholder':'Es activo'}}) }} Activo
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.observaciones,{'attr':{'class':'form-control','placeholder':'Observaciones'}}) }}
               </div>
             </div>
           </div>
           <div class="container">
-            <a href="{{path('usuarios')}}" class="btn btn-success">Regresar</a>
-            <input type="submit" class="btn btn-primary btn-sm pull-right" name="botonGuardar" id="botonGuardar" value="Guardar Usuario"/>
+            <a href="{{path('dreams')}}" class="btn btn-success">Regresar</a>
+            <input type="submit" class="btn btn-primary btn-sm pull-right" name="botonGuardar" id="botonGuardar" value="Guardar Sueño"/>
             {{ form_rest(form) }}
           </div>
           <div class="container text-center">

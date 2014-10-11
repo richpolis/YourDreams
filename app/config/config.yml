@@ -104,5 +104,4 @@ liip_imagine:
 
 parameters:
     richpolis.uploads: %kernel.root_dir%/../web/uploads
-    file_uploader.file_base_path: "%kernel.root_dir%/../web/uploads"
     file_uploader.max_number_of_files: 4

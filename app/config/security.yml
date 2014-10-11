@@ -22,7 +22,7 @@ security:
         pattern:  ^/login$
         security: false
       admin:
-        pattern: ^/admin$
+        pattern: ^/admin
         provider: user_db
         form_login:
             login_path: /admin/login
@@ -46,8 +46,8 @@ security:
         anonymous: true
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }        
         - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/recuperar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: [ROLE_ADMIN] }        

@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\FrontendBundle\DependencyInjection;
+namespace Richpolis\BackendBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

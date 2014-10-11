@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Tests\Controller;
+namespace Richpolis\BackendBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

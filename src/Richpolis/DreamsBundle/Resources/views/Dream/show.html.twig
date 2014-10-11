@@ -1,14 +1,14 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block body -%}
-    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'usuarios' } %}
+    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'dreams' } %}
     <div class="container">
         <form>
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title text-center">
-                        Mostrar Usuario
+                        Mostrar sueño
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -19,34 +19,20 @@
                                 <td>{{entity.id}}</td>
                             </tr>
                             <tr>
-                                <th>Nombre</th>
-                                <td>{{entity.nombre}}</td>
+                                <th>Nombre del sueño</th>
+                                <td>{{entity.titulo}}</td>
                             </tr>
                             <tr>
-                                <th>Apellido</th>
-                                <td>{{entity.apellido}}</td>
+                                <th>Lugar</th>
+                                <td>{{entity.lugar}}</td>
                             </tr>
                             <tr>
-                                <th>Telefono</th>
-                                <td>{{entity.telefono}}</td>
-                            </tr>
-                            <tr>
-                                <th>email</th>
-                                <td>{{entity.email}}</td>
+                                <th>Sueño</th>
+                                <td>{{entity.dream}}</td>
                             </tr>
                             <tr>
                                 <th>Compartir</th>
                                 <td>{{ (entity.compartir?:'Si':'No') }}</td>
-                            </tr>
-                            <tr>
-                                <td>Imagen: </td>
-                                <td>
-                                    {% if entity.imagen | length > 0 %}
-                                        <img src="{{entity.thumbnailWebPath}}" />    
-                                    {% else %}    
-                                        <img src="{{asset('images/sin-imagen-usuario.png')}}"/>
-                                    {% endif %}
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,12 +41,12 @@
             <div class="container text-center">            
                 <ul class="record_actions list-inline">
                     <li>
-                        <a href="{{ path('usuarios') }}" class="btn btn-primary">
+                        <a href="{{ path('dreams') }}" class="btn btn-primary">
                             Regresar
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('usuarios_edit', { 'id': entity.id }) }}" class="btn btn-success">
+                        <a href="{{ path('dreams_edit', { 'id': entity.id }) }}" class="btn btn-success">
                             Editar
                         </a>
                     </li>

@@ -1,13 +1,18 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Controller;
+namespace Richpolis\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class BackendController extends Controller
+/**
+ * Backend controller.
+ *
+ * @Route("/admin")
+ */
+class DefaultController extends Controller
 {
 
     /**

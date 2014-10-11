@@ -1,5 +1,5 @@
 <?php
-namespace Richpolis\FrontendBundle\Utils;
+namespace Richpolis\BackendBundle\Utils;
 
 use Symfony\Component\HttpFoundation\Request;
 

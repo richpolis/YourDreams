@@ -278,4 +278,50 @@ class Componente
                 return 'FrontendBundle:Default:dialogoPapa.html.twig';
         } 
     }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Componente
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set dream
+     *
+     * @param \Richpolis\DreamsBundle\Entity\Dream $dream
+     * @return Componente
+     */
+    public function setDream(\Richpolis\DreamsBundle\Entity\Dream $dream = null)
+    {
+        $this->dream = $dream;
+
+        return $this;
+    }
+
+    /**
+     * Get dream
+     *
+     * @return \Richpolis\DreamsBundle\Entity\Dream 
+     */
+    public function getDream()
+    {
+        return $this->dream;
+    }
 }

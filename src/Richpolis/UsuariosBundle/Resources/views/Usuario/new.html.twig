@@ -42,10 +42,13 @@
               <div class="form-group">
               </div>
               <div class="form-group">
-                {{ form_widget(form.isActive,{'attr':{'class':'form-control','placeholder':'Es activo'}}) }} Activo
+                <label class="checkbox">
+                  {{ form_widget(form.isActive) }}
+                  Activo
+                </label>
               </div>
               <div class="form-group">
-                {{ form_widget(form.observaciones,{'attr':{'class':'form-control','placeholder':'Observaciones'}}) }}
+                {{ form_row(form.observaciones,{'attr':{'class':'form-control','placeholder':'Observaciones'}}) }}
               </div>
             </div>
           </div>

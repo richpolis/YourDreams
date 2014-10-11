@@ -26,7 +26,8 @@
         "doctrine/data-fixtures": "dev-master",
         "beberlei/DoctrineExtensions": "*",
         "kriswallsmith/buzz": "~0.7",
-        "liip/imagine-bundle": "dev-master"
+        "liip/imagine-bundle": "dev-master",
+        "hwi/oauth-bundle": "0.4.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

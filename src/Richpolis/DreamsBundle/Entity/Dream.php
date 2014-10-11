@@ -26,7 +26,7 @@ class Dream
     /**
      * @var string
      *
-     * @ORM\Column(name="dream", type="string", length=140,nullable=false)
+     * @ORM\Column(name="titulo", type="string", length=140,nullable=false)
      * @Assert\NotBlank(message="Cual es tu sueño?")
      */
     private $titulo;
@@ -130,4 +130,165 @@ class Dream
         $this->updatedAt = new \DateTime();
     }
     
+
+    /**
+     * Set titulo
+     *
+     * @param string $titulo
+     * @return Dream
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string 
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * Set dream
+     *
+     * @param string $dream
+     * @return Dream
+     */
+    public function setDream($dream)
+    {
+        $this->dream = $dream;
+
+        return $this;
+    }
+
+    /**
+     * Get dream
+     *
+     * @return string 
+     */
+    public function getDream()
+    {
+        return $this->dream;
+    }
+
+    /**
+     * Set lugar
+     *
+     * @param string $lugar
+     * @return Dream
+     */
+    public function setLugar($lugar)
+    {
+        $this->lugar = $lugar;
+
+        return $this;
+    }
+
+    /**
+     * Get lugar
+     *
+     * @return string 
+     */
+    public function getLugar()
+    {
+        return $this->lugar;
+    }
+
+    /**
+     * Set compartir
+     *
+     * @param boolean $compartir
+     * @return Dream
+     */
+    public function setCompartir($compartir)
+    {
+        $this->compartir = $compartir;
+
+        return $this;
+    }
+
+    /**
+     * Get compartir
+     *
+     * @return boolean 
+     */
+    public function getCompartir()
+    {
+        return $this->compartir;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Dream
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Dream
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \Richpolis\UsuariosBundle\Entity\Usuario $usuario
+     * @return Dream
+     */
+    public function setUsuario(\Richpolis\UsuariosBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Richpolis\UsuariosBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
 }

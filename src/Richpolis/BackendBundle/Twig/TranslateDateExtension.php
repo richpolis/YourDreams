@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Twig;
+namespace Richpolis\BackendBundle\Twig;
 
 class TranslateDateExtension extends \Twig_Extension
 {

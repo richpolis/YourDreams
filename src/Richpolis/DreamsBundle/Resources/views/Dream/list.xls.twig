@@ -2,22 +2,16 @@
     <thead>
         <tr>
             <th>
-                Nombre
+                Nombre de sueño
             </th>
             <th>
-                Apellido
+                Lugar
             </th>
             <th>
-                Telefono
+                Sueño
             </th>
             <th>
-                Email
-            </th>
-            <th>
-                Activo
-            </th>
-             <th>
-                Ser padre/madre
+                Compartir
             </th>
             <th>
                 Alta
@@ -25,44 +19,28 @@
              <th>
                 Actualizacion
             </th>
-            <th>
-                Permiso
-            </th>
         </tr>
     </thead>
     <tbody>
-        {% for usuario in usuarios %}
+        {% for dream in dreams %}
             <tr>
                 <td>
-                    {{ usuario.username }}
+                    {{ dream.titulo }}
                 </td>
                 <td>
-                    {{ usuario.ciudad }}
+                    {{ dream.lugar }}
                 </td>
                 <td>
-                    {{ usuario.email }}
+                    {{ dream.dream }}
                 </td>
                 <td>
-                    {% if usuario.sexo > 0 %}
-                        {{ usuario.stringSexo | raw }}
-                    {% else %}
-                        Indefinido
-                    {% endif %}    
+                    {{ (dream.compartir?'Si':'No') }}
                 </td>
                 <td>
-                    {{ usuario.biografia }}
+                    {{ dream.createdAt | date('d-m-Y') }}
                 </td>
                 <td>
-                    {{ usuario.serMadre }}
-                </td>
-                <td>
-                    {{ usuario.createdAt | date('d-m-Y') }}
-                </td>
-                <td>
-                    {{ usuario.updatedAt | date('d-m-Y') }}
-                </td>
-                <td>
-                    {{ usuario.rol[0]}}
+                    {{ dream.updatedAt | date('d-m-Y') }}
                 </td>
             </tr>
         {% endfor %}

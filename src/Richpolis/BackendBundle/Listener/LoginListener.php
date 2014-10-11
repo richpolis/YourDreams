@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Listener;
+namespace Richpolis\BackendBundle\Listener;
  
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;

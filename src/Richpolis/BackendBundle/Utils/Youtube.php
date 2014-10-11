@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Utils;
+namespace Richpolis\BackendBundle\Utils;
 
 /* 
  * Name: Simple Class Info YouTube 
