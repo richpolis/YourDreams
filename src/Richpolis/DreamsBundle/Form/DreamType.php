@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Richpolis\DreamsBundle\Form\ComponenteType;
+use Richpolis\DreamsBundle\Entity\Componente;
 
 class DreamType extends AbstractType
 {
@@ -22,12 +23,16 @@ class DreamType extends AbstractType
             ->add('compartir')
             ->add('usuario')
         ;
-        $builder->add('archivos', 'collection', array(
-            'type'         => new ComponenteType(),
-            'allow_add'    => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-        ));
+        $builder->add('componentes', 'collection', array(
+                'type'           => new ComponenteType(),
+                'label'          => 'Archivos',
+                'by_reference'   => false,
+                'allow_delete'   => true,
+                'allow_add'      => true,
+                'attr'           => array(
+                    'class' => 'row'
+                )
+            ));
     }
     
     /**

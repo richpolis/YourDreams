@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\DreamsBundle\Entity\Dream;
 use Richpolis\DreamsBundle\Form\DreamType;
+use Richpolis\DreamsBundle\Entity\Componente;
+use Richpolis\DreamsBundle\Form\ComponenteType;
 
 /**
  * Dream controller.
@@ -59,7 +61,6 @@ class DreamController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            $em->flush();
 
             return $this->redirect($this->generateUrl('dreams_show', array('id' => $entity->getId())));
         }
@@ -99,6 +100,8 @@ class DreamController extends Controller
     public function newAction()
     {
         $entity = new Dream();
+		$componente = new Componente();
+		$entity->getComponentes()->add($componente);
         $form   = $this->createCreateForm($entity);
 
         return array(
