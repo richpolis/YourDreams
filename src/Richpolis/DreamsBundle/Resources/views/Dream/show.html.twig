@@ -1,59 +1,105 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/fileuploader.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}" type="text/css"/>
+{% endblock %}
+
 {% block body -%}
     {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'dreams' } %}
     <div class="container">
-            <br>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-center">
-                        Mostrar sueño
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <table class="record_properties table table-striped">
-                        <tbody>
-                            <tr>
-                                <th>Id</th>
-                                <td>{{entity.id}}</td>
-                            </tr>
-                            <tr>
-                                <th>Nombre del sueño</th>
-                                <td>{{entity.titulo}}</td>
-                            </tr>
-                            <tr>
-                                <th>Lugar</th>
-                                <td>{{entity.lugar}}</td>
-                            </tr>
-                            <tr>
-                                <th>Sueño</th>
-                                <td>{{entity.dream}}</td>
-                            </tr>
-                            <tr>
-                                <th>Compartir</th>
-                                <td>{{ ((entity.compartir)?'Si':'No') }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">
+                    Mostrar sueño
+                </h3>
             </div>
-            <div class="container text-center">            
-                <ul class="record_actions list-inline">
-                    <li>
-                        <a href="{{ path('dreams') }}" class="btn btn-primary">
-                            Regresar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('dreams_edit', { 'id': entity.id }) }}" class="btn btn-success">
-                            Editar
-                        </a>
-                    </li>
-                    <li>{{ form(delete_form) }}</li>
-                </ul>
-            </div>    
-            <div class="container text-center">
+            <div class="panel-body">
+                <table class="record_properties table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{entity.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre del sueño</th>
+                            <td>{{entity.titulo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Lugar</th>
+                            <td>{{entity.lugar}}</td>
+                        </tr>
+                        <tr>
+                            <th>Sueño</th>
+                            <td>{{entity.dream}}</td>
+                        </tr>
+                        <tr>
+                            <th>Compartir</th>
+                            <td>{{ ((entity.compartir)?'Si':'No') }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="tab-pane" id="galeria">
+                                    <div class="container-galeria">    
+                                        {# seccion de codigo html #}
+                                        <div id="lista_imagenes" style=" min-height: 400px; overflow: hidden;">
+                                            {% include 'GaleriasBundle:Galeria:galerias.html.twig' with {'galerias': entity.galerias, 'url_delete': url_delete } %}
+                                        </div>
+                                        <table style="width: 80%; margin: 0 auto;">
+                                            <tr>
+                                                <td>
+                                                    <div id="upload"></div>
+                                                    Extenciones disponibles:   "jpeg","png","gif","jpg"
+                                                    <!--List Files-->
+                                                    <ul id="files" ></ul>
+                                                    <div class="clear"></div>
+                                                </td>
+                                                <td>
+                                                    <button onclick="javascript:crearVideoLink()" class="botonUploadVideoLink">Crear Video Link</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
+        <div class="container text-center">            
+            <ul class="record_actions list-inline">
+                <li>
+                    <a href="{{ path('dreams') }}" class="btn btn-primary">
+                        Regresar
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('dreams_edit', { 'id': entity.id }) }}" class="btn btn-success">
+                        Editar
+                    </a>
+                </li>
+                <li>{{ form(delete_form) }}</li>
+            </ul>
+        </div>    
+        <div class="container text-center">
+        </div>
     </div>
-	<br>
+    <br>
+    {% include 'GaleriasBundle:Galeria:formulariosGaleria.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}  
+    <script src="{{ asset('js/fileuploader.js') }}" type="text/javascript"></script>
+    {% include 'GaleriasBundle:Galeria:formulariosGaleria.js.twig' with {'entity': entity, 'url_delete': url_delete, 'get_galerias': get_galerias, 'post_galerias': post_galerias, 'post_galerias_link_video': post_galerias_link_video  } %}
+    <script>
+    $(document).on('ready', function () {
+        createUploader();
+        refrescarGaleria();
+        $('.loader').fadeOut();
+    });
+    </script>   
 {% endblock %}

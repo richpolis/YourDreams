@@ -7,10 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Richpolis\DreamsBundle\Entity\Dream;
 use Richpolis\DreamsBundle\Form\DreamType;
-use Richpolis\DreamsBundle\Entity\Componente;
-use Richpolis\DreamsBundle\Form\ComponenteType;
+
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
+use Richpolis\BackendBundle\Utils\qqFileUploader;
+use Richpolis\GaleriasBundle\Entity\Galeria;
 
 /**
  * Dream controller.
@@ -39,7 +43,7 @@ class DreamController extends Controller
         $query = $em->getRepository('DreamsBundle:Dream')->queryFindDreams($buscar);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->get('page', 1),10, $options 
+            $query, $this->get('request')->query->get('page', 1),10, $options 
         );
 
         return compact('pagination');
@@ -100,8 +104,6 @@ class DreamController extends Controller
     public function newAction()
     {
         $entity = new Dream();
-		$componente = new Componente();
-		$entity->getComponentes()->add($componente);
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -132,6 +134,10 @@ class DreamController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'get_galerias' =>$this->generateUrl('dreams_galerias',array('id'=>$entity->getId()),true),
+            'post_galerias' =>$this->generateUrl('dreams_galerias_upload', array('id'=>$entity->getId()),true),
+            'post_galerias_link_video' =>$this->generateUrl('dreams_galerias_link_video', array('id'=>$entity->getId()),true),
+            'url_delete' => $this->generateUrl('dreams_galerias_delete',array('id'=>$entity->getId(),'idGaleria'=>'0'),true),
         );
     }
 
@@ -272,6 +278,141 @@ class DreamController extends Controller
         );
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="export-dreams.xls"');
+        return $response;
+    }
+
+    /**
+     * Lists all Dream galerias entities.
+     *
+     * @Route("/{id}/galerias", name="dreams_galerias", requirements={"id" = "\d+"})
+     * @Method("GET")
+     */
+    public function galeriasAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $dream = $em->getRepository('DreamsBundle:Dream')->find($id);
+        
+        $galerias = $dream->getGalerias();
+        $get_galerias = $this->generateUrl('dreams_galerias',array('id'=>$dream->getId()),true);
+        $post_galerias = $this->generateUrl('dreams_galerias_upload', array('id'=>$dream->getId()),true);
+        $post_galerias_link_video = $this->generateUrl('dreams_galerias_link_video', array('id'=>$dream->getId()),true);
+        $url_delete = $this->generateUrl('dreams_galerias_delete',array('id'=>$dream->getId(),'idGaleria'=>'0'),true);
+        
+        return $this->render('GaleriasBundle:Galeria:galerias.html.twig', array(
+            'galerias'=>$galerias,
+            'get_galerias' =>$get_galerias,
+            'post_galerias' =>$post_galerias,
+            'post_galerias_link_video' =>$post_galerias_link_video,
+            'url_delete' => $url_delete,
+        ));
+    }
+    
+    /**
+     * Crea una galeria de una dream.
+     *
+     * @Route("/{id}/galerias", name="dreams_galerias_upload", requirements={"id" = "\d+"})
+     * @Method("POST")
+     */
+    public function galeriasUploadAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $dream=$em->getRepository('DreamsBundle:Dream')->find($id);
+       
+        if(!$request->request->has('tipoArchivo')){ 
+            // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+            $allowedExtensions = array("jpeg","png","gif","jpg");
+            // max file size in bytes
+            $sizeLimit = 6 * 1024 * 1024;
+            $uploader = new qqFileUploader($allowedExtensions, $sizeLimit,$request->server);
+            $uploads= $this->container->getParameter('richpolis.uploads');
+            $result = $uploader->handleUpload($uploads."/galerias/");
+            // to pass data through iframe you will need to encode all html tags
+            /*****************************************************************/
+            //$file = $request->getParameter("qqfile");
+            $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+            if($max == null){
+                $max=0;
+            }
+            if(isset($result["success"])){
+                $registro = new Galeria();
+                $registro->setArchivo($result["filename"]);
+                $registro->setThumbnail($result["filename"]);
+                $registro->setTitulo($result["titulo"]);
+                $registro->setIsActive(true);
+                $registro->setPosition($max+1);
+                $registro->setTipoArchivo(RpsStms::TIPO_ARCHIVO_IMAGEN);
+                //unset($result["filename"],$result['original'],$result['titulo'],$result['contenido']);
+                $em->persist($registro);
+                $registro->crearThumbnail();    
+                $dream->getGalerias()->add($registro);
+                $em->flush();
+            }
+        }else{
+            $result = $request->request->all(); 
+            $registro = new Galeria();
+            $registro->setArchivo($result["archivo"]);
+            $registro->setIsActive($result['isActive']);
+            $registro->setPosition($result['position']);
+            $registro->setTipoArchivo($result['tipoArchivo']);
+            $em->persist($registro);
+            $dream->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($result);
+        return $response;
+    }
+    
+    /**
+     * Crea una galeria link video de una dream.
+     *
+     * @Route("/{id}/galerias/link/video", name="dreams_galerias_link_video", requirements={"id" = "\d+"})
+     * @Method({"POST","GET"})
+     */
+    public function galeriasLinkVideoAction(Request $request,$id){
+        $em = $this->getDoctrine()->getManager();
+        $dream=$em->getRepository('DreamsBundle:Dream')->find($id);
+        $parameters = $request->request->all();
+      
+        if(isset($parameters['archivo'])){ 
+            $registro = new Galeria();
+            $registro->setArchivo($parameters['archivo']);
+            $registro->setIsActive($parameters['isActive']);
+            $registro->setPosition($parameters['position']);
+            $registro->setTipoArchivo($parameters['tipoArchivo']);
+            $em->persist($registro);
+            $dream->getGalerias()->add($registro);
+            $em->flush();  
+        }
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData($parameters);
+        return $response;
+    }
+    
+    /**
+     * Deletes una Galeria entity de una Dream.
+     *
+     * @Route("/{id}/galerias/{idGaleria}", name="dreams_galerias_delete", requirements={"id" = "\d+"})
+     * @Method("DELETE")
+     */
+    public function deleteGaleriaAction(Request $request, $id, $idGaleria)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $dream = $em->getRepository('DreamsBundle:Dream')->find($id);
+            $galeria = $em->getRepository('GaleriasBundle:Galeria')->find(intval($idGaleria));
+
+            if (!$dream) {
+                throw $this->createNotFoundException('Unable to find Dream entity.');
+            }
+            
+            $dream->getGalerias()->removeElement($galeria);
+            $em->remove($galeria);
+            $em->flush();
+        
+
+        $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+        $response->setData(array("ok"=>true));
         return $response;
     }
 }

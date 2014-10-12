@@ -64,11 +64,13 @@ class Dream
     private $usuario;
 	
 	/**
-     * Componentes del dream
+     * @var integer
      *
-     * @ORM\OneToMany(targetEntity="Richpolis\DreamsBundle\Entity\Componente", mappedBy="dream")
+     * @ORM\ManyToMany(targetEntity="Richpolis\GaleriasBundle\Entity\Galeria")
+     * @ORM\JoinTable(name="dream_galeria")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
-    private $componentes;
+    private $galerias;
     
     
     /**
@@ -90,7 +92,7 @@ class Dream
      */
     public function __construct()
     {
-        $this->componentes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->compartir = true;
     }
     
@@ -300,35 +302,35 @@ class Dream
     }
 
     /**
-     * Add componentes
+     * Add galerias
      *
-     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
      * @return Dream
      */
-    public function addComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    public function addGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
     {
-        $this->componentes[] = $componentes;
+        $this->galerias[] = $galerias;
 
         return $this;
     }
 
     /**
-     * Remove componentes
+     * Remove galerias
      *
-     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
      */
-    public function removeComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    public function removeGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
     {
-        $this->componentes->removeElement($componentes);
+        $this->galerias->removeElement($galerias);
     }
 
     /**
-     * Get componentes
+     * Get galerias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComponentes()
+    public function getGalerias()
     {
-        return $this->componentes;
+        return $this->galerias;
     }
 }

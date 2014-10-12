@@ -23,16 +23,7 @@ class DreamType extends AbstractType
             ->add('compartir')
             ->add('usuario')
         ;
-        $builder->add('componentes', 'collection', array(
-                'type'           => new ComponenteType(),
-                'label'          => 'Archivos',
-                'by_reference'   => false,
-                'allow_delete'   => true,
-                'allow_add'      => true,
-                'attr'           => array(
-                    'class' => 'row'
-                )
-            ));
+
     }
     
     /**

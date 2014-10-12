@@ -64,11 +64,13 @@ class Dream
     private $usuario;
 	
 	/**
-     * Componentes del dream
+     * @var integer
      *
-     * @ORM\OneToMany(targetEntity="Richpolis\DreamsBundle\Entity\Componente", mappedBy="dream")
+     * @ORM\ManyToMany(targetEntity="Richpolis\GaleriasBundle\Entity\Galeria")
+     * @ORM\JoinTable(name="dream_galeria")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
-    private $componentes;
+    private $galerias;
     
     
     /**
@@ -297,5 +299,38 @@ class Dream
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Add componentes
+     *
+     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     * @return Dream
+     */
+    public function addComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    {
+        $this->componentes[] = $componentes;
+
+        return $this;
+    }
+
+    /**
+     * Remove componentes
+     *
+     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     */
+    public function removeComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    {
+        $this->componentes->removeElement($componentes);
+    }
+
+    /**
+     * Get componentes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComponentes()
+    {
+        return $this->componentes;
     }
 }

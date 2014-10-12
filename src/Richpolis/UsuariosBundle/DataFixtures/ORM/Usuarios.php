@@ -16,30 +16,24 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Richpolis\UsuariosBundle\Entity\Usuario;
 
-
 /**
  * Fixtures de la entidad Usuario.
  */
-class Usuarios extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
-{
-    public function getOrder()
-    {
+class Usuarios extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface {
+
+    public function getOrder() {
         return 10;
     }
 
     private $container;
 
-    public function setContainer(ContainerInterface $container = null)
-    {
+    public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
     }
 
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         // Obtener todas las ciudades de la base de datos
-        $grupoAdmin = Usuario::GRUPO_ADMIN;
-        $grupoUsuario = Usuario::GRUPO_USUARIOS;
-		
+        
         // usuario Richpolis 
         $richpolis = new Usuario();
         $richpolis->setEmail('richpolis@gmail.com');
@@ -48,11 +42,11 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($richpolis);
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $richpolis->getSalt());
         $richpolis->setPassword($passwordCodificado);
-		$richpolis->setNombre("Ricardo");
-		$richpolis->setApellido("Alcantara");
-		$richpolis->setGrupo($grupoAdmin);
+        $richpolis->setNombre("Ricardo");
+        $richpolis->setApellido("Alcantara");
+        $richpolis->setGrupo(Usuario::GRUPO_ADMIN);
         $manager->persist($richpolis);
-            
+
         // usuario Administrador
         $usuarioAdmin = new Usuario();
         $usuarioAdmin->setEmail('admin@yourdreams.com');
@@ -61,12 +55,12 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $encorder = $this->container->get('security.encoder_factory')->getEncoder($usuarioAdmin);
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $usuarioAdmin->getSalt());
         $usuarioAdmin->setPassword($passwordCodificado);
-		$usuarioAdmin->setNombre("Admin");
-		$usuarioAdmin->setApellido("YourDreams");
-		$richpolis->setGrupo($grupoAdmin);
+        $usuarioAdmin->setNombre("Admin");
+        $usuarioAdmin->setApellido("YourDreams");
+        $usuarioAdmin->setGrupo(Usuario::GRUPO_ADMIN);
         $manager->persist($usuarioAdmin);
-		$manager->flush();
-		
+        $manager->flush();
+
 
         // usuario Normal
         $usuarioNormal = new Usuario();
@@ -77,11 +71,10 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $passwordCodificado = $encoder->encodePassword($passwordEnClaro, $usuarioNormal->getSalt());
         $usuarioNormal->setPassword($passwordCodificado);
         $usuarioNormal->setNombre("Usuario1");
-		$usuarioNormal->setApellido("YourDreams");
-		$richpolis->setGrupo($grupoUsuario);
+        $usuarioNormal->setApellido("YourDreams");
+        $usuarioNormal->setGrupo(Usuario::GRUPO_USUARIOS);
         $manager->persist($usuarioNormal);
         $manager->flush();
     }
 
-    
 }

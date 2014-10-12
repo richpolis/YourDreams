@@ -1,0 +1,27 @@
+<h5>{{ galeria.tituloCorto }}</h5>
+<img id="image-{{galeria.id}}" 
+     galeria="{{galeria.id}}" 
+     src="/YourDreams/web{{ galeria.thumbnailWebPath}}" 
+     class="image-sorteable" 
+     data-title="{{galeria.titulo}}" 
+     data-descripcion="{{ galeria.descripcion }}" 
+     data-url="{{path('galerias_show',{'id': galeria.id})}}"
+     style="max-width: 120px; max-height: 120px;" 
+     />
+<p>
+    <button style="float: left;" 
+            type="button" 
+            class="btn btn-primary editar-item" 
+            data-toggle="modal" 
+            data-target="#editarFormModal" 
+            onclick="javascript:editarGaleria('{{galeria.id}}','{{ path('galerias_edit',{ 'id' : galeria.id })}}')">
+        <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+    <button style="float: right;" type="button" 
+            class="btn btn-danger eliminar-item" 
+            data-target="#confirmarFormModal" 
+            data-toggle="modal" 
+            onclick="javascript:eliminarGaleria('{{galeria.id}}','{{ url_delete ~ galeria.id }}')">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+</p>

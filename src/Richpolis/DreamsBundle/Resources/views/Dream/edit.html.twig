@@ -5,113 +5,50 @@
     <div class="container">
         <form action="{{ path('dreams_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
             <input name="_method" value="put" type="hidden"/>
-          <br>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">
-                Editar Sueño
-              </h3>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">
+                        Editar Sueño
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_errors(form) }}  
+                    <div class="form-group">
+                        {{ form_widget(form.titulo,{'attr':{'class':'form-control','placeholder':'Sueño'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.lugar,{'attr':{'class':'form-control','placeholder':'Lugar'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.dream,{'attr':{'class':'form-control','placeholder':'Descripcion'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox">
+                            {{ form_widget(form.compartir) }}
+                            Visible por otros?
+                        </label>  
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.usuario,{'attr':{'class':'form-control','placeholder':'usuario'}}) }}
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-              {{ form_errors(form) }}  
-              <div class="form-group">
-                {{ form_widget(form.titulo,{'attr':{'class':'form-control','placeholder':'Sueño'}}) }}
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.lugar,{'attr':{'class':'form-control','placeholder':'Lugar'}}) }}
-              </div>
-              <div class="form-group">
-                {{ form_row(form.dream,{'attr':{'class':'form-control','placeholder':'Descripcion'}}) }}
-              </div>
-              
-              <div class="form-group">
-                <label class="checkbox">
-                  {{ form_widget(form.compartir) }}
-                  Visible por otros?
-                </label>  
-              </div>
-              <div class="form-group">
-                {{ form_widget(form.usuario,{'attr':{'class':'form-control','placeholder':'usuario'}}) }}
-              </div>
-              <div class="form-group">
-			    <h3>Archivos</h3>
-				<ul class="archivos">
-					{% for componente in form.componentes %}
-						<li>
-						{{ form_widget(componente.file) }}
-						</li>
-					{% endfor %}
-				</ul>
-                {{ form_row(form.componentes) }}  
-              </div>
-              <div class="form-group">
-              </div>
-              <div class="form-group">
-              </div>
-              <div class="form-group">
-              </div>
+            <div class="container">
+                <a href="{{path('dreams')}}" class="btn btn-success">Regresar</a>
+                <input type="submit" class="btn btn-primary btn-sm pull-right" name="botonGuardar" id="botonGuardar" value="Guardar Sueño"/>
+                {{ form_rest(form) }}
             </div>
-          </div>
-          <div class="container">
-            <a href="{{path('dreams')}}" class="btn btn-success">Regresar</a>
-            <input type="submit" class="btn btn-primary btn-sm pull-right" name="botonGuardar" id="botonGuardar" value="Guardar Sueño"/>
-            {{ form_rest(form) }}
-          </div>
-          <div class="container text-center">
-          </div>
+            <div class="container text-center">
+            </div>
         </form>
-      </div>
+    </div>
 {% endblock %}
 
-{% block javascripts %}
-<script>
-	var $collectionHolder;
-
-	// setup an "add a tag" link
-	var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-	var $newLinkLi = $('<li></li>').append($addTagLink);
-
-	jQuery(document).ready(function() {
-		// Get the ul that holds the collection of tags
-		$collectionHolder = $('ul.tags');
-
-		// add the "add a tag" anchor and li to the tags ul
-		$collectionHolder.append($newLinkLi);
-
-		// count the current form inputs we have (e.g. 2), use that as the new
-		// index when inserting a new item (e.g. 2)
-		$collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-		$addTagLink.on('click', function(e) {
-			// prevent the link from creating a "#" on the URL
-			e.preventDefault();
-
-			// add a new tag form (see next code block)
-			addTagForm($collectionHolder, $newLinkLi);
-		});
-	});
-	
-	function addTagForm($collectionHolder, $newLinkLi) {
-		// Get the data-prototype explained earlier
-		var prototype = $collectionHolder.data('prototype');
-
-		// get the new index
-		var index = $collectionHolder.data('index');
-
-		// Replace '__name__' in the prototype's HTML to
-		// instead be a number based on how many items we have
-		var newForm = prototype.replace(/__name__/g, index);
-
-		// increase the index with one for the next item
-		$collectionHolder.data('index', index + 1);
-
-		// Display the form in the page in an li, before the "Add a tag" link li
-		var $newFormLi = $('<li></li>').append(newForm);
-		$newLinkLi.before($newFormLi);
-	}
-
-</script>
-{% endblock %}
-
-
-    
