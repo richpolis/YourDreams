@@ -18,9 +18,6 @@ security:
       dev:
         pattern:  ^/(_(profiler|wdt)|css|images|js)/
         security: false
-      login:
-        pattern:  ^/login$
-        security: false
       admin:
         pattern: ^/admin
         provider: user_db
@@ -44,10 +41,33 @@ security:
             always_remember_me: true
         security: true
         anonymous: true
+      frontend:
+        pattern:  ^/$
+        provider: user_db
+        form_login:
+            login_path: login
+            check_path: login_check
+            remember_me: true
+            always_use_default_target_path: true
+            default_target_path: homepage
+            target_path_parameter: _target_path
+            use_referer: false
+        logout:
+            path: logout
+            target: login
+        remember_me:
+            key: "%secret%"
+            lifetime: 31536000
+            path: /.*
+            domain: ~
+            always_remember_me: true
+        security: true
+        anonymous: true
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: [ROLE_ADMIN] }        
+        - { path: ^/admin, roles: [ROLE_ADMIN] }
         - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/recuperar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/*, roles: [ROLE_USUARIO] }

@@ -1,6 +1,15 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+<link href="{{asset('css/main.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-    <h1>Bienvenido al Frontend de YourDreams</h1>
+    {% if app.user is not null %}
+		<header>
+			
+		</header>
+    {% endif %}
     {% block content %}{% endblock %}
+    
 {% endblock %}    
