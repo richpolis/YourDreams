@@ -33,12 +33,6 @@ security:
         logout:
             path: admin_logout
             target: admin_login
-        remember_me:
-            key: "%secret%"
-            lifetime: 31536000
-            path: /.*
-            domain: ~
-            always_remember_me: true
         security: true
         anonymous: true
       frontend:

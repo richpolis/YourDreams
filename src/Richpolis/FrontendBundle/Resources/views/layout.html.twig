@@ -1,13 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
+{{ parent() }}    
 <link href="{{asset('css/main.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
     {% if app.user is not null %}
 		<header>
-			
+		    
+			<h1>Your Dreams</h1>
 		</header>
     {% endif %}
     {% block content %}{% endblock %}

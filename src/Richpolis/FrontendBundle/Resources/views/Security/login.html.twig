@@ -2,41 +2,44 @@
 
 {% block content %}
     <div class="container row">
-      		{% if error %}
+        <div class="col-lg-4 col-lg-offset-4">
+            {% if error %}
                 <div class="alert alert-danger">{{ error.message | trans }}</div>
             {% endif %}
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="flash-notice alert alert-success">
-                  {{ flashMessage }}
+                    {{ flashMessage }}
                 </div>
             {% endfor %}
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="flash-notice alert alert-danger">
-                  {{ flashMessage }}
+                    {{ flashMessage }}
                 </div>
             {% endfor %}
-      <div class="row"> 
-        <form class="form-signin" role="form" action="{{ path('admin_login_check') }}" method="post">
-          <h1 class="form-signin-heading">YourDreams</h1>
-          
-          <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
-           <br/> 
-          <input type="password" class="form-control" placeholder="Password" name="_password" required>
-          <br/>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+            <div class="formulario"> 
+                <form class="form-signin" role="form" action="{{ path('admin_login_check') }}" method="post">
+                    <h1 class="form-signin-heading">YourDreams</h1>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" name="_password" required>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                </form>
+
+            </div>
             <p class="text-center">
-            Si no eres usuario puedes registrarte <a href="{{path('registro')}}">aquí</a>
-           </p>
-           <p class="text-center">
-            o puedes utilizar las redes sociales: 
-           </p>
-           <p class="redes-sociales text-center">
-              <a href="#"><span class="red-social facebook">&nbsp;</span></a>
-              <a href="#"><span class="red-social twitter">&nbsp;</span></a>
-           </p>
-        </form>
-	     
-       </div>	
+                Si no eres usuario puedes registrarte <a href="{{path('registro')}}">aquí</a>
+            </p>
+            <p class="text-center">
+                o puedes utilizar las redes sociales: 
+            </p>
+            <p class="redes-sociales text-center">
+                <a href="#"><span class="red-social facebook">&nbsp;</span></a>
+                <a href="#"><span class="red-social twitter">&nbsp;</span></a>
+            </p>        
+        </div>        
     </div> <!-- /container -->
-    
+
 {% endblock %}
