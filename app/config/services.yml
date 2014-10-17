@@ -4,8 +4,15 @@ services:
         tags:
             - { name: twig.extension }
 
+    login_admin_listener:
+        class: Richpolis\BackendBundle\Listener\LoginAdminListener
+        arguments: [@service_container,@security.context, @router]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
+            - { name: kernel.event_listener, event: kernel.response }
+
     login_listener:
-        class: Richpolis\BackendBundle\Listener\LoginListener
+        class: Richpolis\FrontendBundle\Listener\LoginListener
         arguments: [@service_container,@security.context, @router]
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }

@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-  <link rel="stylesheet" href="{{asset('css/main.css')}}">
+  <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 {% endblock %}
 
 {% block panel %}
@@ -22,7 +22,7 @@
                             </td>
                             <td class="pull-right">
                                 <span id="name" style="color:#000;"><i class="fa fa-user"></i> <strong>Bienvenido(a), </strong> {{ app.user.nombre }}</span>
-                                <span id="sesion"><i class="fa fa-sign-out"></i> <a href="{{path('logout')}}">Cerrar sesion</a></span>
+                                <span id="sesion"><i class="fa fa-sign-out"></i> <a href="{{path('admin_logout')}}">Cerrar sesion</a></span>
                             </td>
                         </tr>
                     </tbody>

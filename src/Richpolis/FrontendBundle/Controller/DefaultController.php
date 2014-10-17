@@ -27,6 +27,24 @@ class DefaultController extends Controller
     public function registroAction(Request $request)
     {
         return array();
-    }    
+    }
+	
+	/**
+     * @Route("/mostrar/{id}",name="show_dream")
+     * @Template()
+     */
+    public function mostrarAction(Request $request,$id)
+    {
+        return array('entity'=>$id);
+    }
+	
+	/**
+     * @Route("/crear",name="create_dream")
+     * @Template()
+     */
+    public function crearAction(Request $request)
+    {
+        return array();
+    }
     
 }

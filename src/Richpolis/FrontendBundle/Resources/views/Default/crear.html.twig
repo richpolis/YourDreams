@@ -1,0 +1,40 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="login-center">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="flash-notice alert alert-danger">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <div class="formulario"> 
+                <form class="form-crear" role="form" action="{{ path('create_dream') }}" method="post">
+                    <h1 class="form-signin-heading">Nuevo sueño</h1>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nombre de tu sueño" name="titulo" value="" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Lugar del sueño" name="lugar" required>
+                    </div>
+					<div class="form-group">
+                        <input type="text" class="form-control" placeholder="Describe tu sueño" name="dream" required>
+                    </div>
+					<div class="form-group">
+                        <input type="file" class="form-control" placeholder="Ingresa imagen o archivo" name="file" required>
+                    </div>
+					<div class="form-group">
+                        <input type="checkbox" class="form-control" placeholder="Observaciones" name="observaciones"> Compartir tu sueño
+                    </div>
+                    <button class="btn btn-lg btn-center" type="submit">Guardar</button>
+                </form>
+            </div>       
+        </div>        
+    </div> <!-- /container -->
+
+{% endblock %}

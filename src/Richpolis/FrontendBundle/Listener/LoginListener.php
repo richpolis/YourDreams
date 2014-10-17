@@ -1,6 +1,6 @@
 <?php
 
-namespace Richpolis\BackendBundle\Listener;
+namespace Richpolis\FrontendBundle\Listener;
  
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -31,10 +31,10 @@ class LoginListener
         if (null != $this->usuario){
             if($this->usuario->getIsActive()) {
                 $session = $this->container->get('session');
-                if($this->contexto->isGranted('ROLE_ADMIN')){
-                    $irA = $this->router->generate('usuarios');
-                }else{
+                if($this->contexto->isGranted('ROLE_USUARIO')){
                     $irA = $this->router->generate('homepage');
+                }else{
+                    $irA = $this->router->generate('logout');
                 }
             }else{
                 $irA = $this->router->generate('logout');

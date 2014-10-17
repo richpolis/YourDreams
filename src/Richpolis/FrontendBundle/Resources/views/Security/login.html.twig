@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container row">
-        <div class="col-lg-4 col-lg-offset-4">
+        <div class="login-center">
             {% if error %}
                 <div class="alert alert-danger">{{ error.message | trans }}</div>
             {% endif %}
@@ -17,7 +17,7 @@
                 </div>
             {% endfor %}
             <div class="formulario"> 
-                <form class="form-signin" role="form" action="{{ path('admin_login_check') }}" method="post">
+                <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post">
                     <h1 class="form-signin-heading">YourDreams</h1>
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Password" name="_password" required>
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                    <button class="btn btn-lg btn-center" type="submit">Entrar</button>
                 </form>
 
             </div>

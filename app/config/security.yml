@@ -25,10 +25,6 @@ security:
             login_path: admin_login
             check_path: admin_login_check
             remember_me: true
-            # login success redirecting options (read further below)
-            always_use_default_target_path: true
-            default_target_path: usuarios
-            target_path_parameter: _target_path
             use_referer: false
         logout:
             path: admin_logout
@@ -36,15 +32,12 @@ security:
         security: true
         anonymous: true
       frontend:
-        pattern:  ^/$
+        pattern:  ^/
         provider: user_db
         form_login:
             login_path: login
             check_path: login_check
             remember_me: true
-            always_use_default_target_path: true
-            default_target_path: homepage
-            target_path_parameter: _target_path
             use_referer: false
         logout:
             path: logout
@@ -64,4 +57,4 @@ security:
         - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/recuperar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/*, roles: [ROLE_USUARIO] }
+        - { path: ^/, roles: [ROLE_USUARIO] }

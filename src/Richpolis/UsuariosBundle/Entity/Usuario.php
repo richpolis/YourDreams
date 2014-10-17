@@ -200,7 +200,7 @@ class Usuario implements UserInterface, \Serializable
     public function getRoles() {
 
         if($this->getGrupo() == self::GRUPO_USUARIOS){
-            return array('ROLE_USER','ROLE_API');
+            return array('ROLE_USUARIO','ROLE_API');
         }elseif($this->getGrupo() == self::GRUPO_ADMIN){
             return array('ROLE_ADMIN','ROLE_API');
         }else{
