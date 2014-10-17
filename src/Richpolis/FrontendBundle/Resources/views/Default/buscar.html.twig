@@ -3,7 +3,17 @@
 {% block content %}
     <div class="container row">
         <div class="login-center">
-			<h2>Mis sueños</h2>
+			<h2>Todos los sueños</h2>
+			<div class="formulario">
+				<form class="form-buscar" role="form" action="{{ path('homepage') }}" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-input-search" placeholder="Buscar" name="q" value="" >
+                    </div>
+                    <div class="flecha-submit">
+                    	<input type="image" src="{{asset('images/flecha.png')}}" alt=""/>
+                    </div>
+                </form>
+			</div>
             <div class="contenedor-dreams"> 
                 <ul class="lista-dreams">
 					{% for cont in range(1,10) %}

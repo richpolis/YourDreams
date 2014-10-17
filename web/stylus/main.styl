@@ -45,6 +45,7 @@ h2
 input[type="email"],
 input[type="password"], 
 input[type="text"]
+input[type="file"]
 	margin-bottom .4em
 	width 100%
 	color rgba(0,0,0,0.8)
@@ -149,6 +150,14 @@ p
 	padding 10px 10px 5px
 	box-sizing border-box
 	margin-bottom 10px
+	&.form-group-checkbox
+		background transparent
+		font-size 20px
+		color black
+		text-align center
+		text-shadow none
+		font-weight bold
+		
 
 .form-control 
 	height auto
@@ -224,7 +233,14 @@ p
 		max-height 200px
 
 
-
+.formulario
+	position relative
+	& .flecha-submit
+		position absolute
+		top 5px
+		right 10px
+		z-index 1000
+		cursor pointer
 
 
 

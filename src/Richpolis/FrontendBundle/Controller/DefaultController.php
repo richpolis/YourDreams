@@ -46,5 +46,14 @@ class DefaultController extends Controller
     {
         return array();
     }
+
+    /**
+     * @Route("/buscar",name="find_dream")
+     * @Template()
+     */
+    public function buscarAction(Request $request)
+    {
+        return array();
+    }
     
 }
