@@ -3,87 +3,101 @@
 {% block stylesheets %}
 <link href="{{asset('css/main.css')}}" rel="stylesheet">
 <style>
-#colorNav > ul{
-	width: 450px; /* Increase when adding more menu items */
-	margin:0 auto;
+#colorNav {
+	position: absolute;
+	top: 8px;
+	right: 10px;
 }
 
-#colorNav > ul > li{ /* will style only the top level li */
+#colorNav > ul{
+	margin-top:  0px;
+	margin-bottom: 0px;
+}
+
+#colorNav > ul > li{ 
 	list-style: none;
-	box-shadow: 0 0 10px rgba(100, 100, 100, 0.2) inset,1px 1px 1px #CCC;
 	display: inline-block;
 	line-height: 1;
 	margin: 1px;
 	border-radius: 3px;
-	position:relative;
+	position: relative;
 }
 
 #colorNav > ul > li > a{
 	color:inherit;
 	text-decoration:none !important;
 	font-size:24px;
-	padding: 25px;
+	padding: 5px;
 }
 
 #colorNav li ul{
-	position:absolute;
-	list-style:none;
-	text-align:center;
-	width:180px;
-	left:50%;
-	margin-left:-90px;
-	top:70px;
-	font:bold 12px 'Open Sans Condensed', sans-serif;
+	position: absolute;
+	list-style: none;
+	text-align: center;
+	width: 180px;
+	right: -5px;
+	top: 15px;
+	font: bold 12px 'Open Sans Condensed', sans-serif;
 	
 	/* This is important for the show/hide CSS animation */
-	max-height:0px;
-	overflow:hidden;
+	max-height: 0px;
+	overflow: hidden;
 	
-	-webkit-transition:max-height 0.4s linear;
-	-moz-transition:max-height 0.4s linear;
-	transition:max-height 0.4s linear;
+	-webkit-transition: max-height 0.4s linear;
+	-moz-transition: max-height 0.4s linear;
+	transition: max-height 0.4s linear;
 }
 
 #colorNav li ul li{
-	background-color:#313131;
+	background-color: rgba(255,255,255, 0.8);
+	border-bottom: 1px inset rgba(0,0,0,0.4);
 }
 
 #colorNav li ul li a{
-	padding:12px;
-	color:#fff !important;
-	text-decoration:none !important;
-	display:block;
+	padding:12px 10px 12px 20px;
+	color:#000000;
+	text-decoration: none !important;
+	display: block;
+	text-align: left;
+
 }
 
-#colorNav li ul li:nth-child(odd){ /* zebra stripes */
-	background-color:#363636;
+#colorNav li ul li:nth-child(odd){ 
+	background-color: rgba(255,255,255, 0.8);
+	-webkit-transition: background-color 0.5s linear;
+	-moz-transition: background-color 0.5s linear;
+	transition: background-color 0.5s linear;
 }
 
 #colorNav li ul li:hover{
-	background-color:#444;
+	background-color: rgba(255,255,255, 1);
 }
 
+#colorNav li ul li:hover a{
+	color: #53bfe2;
+}
+
+
 #colorNav li ul li:first-child{
-	border-radius:3px 3px 0 0;
-	margin-top:25px;
-	position:relative;
+	border-radius: 3px 3px 0 0;
+	margin-top: 25px;
+	position: relative;
 }
 
 #colorNav li ul li:first-child:before{ /* the pointer tip */
 	content:'';
-	position:absolute;
-	width:1px;
-	height:1px;
-	border:5px solid transparent;
-	border-bottom-color:#313131;
-	left:50%;
-	top:-10px;
-	margin-left:-5px;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	border: 5px solid transparent;
+	border-bottom-color: #fff;
+	right: 15px;
+	top: -10px;
 }
 
 #colorNav li ul li:last-child{
-	border-bottom-left-radius:3px;
-	border-bottom-right-radius:3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 
 /* This will trigger the CSS */
@@ -93,24 +107,10 @@
 	max-height:200px; /* Increase when adding more dropdown items */
 }
 
-
-/*----------------------------
-	Color Themes
------------------------------*/
-
-
-#colorNav li.green{
-	/* This is the color of the menu item */
-	background-color:#00c08b;
-	
-	/* This is the color of the icon */
-	color:#127a5d;
+#colorNav li.white{
+	font-weight: normal;
 }
 
-#colorNav li.red{		background-color:#ea5080;color:#aa2a52;}
-#colorNav li.blue{		background-color:#53bfe2;color:#2884a2;}
-#colorNav li.yellow{	background-color:#f8c54d;color:#ab8426;}
-#colorNav li.purple{	background-color:#df6dc2;color:#9f3c85;}
 
 </style>
 {% endblock %}
@@ -127,12 +127,12 @@
 		</header>
 		<nav id="colorNav">
 			<ul>
-				<li class="green">
+				<li class="white">
 					<a href="#" class="icon-menu"></a>
 					<ul>
-						<li><a href="#">Nuevo</a></li>
-						<li><a href="#">Buscar</a></li>
-						<li><a href="#">Perfil</a></li>
+						<li><a href="{{path('create_dream')}}"><span class="icon-feather"></span>&nbsp;Nuevo</a></li>
+						<li><a href="{{path('homepage')}}"><span class="icon-search"></span>&nbsp;Buscar</a></li>
+						<li><a href="{{path('registro')}}"><span class="icon-user2"></span>&nbsp;Perfil</a></li>
 					</ul>
 				</li>
 			</ul>
