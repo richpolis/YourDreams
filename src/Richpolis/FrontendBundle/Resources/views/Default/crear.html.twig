@@ -1,8 +1,8 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
-        <div class="login-center">
+    <section class="container">
+        <article class="wrap">
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="flash-notice alert alert-success">
                     {{ flashMessage }}
@@ -29,12 +29,14 @@
                         <input type="file" class="form-control" placeholder="Ingresa imagen o archivo" name="file" required>
                     </div>
 					<div class="form-group form-group-checkbox">
+                        <label class="checkbox-inline">
                         <input type="checkbox" class="form-control"> Compartir tu sueño
+                        </label>
                     </div>
                     <button class="btn btn-lg btn-center" type="submit">Guardar</button>
                 </form>
             </div>       
-        </div>        
-    </div> <!-- /container -->
+        </article>        
+    </section> <!-- /container -->
 
 {% endblock %}

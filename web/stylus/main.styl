@@ -24,12 +24,13 @@ a
 		text-decoration underline
 
 body
-	font-size 16px
-	font-family 'Roboto',Helvetica
 	background url('../images/nubes.jpg')
 	background-repeat no-repeat
 	background-size cover
+	background-attachment fixed
 	color white
+	font-family 'Roboto',Helvetica
+	font-size 16px
 	font-weight bold
 
 
@@ -89,12 +90,13 @@ p
 .container
 	margin 0 auto
 	color white
+	max-width 1024px
 	text-shadow 1px 0px 5px rgba(0, 0, 0, 0.70)
 
 .contenedor-dreams
 	height 400px
-	width auto 
-	overflow hidden
+	width 100% 
+	overflow auto
 
 .lista-dreams
 	list-style none
@@ -142,8 +144,14 @@ p
 
 
 .login-center
-	max-width 400px
+	max-width 390px
 	margin 0 auto
+	padding 0px 5px
+
+.wrap
+	min-width 390px
+	margin 0 auto
+	padding 0px 5px
 
 .form-group
 	background rgba(255,255,255,0.6)
@@ -194,14 +202,25 @@ p
 		background-position -55px -0px 
 		
 .show-dream
-	background rgba(255,255,255,0.2)
+	background rgba(#313131, 0.4)
 	text-align center
-	font-weight bold
+	font-weight normal
 	& p
 	&.share-dream
 		margin 0px
 		padding 10px 0px
 		font-size 20px
+	&.header-dream
+		background none !important
+	& .titulo-dream
+		margin-bottom 5px
+		background transparent
+		text-align left
+	& .fecha-dream
+		margin-top 0px
+		background transparent
+		text-align left
+		font-style italic
 
 #menu-principal
 	& a.icon-menu
@@ -278,3 +297,11 @@ p
 
 :-ms-input-placeholder 
 	color rgba(0,0,0,0.6)
+
+@media screen and (min-width: 768px)
+	.form-signin-heading 
+		text-align left
+	.btn-center
+		margin 0px
+		float right
+
