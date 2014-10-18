@@ -1,0 +1,110 @@
+#menuPrincipal 
+	position absolute
+	top 8px
+	right 10px
+
+
+#menuPrincipal > ul
+	margin-top  0px
+	margin-bottom 0px
+	z-index 1000
+
+
+#menuPrincipal > ul > li 
+	list-style none
+	display inline-block
+	line-height 1
+	margin 1px
+	border-radius 3px
+	position relative
+	z-index 1001
+
+
+#menuPrincipal > ul > li > a
+	color:inherit
+	text-decoration:none !important
+	font-size:24px
+	padding 5px
+
+
+#menuPrincipal li ul
+	position absolute
+	list-style none
+	text-align center
+	width 180px
+	right -5px
+	top 15px
+	font bold 12px 'Open Sans Condensed', sans-serif
+	
+	/* This is important for the show/hide CSS animation */
+	max-height 0px
+	overflow hidden
+	
+	-webkit-transition max-height 0.4s linear
+	-moz-transition max-height 0.4s linear
+	transition max-height 0.4s linear
+
+
+#menuPrincipal li ul li
+	background-color rgba(255,255,255, 0.8)
+	border-bottom 1px inset rgba(0,0,0,0.4)
+
+
+#menuPrincipal li ul li a
+	padding:12px 10px 12px 20px
+	color:#000000
+	text-decoration none !important
+	display block
+	text-align left
+
+
+
+#menuPrincipal li ul li:nth-child(odd) 
+	background-color rgba(255,255,255, 0.8)
+	-webkit-transition background-color 0.5s linear
+	-moz-transition background-color 0.5s linear
+	transition background-color 0.5s linear
+
+
+#menuPrincipal li ul li:hover
+	background-color rgba(255,255,255, 1)
+
+
+#menuPrincipal li ul li:hover a
+	color #53bfe2
+
+
+
+#menuPrincipal li ul li:first-child
+	border-radius 3px 3px 0 0
+	margin-top 25px
+	position relative
+
+
+#menuPrincipal li ul li:first-child:before /* the pointer tip */
+	content ''
+	position absolute
+	width 1px
+	height 1px
+	border 5px solid transparent
+	border-bottom-color #fff
+	right 15px
+	top -10px
+
+
+#menuPrincipal li ul li:last-child
+	border-bottom-left-radius 3px
+	border-bottom-right-radius 3px
+
+
+/* This will trigger the CSS */
+/* transition animation on hover */
+
+#menuPrincipal li:hover ul
+	max-height 200px /* Increase when adding more dropdown items */
+
+
+#menuPrincipal li.white
+	font-weight normal
+
+
