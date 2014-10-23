@@ -39,6 +39,15 @@ security:
             check_path: login_check
             remember_me: true
             use_referer: false
+        oauth:
+            resource_owners:
+                facebook:    "/login/check-facebook"
+                twitter:     "/login/check-twitter"
+            login_path:     /login
+            failure_path:   /login 
+            oauth_user_provider:
+               #servicio para logear al usuario.
+                service: my_user_provider
         logout:
             path: logout
             target: login
@@ -52,6 +61,7 @@ security:
         anonymous: true
 
     access_control:
+        - { path: ^/s, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: [ROLE_ADMIN] }
         - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }

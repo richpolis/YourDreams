@@ -14,23 +14,28 @@
                 </div>
             {% endfor %}
             <div class="formulario"> 
-                <form class="form-crear" role="form" action="{{ path('create_dream') }}" method="post">
-                    <h1 class="form-signin-heading">Nuevo sueño</h1>
+                <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id}) }}" method="post">
+                    <h1 class="form-signin-heading">{{titulo}}</h1>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nombre de tu sueño" name="titulo" value="" required autofocus>
+             			{{ form_errors(form.titulo)	}}
+                		{{ form_widget(form.titulo,{'attr':{'class':'form-control'}})	}}
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Lugar del sueño" name="lugar" required>
+             			{{ form_errors(form.lugar)	}}
+                		{{ form_widget(form.lugaar,{'attr':{'class':'form-control'}})	}}
                     </div>
 					<div class="form-group">
-                        <input type="text" class="form-control" placeholder="Describe tu sueño" name="dream" required>
+             			{{ form_errors(form.dream)	}}
+                		{{ form_widget(form.dream,{'attr':{'class':'form-control'}})	}}
                     </div>
 					<div class="form-group">
-                        <input type="file" class="form-control" placeholder="Ingresa imagen o archivo" name="file" required>
+             			{{ form_errors(form.file)	}}
+                		{{ form_widget(form.file,{'attr':{'class':'form-control'}})	}}
                     </div>
 					<div class="form-group form-group-checkbox">
                         <label class="checkbox-inline">
-                        <input type="checkbox" class="form-control"> Compartir tu sueño
+                        {{ form_errors(form.compartir)	}}
+                		{{ form_widget(form.compartir,{'attr':{'class':'form-control'}})	}} Compartir tu sueño
                         </label>
                     </div>
                     <button class="btn btn-lg btn-center" type="submit">Guardar</button>

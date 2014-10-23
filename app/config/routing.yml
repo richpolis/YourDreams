@@ -23,5 +23,19 @@ galerias:
     type:     annotation
     prefix:   /
 
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /connect
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix: /login
+    
+facebook_login:
+    pattern: /login/check-facebook
+
+twitter_login:
+    pattern: /login/check-twitter
+
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"

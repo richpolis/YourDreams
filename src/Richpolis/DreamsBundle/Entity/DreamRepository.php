@@ -15,7 +15,7 @@ class DreamRepository extends EntityRepository
 {
     
     
-    public function queryFindDreams($buscar = "",$usuario=null)
+    public function queryFindDreams($buscar = "",$usuario=null,$operador="=")
     {
         $em = $this->getEntityManager();
         if(strlen($buscar)==0){
@@ -26,7 +26,7 @@ class DreamRepository extends EntityRepository
             }else{
                 $consulta = $em->createQuery("SELECT h "
                     . "FROM DreamsBundle:Dream h "
-                    . "WHERE h.usuario=:usuario "    
+                    . "WHERE h.usuario$operador:usuario "    
                     . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
                     'usuario' => $usuario->getId()
@@ -47,7 +47,7 @@ class DreamRepository extends EntityRepository
                 $consulta = $em->createQuery("SELECT h "
                     . "FROM DreamsBundle:Dream h "   
                     . "WHERE h.titulo LIKE :dream  "
-                    . "AND h.usuario=:usuario AND (h.titulo LIKE :titulo OR h.lugar LIKE :lugar OR h.dream LIKE :dream) "    
+                    . "AND h.usuario$operador:usuario AND (h.titulo LIKE :titulo OR h.lugar LIKE :lugar OR h.dream LIKE :dream) "    
                     . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
                     'usuario' => $usuario->getId(),
@@ -60,54 +60,8 @@ class DreamRepository extends EntityRepository
         return $consulta;
     }
     
-    public function findDreams($buscar = "",$usuario=null){
-        return $this->queryFindDreams($buscar,$usuario)->getResult();
+    public function findDreams($buscar = "", $usuario=null, $operador="="){
+        return $this->queryFindDreams($buscar,$usuario,$operador)->getResult();
     }
     
-    public function getCountDreamsEnYears($year, Usuario $usuario)
-    {
-        $em = $this->getEntityManager();
-        $emConfig = $em->getConfiguration();
-        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
-        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
-        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
-            $consulta = $em->createQuery(
-                "SELECT a.imagen as imagen, MONTH(h.fecha) as mes "
-                . "FROM DreamsBundle:Dream h "
-                . "JOIN h.usuario u "
-                . "JOIN h.hijo a "    
-                . "WHERE YEAR(h.fecha) =:year "
-                . "AND u.id=:usuario "    
-                . "ORDER BY mes ASC");
-            $consulta->setParameters(array(
-                'year'      =>  $year,
-                'usuario'   =>  $usuario->getId(),
-            ));
-        return $consulta->getResult();
-    }
-    
-    public function getDreamsDelMes($year,$mes, Usuario $usuario)
-    {
-        $em = $this->getEntityManager();
-        $emConfig = $em->getConfiguration();
-        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
-        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
-        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
-            $consulta = $em->createQuery(
-                "SELECT h, c, u, uh "
-                . "FROM DreamsBundle:Dream h "
-                . "JOIN h.componentes c "
-                . "JOIN h.usuario u "
-                . "JOIN u.hijos uh "
-                . "WHERE YEAR(h.fecha) =:year "
-                . "AND MONTH(h.fecha)=:mes "
-                . "AND u.id=:usuario "    
-                . "ORDER BY h.fecha ASC");
-            $consulta->setParameters(array(
-                'year'  =>  $year,
-                'mes'   =>  $mes,
-                'usuario'   =>  $usuario->getId(),
-            ));
-        return $consulta->getResult();
-    }
 }

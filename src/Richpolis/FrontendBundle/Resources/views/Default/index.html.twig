@@ -6,12 +6,12 @@
 			<h2>Mis sueños</h2>
             <div class="contenedor-dreams"> 
                 <ul class="lista-dreams">
-					{% for cont in range(1,10) %}
+					{% for dream in dreams %}
 					<li class="item-dream">
-						<a href="{{path('show_dream',{'id': cont })}}">
+						<a href="{{path('show_dream',{'id': dream.id })}}">
 							<div class="dream">
-								<h3 class="titulo-dream">Sueño {{cont}}</h3>
-								<span class="fecha-dream">Creado: {{'now'|date('d M Y')}}</span>
+								<h3 class="titulo-dream">{{dream.titulo}}</h3>
+								<span class="fecha-dream">{{ dream.createdAt|date('d M Y') }}</span>
 							</div>
 						</a>
 					</li>
