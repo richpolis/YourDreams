@@ -333,4 +333,39 @@ class Dream
     {
         return $this->galerias;
     }
+    
+    /*** uploads ***/
+    
+    /**
+     * @Assert\File(maxSize="2M",maxSizeMessage="El archivo es demasiado grande. El tamaño máximo permitido es {{ limit }}")
+     */
+    public $file;
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->imagen)) {
+            // store the old name to delete after the update
+            $this->temp = $this->imagen;
+            $this->imagen = null;
+        } else {
+            $this->imagen = 'initial';
+        }
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
 }

@@ -1,6 +1,11 @@
 parameters:
     my_user_provider.class: Richpolis\UsuariosBundle\Security\Core\User\UserProvider
     my_user.class: Richpolis\UsuariosBundle\Entity\Usuario
+    facebook_app_id: 7763353070403839
+    facebook_app_secret: 7fcb999c0b2838a43b78e5957dcfb985a
+    twitter_app_id: 7oCDfF9DWJeSwHKdZEDciLKAWy
+    twitter_app_secret: 79OOStXmCjelx63WvOUNMTsbOAzYI0azr3122ql1po7cGNHWImH
+    
     
 services:
     my_user_provider:

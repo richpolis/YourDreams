@@ -1,33 +1,37 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-<link href="{{asset('css/main.css')}}" rel="stylesheet">
+    <link href="{{asset('css/main.css')}}" rel="stylesheet">
 {% endblock %}
+
+{% set route = app.request.get('_route') %}
 
 {% block body %}
     {% if app.user is not null %}
-		<header class="encabezado">
-		    <div class="flechita">
-				<a href="{{path('homepage')}}">
-					<span class="icon-arrow-left"></span>
-				</a>
-			</div>
-			<h1>YourDreams</h1>
-		</header>
-		<nav id="menuPrincipal">
-			<ul>
-				<li class="white">
-					<a href="#" class="icon-menu"></a>
-					<ul>
-						<li><a href="{{path('create_dream')}}"><span class="icon-feather"></span>&nbsp;Nuevo</a></li>
-						<li><a href="{{path('find_dream')}}"><span class="icon-search"></span>&nbsp;Buscar</a></li>
-						<li><a href="{{path('registro')}}"><span class="icon-user"></span>&nbsp;Perfil</a></li>
-						<li><a href="{{path('logout')}}"><span class="icon-logout"></span>&nbsp;Salir</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+        <header class="encabezado">
+            {% if route != 'homepage' %}
+            <div class="flechita">
+                <a href="{{path('homepage')}}">
+                    <span class="icon-arrow-left"></span>
+                </a>
+            </div>
+            {% endif %}        
+            <h1>YourDreams</h1>
+        </header>
+        <nav id="menuPrincipal">
+            <ul>
+                <li class="white">
+                    <a href="#" class="icon-menu"></a>
+                    <ul>
+                        <li><a href="{{path('create_dream')}}"><span class="icon-feather"></span>&nbsp;Nuevo</a></li>
+                        <li><a href="{{path('find_dream')}}"><span class="icon-search"></span>&nbsp;Buscar</a></li>
+                        <li><a href="{{path('editar_usuario')}}"><span class="icon-user"></span>&nbsp;Perfil</a></li>
+                        <li><a href="{{path('logout')}}"><span class="icon-logout"></span>&nbsp;Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     {% endif %}
-    {% block content %}{% endblock %}
-    
+{% block content %}{% endblock %}
+
 {% endblock %}    

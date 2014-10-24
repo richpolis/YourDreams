@@ -3,22 +3,62 @@
 {% block content %}
     <section class="container row">
         <article class="wrap">
-			<header class="show-dream header-dream">
-				<hgroup>
-					<h2 class="titulo-dream">Sueño numero {{entity}}</h2>
-					<h4 class="fecha-dream">Creado el: {{'now' | date('d/m/Y')}} a las {{'now' | date('h')}}</h4>
-				</hgroup>
-			</header>
-			<div class="show-dream description-dream">
-				<p>Descripcion del sueño numero {{entity}}</p>
-			</div>
-			<div class="show-dream file-dream">
-				<img src="https://s3.amazonaws.com/media.jetstrap.com/fHMBWChrSHOKaZ4C9Jdm_icon.png">
-			</div>
-			<div class="show-dream share-dream">
-				<span class="icon-checkmark"></span> Compartir mi sueño
-			</div>
+            <header class="show-dream header-dream">
+                <hgroup>
+                    <h2 class="titulo-dream">{{dream.titulo}}</h2>
+                    <h4 class="fecha-dream">Creado el: {{ dream.createdAt | date('d/m/Y')}} a las {{dream.createdAt | date('h')}}</h4>
+                </hgroup>
+            </header>
+            <div class="show-dream description-dream">
+                <p>{{dream.dream}}</p>
+            </div>
+            <div class="show-dream file-dream">
+                <img src="https://s3.amazonaws.com/media.jetstrap.com/fHMBWChrSHOKaZ4C9Jdm_icon.png">
+            </div>
+            <div class="show-dream share-dream">
+                {% if dream.compartir == true %}
+                <span class="icon-checkmark"></span> Compartir mi sueño
+                {% else %}
+                &nbsp; Compartir mi sueño
+                {% endif %}    
+            </div>
+            <button class="btn btn-lg" id="editDream">Editar</button>
+            <button class="btn btn-lg" id="deleteDream">Eliminar</button>
         </article>        
     </section> <!-- /container -->
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).on("ready",function(){
+            
+            $("#deleteDream").on("click",function(){
+                if(confirm("Quiere eliminar este sueño?")){
+                    $.ajax({
+                        url: '{{ path('delete_dream',{'id':dream.id}) }}',
+                        type: 'DELETE',
+                        dataType: 'json',
+                    }).done(function(data, textStatus,jqXHR){
+                        debugger;
+                        data = JSON.parse(data);
+                        if(data.accion == 'ok'){
+                            alert('El sueño fue eliminado');
+                            location.href='{{path('homepage')}}';
+                        }else{
+                            alert('Error al eliminar');
+                        }
+                    }).fail(function(data){
+                        console.log(data);
+                    });
+                }
+            });
+            
+            $("#editDream").on("click",function(){
+                location.href='{{path('update_dream',{'id': dream.id})}}';
+            });
+        });
+        
+    </script>
+{% endblock %}    

@@ -17,21 +17,38 @@ use Richpolis\DreamsBundle\Entity\Dream;
 
 class DefaultController extends Controller
 {
-	
+
+    /**
+     * @Route("/s/{clave}",name="share_dream",requirements={"clave": "\d+"})
+     * @Template("FrontendBundle:Default:mostrar.html.twig")
+     * @Method({"GET"})
+     */
+    public function shareDreamAction(Request $request, $clave) {
+        $em = $this->getDoctrine()->getManager();
+        $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
+                array('id' => $clave)
+        );
+
+        if (null == $dream) {
+            return $this->redirect('homepage');
+        }
+
+        return array('dream' => $dream);
+    }
+    
     /**
      * @Route("/",name="homepage")
      * @Template()
      */
-    public function indexAction(Request $request)
-    {
-		$em = $this->getDoctrine()->getManager();
-		$dreams = $this->getRepository('DreamsBundle:Dream')->findBy(
-			array('usuario'=>$this->getUser()),array('createdAt'=>'DESC'),
-		);
-		
+    public function indexAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $dreams = $em->getRepository('DreamsBundle:Dream')->findBy(
+            array('usuario' => $this->getUser()), array('createdAt' => 'DESC')
+        );
+
         return array(
-			'dreams'=>$dreams,
-		);
+            'dreams' => $dreams,
+        );
     }
 
     /**
@@ -105,31 +122,30 @@ class DefaultController extends Controller
         );
     }
 	
-	/**
-     * @Route("/mostrar/{id}",name="show_dream")
-     * @Template()
+    /**
+     * @Route("/mostrar/{id}",name="show_dream",requirements={"id": "\d+"})
+     * @Template("FrontendBundle:Default:mostrar.html.twig")
+     * @Method({"GET"})
      */
-    public function mostrarAction(Request $request,$id)
-    {
-		$em = $this->getDoctrine()->getManager();
-		$dream = $this->getRepository('DreamsBundle:Dream')->findOneBy(
-			array('usuario'=>$this->getUser(),'id'=>$id),
-		);
-		
-		if(null == $dream){
-			return $this->redirect('homepage');
-		}
-		
-		return array('dream'=>$dream);
-		
+    public function showDreamAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
+                array('usuario' => $this->getUser(), 'id' => $id)
+        );
+
+        if (null == $dream) {
+            return $this->redirect('homepage');
+        }
+
+        return array('dream' => $dream);
     }
-	
-	/**
+
+    /**
      * @Route("/dream",name="create_dream")
      * @Method({"GET","POST"})
-     * @Template()
+     * @Template("FrontendBundle:Default:crear.html.twig")
      */
-    public function crearAction(Request $request)
+    public function createDreamAction(Request $request)
     {
         $dream = new Dream();
         $form = $this->createForm( new DreamFrontendType(), $dream);
@@ -139,6 +155,7 @@ class DefaultController extends Controller
             $form->handleRequest($request);
             if($form->isValid()){
                 $em = $this->getDoctrine()->getManager();
+                $dream->setUsuario($this->getUser());
                 $em->persist($dream);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
@@ -152,87 +169,88 @@ class DefaultController extends Controller
         return array(
             'form'      =>  $form->createView(),
             'titulo'    => 'Nuevo sueño',
-            'usuario'   => $dream,
+            'dream'   => $dream,
             'isNew'     =>  true,
         );
     }
 	
-	/**
-     * @Route("/dream/{id}",name="update_dream")
+    /**
+     * @Route("/dream/{id}",name="update_dream",requirements={"id": "\d+"})
      * @Template("FrontendBundle:Default:crear.html.twig")
      * @Method({"GET","POST","PUT"})
      */
-    public function editarAction(Request $request,$id)
+    public function updateDreamAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
         $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
-			array('usuario'=>$this->getUser(),'id'=>$id)
-		);
-		if(null == $dream){
-			return $this->redirect($this->generateUrl('homepage'));
-		}
-		$form = $this->createForm( new UsuarioFrontendType(), $dream);
+                array('usuario' => $this->getUser(), 'id' => $id)
+        );
+        if (null == $dream) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+        $form = $this->createForm(new DreamFrontendType(), $dream);
         $isNew = false;
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if($form->isValid()){
+            if ($form->isValid()) {
                 $em->flush();
             }
         }
-        
+
         return array(
-            'form'      =>  $form->createView(),
-            'dream'   	=>  $dream,
-            'titulo'    => 'Editar sueño',
-            'isNew'     =>  $isNew,
+            'form' => $form->createView(),
+            'dream' => $dream,
+            'titulo' => 'Editar sueño',
+            'isNew' => $isNew,
         );
     }
     
     /**
-     * @Route("/dream/{id}",name="delete_dream")
+     * @Route("/dream/{id}",name="delete_dream",requirements={"id": "\d+"})
      * @Method({"DELETE"})
      */
-    public function eliminarHistoriaAction(Request $request, $id)
+    public function deleteDreamAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
-			array('usuario'=>$this->getUser(),'id'=>$id)
-		);
-		if(null == $dream){
-            return new JsonResponse(json_encode(array('accion'=>'bat','mensaje'=>'El registro no existe')));
+                array('usuario' => $this->getUser(), 'id' => $id)
+        );
+        if (null == $dream) {
+            return new JsonResponse(json_encode(array('accion' => 'bat', 'mensaje' => 'El registro no existe')));
         }
-        
-        foreach($dream->getGalerias() as $galeria){
+
+        foreach ($dream->getGalerias() as $galeria) {
             $dream->removeGaleria($galeria);
-			$em->remove($galeria);
+            $em->remove($galeria);
             $em->flush();
         }
-		
+
         $em->remove($dream);
         $em->flush();
-        
-        return new JsonResponse(json_encode(array('accion'=>'ok','mensaje'=>'El registro fue eliminado')));
+
+        return new JsonResponse(json_encode(array('accion' => 'ok', 'mensaje' => 'El registro fue eliminado')));
     }
 
     /**
      * @Route("/buscar",name="find_dream")
-     * @Template()
+     * @Template("FrontendBundle:Default:buscar.html.twig")
+     * @Method({"GET","POST"})
      */
     public function buscarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
-		$buscar = $request->query->get('q','%');
+	$buscar = $request->query->get('q','%');
 		
         $dreams = $em->getRepository('DreamsBundle:Dream')
-                        ->findDreams($buscar,$this->getUser(),"<>");
+                     ->findBy(array('compartir'=>true));
       	       
         return array(
             'dreams'    =>  $dreams,
         );
     }
 	
-	private function setSecurePassword(&$entity) {
+    private function setSecurePassword(&$entity) {
         $encoder = $this->get('security.encoder_factory')->getEncoder($entity);
         $passwordCodificado = $encoder->encodePassword(
                     $entity->getPassword(),

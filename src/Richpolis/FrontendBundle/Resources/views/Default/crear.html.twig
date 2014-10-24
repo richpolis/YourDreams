@@ -13,31 +13,35 @@
                     {{ flashMessage }}
                 </div>
             {% endfor %}
+            <p>
+                {{ form_errors(form) }}
+            </p>
             <div class="formulario"> 
-                <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id}) }}" method="post">
+                <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id})) }}" method="post">
                     <h1 class="form-signin-heading">{{titulo}}</h1>
                     <div class="form-group">
-             			{{ form_errors(form.titulo)	}}
-                		{{ form_widget(form.titulo,{'attr':{'class':'form-control'}})	}}
+                        {{ form_errors(form.titulo)	}}
+                        {{ form_widget(form.titulo,{'attr':{'class':'form-control','placeholder':'titulo'}})	}}
                     </div>
                     <div class="form-group">
-             			{{ form_errors(form.lugar)	}}
-                		{{ form_widget(form.lugaar,{'attr':{'class':'form-control'}})	}}
+                        {{ form_errors(form.lugar)	}}
+                        {{ form_widget(form.lugar,{'attr':{'class':'form-control','placeholder':'lugar'}})	}}
                     </div>
-					<div class="form-group">
-             			{{ form_errors(form.dream)	}}
-                		{{ form_widget(form.dream,{'attr':{'class':'form-control'}})	}}
+                    <div class="form-group">
+                        {{ form_errors(form.dream)	}}
+                        {{ form_widget(form.dream,{'attr':{'class':'form-control','placeholder':'Descripcion del sueño'}})	}}
                     </div>
-					<div class="form-group">
-             			{{ form_errors(form.file)	}}
-                		{{ form_widget(form.file,{'attr':{'class':'form-control'}})	}}
+                    <div class="form-group">
+                        {{ form_errors(form.file)	}}
+                        {{ form_widget(form.file,{'attr':{'class':'form-control','placeholder':'archivo(s)'}})	}}
                     </div>
-					<div class="form-group form-group-checkbox">
+                    <div class="form-group form-group-checkbox">
                         <label class="checkbox-inline">
-                        {{ form_errors(form.compartir)	}}
-                		{{ form_widget(form.compartir,{'attr':{'class':'form-control'}})	}} Compartir tu sueño
+                            {{ form_errors(form.compartir)	}}
+                            {{ form_widget(form.compartir,{'attr':{'class':'form-control'}})	}} Compartir tu sueño
                         </label>
                     </div>
+                    {{form_rest(form)}}
                     <button class="btn btn-lg btn-center" type="submit">Guardar</button>
                 </form>
             </div>       

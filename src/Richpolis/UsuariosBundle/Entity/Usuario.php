@@ -821,12 +821,12 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDreams()
-    {
+    public function getDreams() {
         return $this->dreams;
     }
-	
-	public function getNombreCompleto(){
-		return $this->nombre . " " . $this->apellido;
-	}
+
+    public function getNombreCompleto() {
+        return $this->nombre . " " . $this->apellido;
+    }
+
 }

@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
             new Richpolis\UsuariosBundle\UsuariosBundle(),
             new Richpolis\DreamsBundle\DreamsBundle(),

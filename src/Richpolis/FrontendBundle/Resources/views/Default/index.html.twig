@@ -3,20 +3,41 @@
 {% block content %}
     <section class="container row">
         <article class="wrap">
-			<h2>Mis sueños</h2>
+            <h2>Mis sueños</h2>
+            
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="flash-notice alert alert-danger">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            
             <div class="contenedor-dreams"> 
                 <ul class="lista-dreams">
-					{% for dream in dreams %}
-					<li class="item-dream">
-						<a href="{{path('show_dream',{'id': dream.id })}}">
-							<div class="dream">
-								<h3 class="titulo-dream">{{dream.titulo}}</h3>
-								<span class="fecha-dream">{{ dream.createdAt|date('d M Y') }}</span>
-							</div>
-						</a>
-					</li>
-					{% endfor %}
-				</ul>
+                    {% for dream in dreams %}
+                        <li class="item-dream">
+                            <a href="{{path('show_dream',{'id': dream.id })}}">
+                                <div class="dream">
+                                    <h3 class="titulo-dream">{{dream.titulo}}</h3>
+                                    <span class="fecha-dream">{{ dream.createdAt|date('d M Y') }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="item-dream">
+                            <a href="{{path('create_dream')}}">
+                                <div class="dream">
+                                    <h3 class="titulo-dream">Bienvenido, empieza por crear tus sueños</h3>
+                                    <span class="fecha-dream">{{ 'now'|date('d M Y') }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </article>        
     </section> <!-- /container -->

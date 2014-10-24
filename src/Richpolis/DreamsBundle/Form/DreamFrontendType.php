@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Richpolis\DreamsBundle\Form\ComponenteType;
 use Richpolis\DreamsBundle\Entity\Componente;
 
-class DreamType extends AbstractType
+class DreamFrontendType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -21,7 +21,7 @@ class DreamType extends AbstractType
             ->add('dream',null,array('label'=>'Descripción'))
             ->add('lugar','text',array('required'=>false))
             ->add('compartir')
-			->add('file',array('label'=>'Archivos'))
+	    ->add('file','file',array('label'=>'Archivos','required'=>false))
             ->add('usuario','hidden')
         ;
 
