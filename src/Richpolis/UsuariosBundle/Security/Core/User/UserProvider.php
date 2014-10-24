@@ -61,6 +61,8 @@ class UserProvider extends BaseClass
             //$user->setUsername($username);
             $user->setEmail($username);
             $user->setPassword($username);
+            $user->setNombre($username);
+            $user->setApellido($username);
             $user->setIsActive(true);
 			$user->setGrupo(Usuario::GRUPO_USUARIOS);
             $this->em->persist($user);
