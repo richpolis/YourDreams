@@ -245,7 +245,9 @@ class Comentario
     {
         $this->parent = $parent;
         
-        $this->setNivel($parent->getNivel()+1);
+        if(($parent instanceof Comentario) && (null!==$parent)){
+            $this->setNivel($parent->getNivel()+1);
+        }    
 
         return $this;
     }

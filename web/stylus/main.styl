@@ -76,6 +76,7 @@ p
 	padding  10px 20px 10px 20px
 	text-decoration  none
 	border none
+	color white
 	&:hover
 		background  #1d95e0
 		background-image  linear-gradient(to bottom, #1d95e0, #246c9c)
@@ -154,6 +155,8 @@ p
 		vertical-align top 
 		list-style none
 
+
+
 			
 .lista-dreams
 	list-style none
@@ -231,6 +234,36 @@ p
 		background transparent
 		text-align left
 		font-style italic
+	&.comentario-dream
+		text-align left
+		& .comentario
+			padding 16px
+			position relative
+			& .titulo-comentario
+				margin 0px 0px 5px
+				font-weight bold
+				font-size 18px
+			& .fecha-comentario
+				font-size 14px
+				font-style italic
+				display block
+				text-align right
+				color black
+				font-weight bold
+			& .acciones-comentario
+				display block
+				text-align right
+				margin-bottom 5px
+				& a
+					color white
+					font-weight bold
+	&.footer-dream
+		background rgba(255,255,255,0.6) !important
+		border-radius 0px 0px 10px 10px
+		height 50px
+		& .btn 
+			position relative
+			top 15px
 
 #menu-principal
 	& a.icon-menu
@@ -280,7 +313,16 @@ p
 	max-width 500px
 	margin 20px auto
 
+/* 
+	modalForm
 
+*/
+
+.modalForm
+	color black
+	& #titulo-form-comentario
+		margin-top 0px
+	
 
 /*
     Login
@@ -305,6 +347,33 @@ p
 .form-signin .form-controlfocus 
 	z-index 2
 
+/* overlay at start */
+.mfp-fade.mfp-bg 
+	opacity 0
+	transition all 0.15s ease-out
+
+/* overlay animate in */
+.mfp-fade.mfp-bg.mfp-ready 
+	opacity 0.8
+
+/* overlay animate out */
+.mfp-fade.mfp-bg.mfp-removing 
+	opacity 0
+
+/* content at start */
+.mfp-fade.mfp-wrap .mfp-content 
+	opacity 0
+	transition all 0.15s ease-out
+
+/* content animate it */
+.mfp-fade.mfp-wrap.mfp-ready .mfp-content 
+	opacity 1
+
+/* content animate out */
+.mfp-fade.mfp-wrap.mfp-removing .mfp-content 
+	opacity 0
+   
+
 ::-webkit-input-placeholder
 	color rgba(0,0,0,0.6)
 
@@ -317,7 +386,7 @@ p
 :-ms-input-placeholder 
 	color rgba(0,0,0,0.6)
 
-@media screen and (min-width: 768px)
+@media screen and (min-width 768px)
 	.wrap
 		.form-signin-heading 
 			text-align left

@@ -54,7 +54,7 @@ class ComentarioType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'richpolis_comentariosbundle_comentario';
+        return '';
     }
 
 }

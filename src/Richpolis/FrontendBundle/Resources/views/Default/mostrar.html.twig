@@ -3,41 +3,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{asset('css/magnific-popup.css')}}" rel="stylesheet">
-    <style>
-        /* overlay at start */
-    .mfp-fade.mfp-bg {
-      opacity: 0;
-
-      -webkit-transition: all 0.15s ease-out;
-      -moz-transition: all 0.15s ease-out;
-      transition: all 0.15s ease-out;
-    }
-    /* overlay animate in */
-    .mfp-fade.mfp-bg.mfp-ready {
-      opacity: 0.8;
-    }
-    /* overlay animate out */
-    .mfp-fade.mfp-bg.mfp-removing {
-      opacity: 0;
-    }
-
-    /* content at start */
-    .mfp-fade.mfp-wrap .mfp-content {
-      opacity: 0;
-
-      -webkit-transition: all 0.15s ease-out;
-      -moz-transition: all 0.15s ease-out;
-      transition: all 0.15s ease-out;
-    }
-    /* content animate it */
-    .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
-      opacity: 1;
-    }
-    /* content animate out */
-    .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
-      opacity: 0;
-    }   
-    </style>
 {% endblock %}
 
 {% block content %}
@@ -66,26 +31,41 @@
                 &nbsp; Compartir mi sueño
                 {% endif %}    
             </div>
+            {% if dream.usuario.id == app.user.id %} 
             <button class="btn btn-lg" id="editDream">Editar</button>
             <button class="btn btn-lg" id="deleteDream">Eliminar</button>
+            {% endif %}
         </article>
+        <br/>        
         <article class="wrap">
+            <header class="show-dream header-dream">
+                <hgroup>
+                    <h2 class="titulo-dream">Mensajes</h2>
+                </hgroup>
+            </header>
             {% for comentario in comentarios if comentario.nivel == 0 %}
             {% include 'FrontendBundle:Default:comentarios.html.twig' with { 'comentario': comentario } %}
             {% endfor %}
-            <div class="acciones-comentario">
-            {% if dream.id == app.user.id %}
-                <a href="#test-popup" class="crearComentario" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
-                    responder
+            <footer class="show-dream footer-dream">
+            {% if dream.usuario.id == app.user.id %}
+                <a href="#modalFormComentario" class="crearComentario btn btn-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
+                    Enviar mensaje
                 </a>
             {% endif %}
-        </div>
+            </footer>
         </article>
     </section> <!-- /container -->
-    <div id="test-popup" class="white-popup mfp-hide">
-        Popup content
-        
-        <a href="#test-popup" onclick="$.magnificPopup.close();">cerrar</a>
+    <div id="modalFormComentario" class="modalForm white-popup mfp-hide">
+        <div class="header-form-comentario">
+            <h2 id="titulo-form-comentario"></h2>
+        </div>
+        <div id="body-form-comentario" class="body-form-comentario">
+            
+        </div>
+        <div class="footer-form-comentario">
+            <a href="#cerrarForm" onclick="$.magnificPopup.close();" class="btn btn-cerrar">Cerrar</a>
+            <a href="#guardarForm" onclick="javascript:guardar()" class="btn btn-guardar">Enviar</a>
+        </div>
     </div>
 {% endblock %}
 
@@ -93,6 +73,7 @@
     {{ parent() }}
     <script src="{{asset('js/jquery.magnific-popup.js')}}"></script>
     <script type="text/javascript">
+        var popupMagnific = null;
         $(document).on("ready",function(){
             
             $("#deleteDream").on("click",function(){
@@ -133,6 +114,13 @@
                 mainClass: 'mfp-fade'
             });
             
+            $(".crearComentario").on("click",function(){
+                mostrarFormulario("Enviar mensaje");
+                var url = $(this).data('url');
+                var parent = $(this).data('parent');
+                getFormulario(url,parent);
+            });
+            
             $('.crearComentario').magnificPopup({
                 type:'inline',
                 modal: true,
@@ -145,7 +133,57 @@
                 mainClass: 'mfp-fade'
             });
             
+            
         });
+        
+        function mostrarFormulario(titulo){
+            $("#titulo-form-comentario").html(titulo);
+            $loader = $("<img>");
+            $loader.attr({'src': '{{asset('images/loader.GIF')}}','id': 'loader'});
+            $loader.css({'maxWidth': '80px'});
+            $("#body-form-comentario").html($loader);
+        }
+        
+        function guardar(){
+            debugger;
+            var $form = $("#body-form-comentario form");
+            var data = $form.serialize();
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+            }).done(function(data, textStatus,jqXHR){
+                debugger;
+                data = JSON.parse(data);
+                if(data.respuesta == 'nuevo'){
+                    $("#body-form-comentario").html(data.form);
+                    $("#body-form-comentario form").attr({'action': data.rutaAction});
+                }else if(data.respuesta == 'creado'){
+                    $.magnificPopup.close();
+                    // reload pagina
+                    location.reload();
+                }
+            }).fail(function(data){
+                console.log(data);
+            });
+        }
+        
+        function getFormulario(url,parent){
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: { 'parent': parent },
+                    dataType: 'json',
+                }).done(function(data, textStatus,jqXHR){
+                    debugger;
+                    data = JSON.parse(data);
+                    if(data.respuesta == 'nuevo'){
+                        $("#body-form-comentario").html(data.form);
+                        $("#body-form-comentario form").attr({'action': data.rutaAction});
+                    }
+                });
+        }
         
     </script>
 {% endblock %}    
