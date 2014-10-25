@@ -17,7 +17,7 @@
                 {{ form_errors(form) }}
             </p>
             <div class="formulario"> 
-                <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id})) }}" method="post">
+                <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id})) }}" method="post" {{ form_enctype(form) }}>
                     <h1 class="form-signin-heading">{{titulo}}</h1>
                     <div class="form-group">
                         {{ form_errors(form.titulo)	}}
@@ -31,6 +31,17 @@
                         {{ form_errors(form.dream)	}}
                         {{ form_widget(form.dream,{'attr':{'class':'form-control','placeholder':'Descripcion del sueño'}})	}}
                     </div>
+                    {% if isNew == false %}
+                    <div class="form-group">
+                        <ul class="dream-archivos">
+                        {% for galeria in dream.galerias %}
+                            <li class="dream-archivo">
+                            {{ galeria.archivoView(200,200) | raw }}
+                            </li>
+                        {% endfor %}    
+                        </ul>
+                    </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form_errors(form.file)	}}
                         {{ form_widget(form.file,{'attr':{'class':'form-control','placeholder':'archivo(s)'}})	}}

@@ -44,10 +44,10 @@ h2
 	font-size 29px
 
 
-input[type="email"]
-input[type="password"] 
-input[type="text"]
-input[type="file"]
+input[type="email"],
+input[type="password"], 
+input[type="text"],
+input[type="file"],
 textarea
 	margin-bottom .4em
 	width 100%
@@ -100,36 +100,6 @@ p
 	width 100% 
 	overflow auto
 
-.lista-dreams
-	list-style none
-	padding-left 0px
-	& .item-dream
-		background rgba(#313131,0.4)
-		min-height 87px
-		margin 5px
-		text-shadow none
-		padding 10px
-		box-sizing border-box
-		& a
-			color white
-			text-decoration none
-			&:hover 
-				color white
-				text-decoration none
-		& .titulo-dream
-			font-size 22px
-			font-weight bold
-			margin 0px 0px 5px 
-			line-height 25px
-			font-family 'Roboto'
-		& .fecha-dream
-			font-size 18px
-			color rgb(31, 17, 17)
-			font-style italic
-			font-family 'Roboto'
-			line-height 21px
-
-
 .encabezado
 	background rgba(#313131, 0.4)
 	position relative
@@ -142,18 +112,6 @@ p
 		line-height 50px
 		font-size 31px
 		font-family 'Helvetica'
-
-
-
-.login-center
-	max-width 390px
-	margin 0 auto
-	padding 0px 5px
-
-.wrap
-	min-width 390px
-	margin 0 auto
-	padding 0px 5px
 
 .form-group
 	background rgba(255,255,255,0.6)
@@ -186,6 +144,56 @@ p
 	color #00c08b
 	text-shadow none
 	font-size 25px
+
+.dream-archivos
+	margin 0px
+	padding 0px
+	text-align center
+	& .dream-archivo
+		display inline-block
+		vertical-align top 
+		list-style none
+
+			
+.lista-dreams
+	list-style none
+	padding-left 0px
+	& .item-dream
+		background rgba(#313131,0.4)
+		min-height 87px
+		margin 5px
+		text-shadow none
+		padding 10px
+		box-sizing border-box
+		& a
+			color white
+			text-decoration none
+			&:hover 
+				color white
+				text-decoration none
+		& .titulo-dream
+			font-size 22px
+			font-weight bold
+			margin 0px 0px 5px 
+			line-height 25px
+			font-family 'Roboto'
+		& .fecha-dream
+			font-size 18px
+			color rgb(31, 17, 17)
+			font-style italic
+			font-family 'Roboto'
+			line-height 21px
+
+
+.login-center
+	max-width 390px
+	margin 0 auto
+	padding 0px 5px
+
+.wrap
+	min-width 390px
+	margin 0 auto
+	padding 0px 5px
 
 .text-center
 	text-align center

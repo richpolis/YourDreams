@@ -502,11 +502,9 @@ class Galeria
     }
     
     public function getWidth(){
-    
         
     }
     public function getHeight(){
-    
         
     }
     

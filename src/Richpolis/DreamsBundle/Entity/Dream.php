@@ -5,6 +5,8 @@ namespace Richpolis\DreamsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Dream
  *
@@ -349,14 +351,6 @@ class Dream
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-        // check if we have an old image path
-        if (isset($this->imagen)) {
-            // store the old name to delete after the update
-            $this->temp = $this->imagen;
-            $this->imagen = null;
-        } else {
-            $this->imagen = 'initial';
-        }
     }
     
     /**

@@ -15,6 +15,8 @@ use Richpolis\UsuariosBundle\Entity\Usuario;
 use Richpolis\DreamsBundle\Form\DreamFrontendType;
 use Richpolis\DreamsBundle\Entity\Dream;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+
 class DefaultController extends Controller
 {
 
@@ -148,14 +150,17 @@ class DefaultController extends Controller
     public function createDreamAction(Request $request)
     {
         $dream = new Dream();
-        $form = $this->createForm( new DreamFrontendType(), $dream);
+        $dream->setUsuario($this->getUser());
+        $form = $this->createForm( new DreamFrontendType(), $dream, array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
         $isNew = true;
         if($request->isMethod('POST')){
             $parametros = $request->request->all();
             $form->handleRequest($request);
             if($form->isValid()){
                 $em = $this->getDoctrine()->getManager();
-                $dream->setUsuario($this->getUser());
+                $this->saveGaleriaDream($dream, $em);
                 $em->persist($dream);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
@@ -188,11 +193,14 @@ class DefaultController extends Controller
         if (null == $dream) {
             return $this->redirect($this->generateUrl('homepage'));
         }
-        $form = $this->createForm(new DreamFrontendType(), $dream);
+        $form = $this->createForm(new DreamFrontendType(), $dream, array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
         $isNew = false;
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                $this->saveGaleriaDream($dream, $em);
                 $em->flush();
             }
         }
@@ -240,11 +248,15 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-	$buscar = $request->query->get('q','%');
-		
-        $dreams = $em->getRepository('DreamsBundle:Dream')
-                     ->findBy(array('compartir'=>true));
-      	       
+	$buscar = $request->get("q","");
+	
+        if(strlen($buscar)>0){
+            $dreams = $em->getRepository('DreamsBundle:Dream')
+                         ->findDreams($buscar,$this->getUser(),"<>");
+        }else{
+            $dreams = array();
+        }
+        
         return array(
             'dreams'    =>  $dreams,
         );
@@ -259,5 +271,20 @@ class DefaultController extends Controller
         $entity->setPassword($passwordCodificado);
     }
     
+    private function saveGaleriaDream(Dream $dream, $em) {
+        //archivo upload
+        $file = $dream->getFile();
+        if (null != $file) {
+            $galeria = new \Richpolis\GaleriasBundle\Entity\Galeria();
+            $galeria->setFile($file);
+            $galeria->setPosition(0);
+            $galeria->setTipoArchivo(RpsStms::getTipoArchivo($file->getClientOriginalName()));
+            $galeria->setTitulo($file->getClientOriginalName());
+
+            $dream->addGaleria($galeria);
+            $em->persist($galeria);
+        }
+    }
+
 }
 

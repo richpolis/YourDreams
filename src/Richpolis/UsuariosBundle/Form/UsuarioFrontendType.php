@@ -9,7 +9,7 @@ use Richpolis\UsuariosBundle\Entity\Usuario;
 
 class UsuarioFrontendType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
