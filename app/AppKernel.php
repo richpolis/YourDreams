@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Richpolis\GaleriasBundle\GaleriasBundle(),
             new Richpolis\FrontendBundle\FrontendBundle(),
             new Richpolis\BackendBundle\BackendBundle(),
+            new Richpolis\ComentariosBundle\ComentariosBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,5 +1,45 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{asset('css/magnific-popup.css')}}" rel="stylesheet">
+    <style>
+        /* overlay at start */
+    .mfp-fade.mfp-bg {
+      opacity: 0;
+
+      -webkit-transition: all 0.15s ease-out;
+      -moz-transition: all 0.15s ease-out;
+      transition: all 0.15s ease-out;
+    }
+    /* overlay animate in */
+    .mfp-fade.mfp-bg.mfp-ready {
+      opacity: 0.8;
+    }
+    /* overlay animate out */
+    .mfp-fade.mfp-bg.mfp-removing {
+      opacity: 0;
+    }
+
+    /* content at start */
+    .mfp-fade.mfp-wrap .mfp-content {
+      opacity: 0;
+
+      -webkit-transition: all 0.15s ease-out;
+      -moz-transition: all 0.15s ease-out;
+      transition: all 0.15s ease-out;
+    }
+    /* content animate it */
+    .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+      opacity: 1;
+    }
+    /* content animate out */
+    .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+      opacity: 0;
+    }   
+    </style>
+{% endblock %}
+
 {% block content %}
     <section class="container row">
         <article class="wrap">
@@ -14,7 +54,9 @@
             </div>
             <div class="show-dream file-dream">
                 {% for galeria in dream.galerias %}
-                    {{ galeria.archivoView | raw }}
+                    <a class="image-link" href="{{galeria.webPath}}">
+                    {{ galeria.archivoView(200,200) | raw }}
+                    </a>
                 {% endfor %}    
             </div>
             <div class="show-dream share-dream">
@@ -26,13 +68,30 @@
             </div>
             <button class="btn btn-lg" id="editDream">Editar</button>
             <button class="btn btn-lg" id="deleteDream">Eliminar</button>
-        </article>        
+        </article>
+        <article class="wrap">
+            {% for comentario in comentarios if comentario.nivel == 0 %}
+            {% include 'FrontendBundle:Default:comentarios.html.twig' with { 'comentario': comentario } %}
+            {% endfor %}
+            <div class="acciones-comentario">
+            {% if dream.id == app.user.id %}
+                <a href="#test-popup" class="crearComentario" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
+                    responder
+                </a>
+            {% endif %}
+        </div>
+        </article>
     </section> <!-- /container -->
-
+    <div id="test-popup" class="white-popup mfp-hide">
+        Popup content
+        
+        <a href="#test-popup" onclick="$.magnificPopup.close();">cerrar</a>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{asset('js/jquery.magnific-popup.js')}}"></script>
     <script type="text/javascript">
         $(document).on("ready",function(){
             
@@ -60,6 +119,32 @@
             $("#editDream").on("click",function(){
                 location.href='{{path('update_dream',{'id': dream.id})}}';
             });
+            
+            $('.image-link').magnificPopup({
+                type: 'image',
+                gallery: {
+                  enabled:true
+                },
+                // Delay in milliseconds before popup is removed
+                removalDelay: 500,
+
+                // Class that is added to popup wrapper and background
+                // make it unique to apply your CSS animations just to this exact popup
+                mainClass: 'mfp-fade'
+            });
+            
+            $('.crearComentario').magnificPopup({
+                type:'inline',
+                modal: true,
+                midClick: true,
+                // Delay in milliseconds before popup is removed
+                removalDelay: 500,
+
+                // Class that is added to popup wrapper and background
+                // make it unique to apply your CSS animations just to this exact popup
+                mainClass: 'mfp-fade'
+            });
+            
         });
         
     </script>

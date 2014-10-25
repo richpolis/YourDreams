@@ -16,17 +16,19 @@ class UserProvider extends BaseClass
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
- 
+        $email = $response->getEmail();
+        $imagen = $response->getProfilePicture();
+        $nombre = $response->getRealName();
         //on connect - get the access token and the user ID
         $service = $response->getResourceOwner()->getName();
- 
+        
         $setter = 'set'.ucfirst($service);
         $setter_id = $setter.'Id';
         $setter_token = $setter.'AccessToken';
  
         //we "disconnect" previously connected users
         
-        if (null !== $previousUser = $this->repository->findOneBy(array($property => $username))) {
+        if (null !== $previousUser = $this->repository->findOneBy(array($this->getProperty($response) => $username))) {
             $previousUser->$setter_id(null);
             $previousUser->$setter_token(null);
             $this->em->flush();
@@ -35,6 +37,10 @@ class UserProvider extends BaseClass
         //we connect current user
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
+        
+        $user->setImagen($imagen);
+        $user->setEmail($email);
+        $user->setNombre($nombre);
  
         $this->em->flush();
     }
@@ -45,7 +51,14 @@ class UserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
-        $user = $this->repository->findOneBy(array($this->getProperty($response) => $username));
+        $email = $response->getEmail();
+        $imagen = $response->getProfilePicture();
+        $nombre = $response->getRealName();
+        if(null !== $email){
+            $user = $this->repository->findOneBy(array('email' => $email));
+        }else{
+            $user = $this->repository->findOneBy(array($this->getProperty($response) => $username));
+        }
         //when the user is registrating
         if (null === $user) {
             $service = $response->getResourceOwner()->getName();
@@ -58,13 +71,13 @@ class UserProvider extends BaseClass
             $user->$setter_token($response->getAccessToken());
             //I have set all requested data with the user's username
             //modify here with relevant data
-            //$user->setUsername($username);
-            $user->setEmail($username);
+            $user->setEmail($email);
             $user->setPassword($username);
-            $user->setNombre($username);
-            $user->setApellido($username);
+            $user->setNombre($nombre);
+            $user->setApellido("");
+            $user->setImagen($imagen);
             $user->setIsActive(true);
-			$user->setGrupo(Usuario::GRUPO_USUARIOS);
+            $user->setGrupo(Usuario::GRUPO_USUARIOS);
             $this->em->persist($user);
             $this->em->flush();
             return $user;
@@ -82,7 +95,7 @@ class UserProvider extends BaseClass
         return $user;
     }
 	
-	/**
+   /**
      * Gets the property for the response.
      *
      * @param UserResponseInterface $response

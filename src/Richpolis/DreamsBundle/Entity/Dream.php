@@ -36,16 +36,24 @@ class Dream
     /**
      * @var string
      *
-     * @ORM\Column(name="dream", type="text",nullable=false)
+     * @ORM\Column(name="dream", type="text", nullable=false)
+     * @Assert\NotBlank(message="Falta la descripción de tu sueño.")
      */
     private $dream;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="lugar", type="string", length=140,nullable=false)
+     * @ORM\Column(name="lugar", type="string", length=140, nullable=false)
      */
     private $lugar;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clave", type="string", length=140 , nullable=true)
+     */
+    private $clave;
     
     /**
      * @var boolean
@@ -361,5 +369,28 @@ class Dream
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set clave
+     *
+     * @param string $clave
+     * @return Dream
+     */
+    public function setClave($clave)
+    {
+        $this->clave = $clave;
+
+        return $this;
+    }
+
+    /**
+     * Get clave
+     *
+     * @return string 
+     */
+    public function getClave()
+    {
+        return $this->clave;
     }
 }

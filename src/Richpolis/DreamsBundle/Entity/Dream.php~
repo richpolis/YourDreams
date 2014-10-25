@@ -5,6 +5,8 @@ namespace Richpolis\DreamsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Dream
  *
@@ -34,16 +36,24 @@ class Dream
     /**
      * @var string
      *
-     * @ORM\Column(name="dream", type="text",nullable=false)
+     * @ORM\Column(name="dream", type="text", nullable=false)
+     * @Assert\NotBlank(message="Falta la descripción de tu sueño.")
      */
     private $dream;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="lugar", type="string", length=140,nullable=false)
+     * @ORM\Column(name="lugar", type="string", length=140, nullable=false)
      */
     private $lugar;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clave", type="string", length=140 , nullable=true)
+     */
+    private $clave;
     
     /**
      * @var boolean
@@ -92,7 +102,7 @@ class Dream
      */
     public function __construct()
     {
-        $this->componentes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galerias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->compartir = true;
     }
     
@@ -302,35 +312,62 @@ class Dream
     }
 
     /**
-     * Add componentes
+     * Add galerias
      *
-     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
      * @return Dream
      */
-    public function addComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    public function addGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
     {
-        $this->componentes[] = $componentes;
+        $this->galerias[] = $galerias;
 
         return $this;
     }
 
     /**
-     * Remove componentes
+     * Remove galerias
      *
-     * @param \Richpolis\DreamsBundle\Entity\Componente $componentes
+     * @param \Richpolis\GaleriasBundle\Entity\Galeria $galerias
      */
-    public function removeComponente(\Richpolis\DreamsBundle\Entity\Componente $componentes)
+    public function removeGaleria(\Richpolis\GaleriasBundle\Entity\Galeria $galerias)
     {
-        $this->componentes->removeElement($componentes);
+        $this->galerias->removeElement($galerias);
     }
 
     /**
-     * Get componentes
+     * Get galerias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComponentes()
+    public function getGalerias()
     {
-        return $this->componentes;
+        return $this->galerias;
+    }
+    
+    /*** uploads ***/
+    
+    /**
+     * @Assert\File(maxSize="2M",maxSizeMessage="El archivo es demasiado grande. El tamaño máximo permitido es {{ limit }}")
+     */
+    public $file;
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

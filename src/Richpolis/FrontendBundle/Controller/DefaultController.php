@@ -15,6 +15,9 @@ use Richpolis\UsuariosBundle\Entity\Usuario;
 use Richpolis\DreamsBundle\Form\DreamFrontendType;
 use Richpolis\DreamsBundle\Entity\Dream;
 
+use Richpolis\ComentariosBundle\Form\ComentarioType;
+use Richpolis\ComentariosBundle\Entity\Comentario;
+
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 class DefaultController extends Controller
@@ -28,11 +31,11 @@ class DefaultController extends Controller
     public function shareDreamAction(Request $request, $clave) {
         $em = $this->getDoctrine()->getManager();
         $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
-                array('id' => $clave)
+                array('clave' => $clave)
         );
 
         if (null == $dream) {
-            return $this->redirect('homepage');
+            return $this->redirect($this->generateUrl('login'));
         }
 
         return array('dream' => $dream);
@@ -138,8 +141,11 @@ class DefaultController extends Controller
         if (null == $dream) {
             return $this->redirect('homepage');
         }
+        
+        $comentarios = $em->getRepository('ComentariosBundle:Comentario')
+                          ->findBy(array('dream'=>$dream));
 
-        return array('dream' => $dream);
+        return compact('dream','comentarios');
     }
 
     /**
@@ -151,17 +157,22 @@ class DefaultController extends Controller
     {
         $dream = new Dream();
         $dream->setUsuario($this->getUser());
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm( new DreamFrontendType(), $dream, array(
-            'em' => $this->getDoctrine()->getManager(),
+            'em' => $em,
         ));
         $isNew = true;
         if($request->isMethod('POST')){
             $parametros = $request->request->all();
             $form->handleRequest($request);
             if($form->isValid()){
-                $em = $this->getDoctrine()->getManager();
+                //salvamos el upload
                 $this->saveGaleriaDream($dream, $em);
+                //creamos el sueño
                 $em->persist($dream);
+                $em->flush();
+                //creamos la clave para compartir
+                $dream->setClave(md5($dream->getId()));
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
                      'notice',
@@ -230,7 +241,14 @@ class DefaultController extends Controller
         foreach ($dream->getGalerias() as $galeria) {
             $dream->removeGaleria($galeria);
             $em->remove($galeria);
-            $em->flush();
+        }
+        
+        $comentarios = $em->getRepository('ComentariosBundle:Comentario')->findBy(
+           array('dream'=>$dream),array('createdAt'=>'DESC')
+        );
+        
+        foreach($comentarios as $comentario){
+            $em->remove($comentario);
         }
 
         $em->remove($dream);
@@ -284,6 +302,53 @@ class DefaultController extends Controller
             $dream->addGaleria($galeria);
             $em->persist($galeria);
         }
+    }
+    
+    /**
+     * @Route("/dream/{id}/mensaje",name="create_dream_mensaje",requirements={"id": "\d+"})
+     * @Method({"GET","POST","PUT"})
+     */
+    public function createDreamMensajeAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dream = $em->getRepository('DreamsBundle:Dream')->find($id);
+        if (null == $dream) {
+            return new JsonResponse(json_encode(array('respuesta' => 'bat', 'mensaje' => 'El registro no existe')));
+        }
+        $comentario = new Comentario();
+        $comentario->setDream($dream);
+        //parent, comentario anterior, si no existe es null.
+        $parent = $em->getRepository('ComentariosBundle:Comentario')
+                         ->find($request->query->get('parent'));
+        $comentario->setParent($parent);
+        $comentario->setUsuario($this->getUser());
+        $form = $this->createForm(new ComentarioType(), $comentario, array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
+        $isNew = true;
+        
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->persist($comentario);
+                $em->flush();
+                $response = new JsonResponse(json_encode(array(
+                    'html'=>$this->renderView('FrontendBundle:Default:comentario.html.twig', array('comentario'=>$comentario)),
+                    'respuesta'=>'creado',
+                )));
+                return $response;
+            }
+        }
+
+        $response = new JsonResponse(json_encode(array(
+            'form' => $this->renderView('FrontendBundle:Default:formComentario.html.twig', array(
+                'rutaAction' => $this->generateUrl('create_dream_mensaje',array('id'=>$dream->getId())),
+                'form'=>$form->createView(),
+                'comentario'=>$comentario,
+             )),
+            'respuesta' => 'nuevo',
+        )));
+        return $response;
     }
 
 }

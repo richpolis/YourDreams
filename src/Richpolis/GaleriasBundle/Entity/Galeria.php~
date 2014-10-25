@@ -419,12 +419,18 @@ class Galeria
         if(file_exists($file)){
             unlink($file);
         }
-      }     
+      }
+      if ($thumbnail = $this->getAbosluteThumbnailPath()) {
+        if(file_exists($thumbnail)){
+            unlink($thumbnail);
+        }
+      }
     }
     
     protected function getUploadDir()
     {
-        return '/uploads/galerias';
+        $adicional = '';
+        return $adicional.'/uploads/galerias';
     }
 
     protected function getUploadRootDir()
@@ -496,11 +502,9 @@ class Galeria
     }
     
     public function getWidth(){
-    
         
     }
     public function getHeight(){
-    
         
     }
     
