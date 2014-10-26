@@ -1,5 +1,28 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% set urlAbsolutaFoto = 'http://'
+                     ~ app.request.server.get('SERVER_NAME')
+                     ~ asset('images/logo.png') %}
+
+{% block redes_sociales %}
+    <meta property="og:url" content="{{ url('share_dream',{ 'clave': dream.clave })}}" />
+    <meta property="og:title" content="Mi sueño es {{dream.titulo}}" />
+    <meta property="og:description" content="{{dream.dream}}." />
+    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="yourdreams.com" />
+    <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@yourdreams">
+    <meta name="twitter:title" content="Mi sueño es {{dream.titulo}}">
+    <meta name="twitter:description" content="{{dream.dream}}.">
+    <meta name="twitter:creator" content="@richpolis">
+    <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
+    <meta name="twitter:domain" content="{{ url('share_dream',{ 'clave': dream.clave })}}">
+{% endblock %}
+
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{asset('css/magnific-popup.css')}}" rel="stylesheet">
@@ -47,7 +70,7 @@
             {% include 'FrontendBundle:Default:comentarios.html.twig' with { 'comentario': comentario } %}
             {% endfor %}
             <footer class="show-dream footer-dream">
-            {% if dream.usuario.id == app.user.id %}
+            {% if dream.usuario.id != app.user.id %}
                 <a href="#modalFormComentario" class="crearComentario btn btn-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
                     Enviar mensaje
                 </a>

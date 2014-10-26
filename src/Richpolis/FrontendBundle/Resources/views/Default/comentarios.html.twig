@@ -1,4 +1,4 @@
-<div class="show-dream comentario-dream comentario-dream-nivel-{{comentario.nivel}}">
+<div class="show-dream comentario-dream comentario-dream-nivel-{{comentario.nivel}}" style="padding-left: {{10*comentario.nivel}}px">
     <div class="comentario">
         <span class="fecha-comentario">{{ dream.createdAt|date('d M Y') }} a las {{ dream.createdAt | date('ha') }}</span>
         <h3 class="titulo-comentario">{{comentario.usuario.nombreCompleto}}</h3>
@@ -6,7 +6,7 @@
             {{ comentario.message }}
         </p>
         <div class="acciones-comentario">
-            {% if comentario.usuario.id == app.user.id %}
+            {% if comentario.usuario.id != app.user.id %}
                 <a href="#modalFormComentario" class="crearComentario" data-url="{{path('create_dream_mensaje',{'id': comentario.dream.id })}}" data-titulo="Responder mensaje" data-parent="{{comentario.id}}">
                     Responder
                 </a>

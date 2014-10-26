@@ -168,6 +168,7 @@ p
 		text-shadow none
 		padding 10px
 		box-sizing border-box
+		position relative
 		& a
 			color white
 			text-decoration none
@@ -186,7 +187,21 @@ p
 			font-style italic
 			font-family 'Roboto'
 			line-height 21px
-
+		& .acciones-dream
+			position absolute
+			bottom 0px
+			right 0px
+			display none
+			opacity 0
+			transition all 0.5s ease-in
+			& > a
+				display inline-block
+				vertical-align top
+				padding 10px 5px 
+		&:hover .acciones-dream
+			display block
+			opacity 1
+			
 
 .login-center
 	max-width 390px
@@ -294,7 +309,6 @@ p
 	& li:hover ul
 		max-height 200px
 
-
 .formulario
 	position relative
 	& .flecha-submit
@@ -303,7 +317,6 @@ p
 		right 10px
 		z-index 1000
 		cursor pointer
-
 
 .white-popup
 	position relative

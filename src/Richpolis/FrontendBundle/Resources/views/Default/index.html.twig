@@ -24,6 +24,19 @@
                                 <div class="dream">
                                     <h3 class="titulo-dream">{{dream.titulo}}</h3>
                                     <span class="fecha-dream">{{ dream.createdAt|date('d M Y') }}</span>
+                                    <div class="acciones-dream">
+                                    {% set urlRedes = url('share_dream',{ 'clave': dream.clave })%}
+
+                                    {% set textoRedes = 'He creado un nuevo sueño, ' 
+                                                        ~ dream.titulo ~ ', '
+                                                        ~ ' en Your Dreams, si quieres conocerlo has click ' %}
+                                        <a target="_blank" href="http://www.facebook.com/sharer.php?u={{urlRedes}}&t={{textoRedes|url_encode}}" class="accion-share accion-share-facebook">
+                                            <span class="icon-facebook"></span>&nbsp;compartir
+                                        </a>
+                                        <a target="_blank" href="http://twitter.com/home?status={{textoRedes|url_encode}}{{urlRedes|url_encode}}" class="accion-share accion-share-twitter">
+                                            <span class="icon-twitter"></span>&nbsp;compartir
+                                        </a>
+                                    </div>
                                 </div>
                             </a>
                         </li>

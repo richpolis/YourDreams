@@ -4,8 +4,28 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}YourDreams{% endblock %}</title>
-        <meta name="description" content="">
+        <meta name="description" content="Comparte tus sueños con el mundo.">
         <meta name="author" content="">
+        {% set urlAbsolutaFoto = 'http://'
+                             ~ app.request.server.get('SERVER_NAME')
+                             ~ asset('images/logo.png') %}
+
+        {% block redes_sociales %}
+            <meta property="og:url" content="{{url('homepage')}}" />
+            <meta property="og:title" content="Your Dreams" />
+            <meta property="og:image" content="{{urlAbsolutaFoto}}" />
+            <meta property="og:type" content="article" />
+            <meta property="og:site_name" content="yourdreams.com" />
+            <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
+
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:site" content="@yourdreams">
+            <meta name="twitter:title" content="Your Dreams">
+            <meta name="twitter:description" content="Comparte tus sueños con todo el mundo.">
+            <meta name="twitter:creator" content="@richpolis">
+            <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
+            <meta name="twitter:domain" content="{{url('homepage')}}">
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% block stylesheets %}
             <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">

@@ -326,10 +326,10 @@ class DefaultController extends Controller
         if($request->query->has('parent')){
             $parent = $em->getRepository('ComentariosBundle:Comentario')
                          ->find($request->query->get('parent'));
+            $comentario->setParent($parent);
         }else{
             $parent = null;
         }
-        $comentario->setParent($parent);
         $comentario->setUsuario($this->getUser());
         $form = $this->createForm(new ComentarioType(), $comentario, array(
             'em' => $this->getDoctrine()->getManager(),
@@ -344,7 +344,7 @@ class DefaultController extends Controller
                 $comentarios = $em->getRepository('ComentariosBundle:Comentario')
                                   ->findBy(array('dream'=>$comentario->getDream()));
                 $response = new JsonResponse(json_encode(array(
-                    'html'=>$this->renderView('FrontendBundle:Default:comentarios.html.twig', array('comentarios'=>$comentarios)),
+                    'html'=>'',
                     'respuesta'=>'creado',
                 )));
                 return $response;
