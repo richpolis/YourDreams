@@ -1,5 +1,16 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% block mensajes %}
+	<li class="white">
+	<a href="#" class="icon-user"></a>&nbsp;Mensajes
+    <ul>
+	 {% for mensaje in mensajes %}
+     <li><a href="{{path('share_dream',{'clave':mensaje.dream.clave})}}"><span class="icon-user"></span>&nbsp;{{mensaje.deUsuario.nombreCompleto}}</a></li>
+	 {% endfor %}
+    </ul>
+	</li>
+{% endblock %}
+
 {% block content %}
     <section class="container row">
         <article class="wrap">
@@ -35,6 +46,9 @@
                                         </a>
                                         <a target="_blank" href="http://twitter.com/home?status={{textoRedes|url_encode}}{{urlRedes|url_encode}}" class="accion-share accion-share-twitter">
                                             <span class="icon-twitter"></span>&nbsp;compartir
+                                        </a>
+										<a href="{{urlRedes|url_encode}}" class="mensajes-dream">
+                                            {{ dream.mensajes | length }}&nbsp;mensaje(s)
                                         </a>
                                     </div>
                                 </div>

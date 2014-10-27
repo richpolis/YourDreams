@@ -18,7 +18,7 @@
                 <ul class="lista-dreams">
                     {% for dream in dreams %}
                         <li class="item-dream">
-                            <a href="{{path('share_dream',{'clave': dream.id })}}">
+                            <a href="{{path('share_dream',{'clave': dream.clave })}}">
                                 <div class="dream">
                                     <h3 class="titulo-dream">{{dream.titulo}} - {{dream.usuario.nombreCompleto }}</h3>
                                     <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>

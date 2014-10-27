@@ -82,6 +82,12 @@ class Dream
      */
     private $galerias;
     
+	/**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @ORM\OneToMany(targetEntity="Richpolis\ComentariosBundle\Entity\Mensaje", mappedBy="dream")
+     */
+    private $mensajes;
     
     /**
      * @var \DateTime
@@ -369,5 +375,28 @@ class Dream
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set clave
+     *
+     * @param string $clave
+     * @return Dream
+     */
+    public function setClave($clave)
+    {
+        $this->clave = $clave;
+
+        return $this;
+    }
+
+    /**
+     * Get clave
+     *
+     * @return string 
+     */
+    public function getClave()
+    {
+        return $this->clave;
     }
 }

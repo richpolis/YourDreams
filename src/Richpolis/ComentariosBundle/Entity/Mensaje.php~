@@ -1,0 +1,59 @@
+<?php
+
+namespace Richpolis\ComentariosBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Mensaje
+ *
+ * @ORM\Table(name="mensajes")
+ * @ORM\Entity(repositoryClass="Richpolis\ComentariosBundle\Entity\MensajeRepository")
+ */
+class Mensaje
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
+     * @ORM\JoinColumn(name="de_usuario_id", referencedColumnName="id")
+     */
+    private $deUsuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
+     * @ORM\JoinColumn(name="para_usuario_id", referencedColumnName="id")
+     */
+    private $paraUsuario;
+
+    /**
+     * @var boolean
+     * @todo Si el status del mensaje, si es nuevo o no. 
+     *
+     * @ORM\Column(name="status", type="boolean")
+     */
+    private $status;
+
+    /**
+     * @var \Richpolis\DreamsBundle\Entity\Dream
+     * @todo Comentarios de las dreams
+     *
+     * @ORM\ManyToOne(targetEntity="Richpolis\DreamsBundle\Entity\Dream",inversedBy="mensajes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dream_id", referencedColumnName="id")
+     * })
+     */
+    private $dream;
+
+}

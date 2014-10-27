@@ -82,6 +82,12 @@ class Dream
      */
     private $galerias;
     
+	/**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @ORM\OneToMany(targetEntity="Richpolis\ComentariosBundle\Entity\Mensaje", mappedBy="dream")
+     */
+    private $mensajes;
     
     /**
      * @var \DateTime
@@ -392,5 +398,38 @@ class Dream
     public function getClave()
     {
         return $this->clave;
+    }
+
+    /**
+     * Add mensajes
+     *
+     * @param \Richpolis\ComentariosBundle\Entity\Mensaje $mensajes
+     * @return Dream
+     */
+    public function addMensaje(\Richpolis\ComentariosBundle\Entity\Mensaje $mensajes)
+    {
+        $this->mensajes[] = $mensajes;
+
+        return $this;
+    }
+
+    /**
+     * Remove mensajes
+     *
+     * @param \Richpolis\ComentariosBundle\Entity\Mensaje $mensajes
+     */
+    public function removeMensaje(\Richpolis\ComentariosBundle\Entity\Mensaje $mensajes)
+    {
+        $this->mensajes->removeElement($mensajes);
+    }
+
+    /**
+     * Get mensajes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMensajes()
+    {
+        return $this->mensajes;
     }
 }

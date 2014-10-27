@@ -115,13 +115,7 @@ hwi_oauth:
             type:                facebook
             client_id:           "%facebook_app_id%"
             client_secret:       "%facebook_app_secret%"
-            scope:               "email"
-            infos_url:           "https://graph.facebook.com/me?fields=email,first_name,last_name,picture.type(square)"
-            paths:
-                email:          email
-                firstname:      first_name
-                lastname:       last_name
-                profilepicture: picture.data.url
+            scope:               ""
         twitter:
             type:                twitter
             client_id:           "%twitter_app_id%"

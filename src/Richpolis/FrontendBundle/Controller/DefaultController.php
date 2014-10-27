@@ -18,6 +18,7 @@ use Richpolis\DreamsBundle\Entity\Dream;
 
 use Richpolis\ComentariosBundle\Form\ComentarioType;
 use Richpolis\ComentariosBundle\Entity\Comentario;
+use Richpolis\ComentariosBundle\Entity\Mensaje;
 
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
@@ -25,7 +26,7 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Route("/s/{clave}",name="share_dream",requirements={"clave": "\d+"})
+     * @Route("/s/{clave}",name="share_dream")
      * @Template("FrontendBundle:Default:mostrar.html.twig")
      * @Method({"GET"})
      */
@@ -43,6 +44,10 @@ class DefaultController extends Controller
             array('dream'=>$dream),array('createdAt'=>'DESC')
         );
 
+		if(null !== $this->getUser()){
+			$this->findMensajeAUsuario($this->getUser(),$dream,$em);
+		}
+
         return compact('dream','comentarios');
     }
     
@@ -55,9 +60,14 @@ class DefaultController extends Controller
         $dreams = $em->getRepository('DreamsBundle:Dream')->findBy(
             array('usuario' => $this->getUser()), array('createdAt' => 'DESC')
         );
+		
+		$mensajes = $em->getRepository('ComentariosBundle:Mensaje')->findBy(
+            array('paraUsuario' => $this->getUser(),'status'=>true,)
+        );
 
         return array(
             'dreams' => $dreams,
+			'mensajes' => $mensajes,
         );
     }
 
@@ -271,7 +281,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-	$buscar = $request->get("q","");
+		$buscar = $request->get("q","");
 	
         if(strlen($buscar)>0){
             $dreams = $em->getRepository('DreamsBundle:Dream')
@@ -341,8 +351,12 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $em->persist($comentario);
                 $em->flush();
-                $comentarios = $em->getRepository('ComentariosBundle:Comentario')
-                                  ->findBy(array('dream'=>$comentario->getDream()));
+				$parent = $comentario->getParent();
+				if( $parent == null ){
+					$this->agregarMensajeAUsuario($comentario->getDream()->getUsuario(),$this->getUser(),$dream,$em);
+				}else{
+					$this->agregarMensajeAUsuario($parent,$this->getUser(),$dream,$em);
+				}
                 $response = new JsonResponse(json_encode(array(
                     'html'=>'',
                     'respuesta'=>'creado',
@@ -361,6 +375,40 @@ class DefaultController extends Controller
         )));
         return $response;
     }
+	
+	private function agregarMensajeAUsuario($para,$de,&$dream,&$em){
+		$mensaje = $em->getRepository('ComentariosBundle:Mensaje')
+					  ->findOneBy(array(
+						  'paraUsuario' => $para,
+						  'deUsuario' => $de,
+						  'dream' => $dream,
+					  ));
+		if(null == $mensaje){
+			$mensaje = new Mensaje();
+			$mensaje->setParaUsuario($para);
+			$mensaje->setDeUsuario($de);
+			$mensaje->setDream($dream);
+			$mensaje->setStatus(true);
+			$em->persist($mensaje);
+		}else{
+			$mensaje->setStatus(true);
+		}
+		
+		$em->flush();
+		
+	}
+	
+	private function findMensajeAUsuario($para,&$dream,&$em){
+		$mensaje = $em->getRepository('ComentariosBundle:Mensaje')
+					  ->findOneBy(array(
+						  'paraUsuario' => $para,
+						  'dream' => $dream,
+					  ));
+		if(null !== $mensaje){
+			$mensaje->setStatus(false);
+			$em->flush();
+		}
+	}
 
 }
 
