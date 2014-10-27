@@ -36,8 +36,12 @@
                 o puedes utilizar las redes sociales: 
             </p>
             <p class="redes-sociales text-center">
-                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Sign in with Facebook"><span class="red-social facebook">&nbsp;</span></a>
-                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" alt="Sign in with Twitter"><span class="red-social twitter">&nbsp;</span></a>
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Sign in with Facebook">
+                    <img src="{{asset('images/ico-facebook.png')}}"/>
+                </a>
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" alt="Sign in with Twitter">
+                    <img src="{{asset('images/ico-twitter.png')}}"/>
+                </a>
             </p>        
         </div>        
     </div> <!-- /container -->

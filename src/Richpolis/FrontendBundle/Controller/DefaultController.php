@@ -355,7 +355,7 @@ class DefaultController extends Controller
 				if( $parent == null ){
 					$this->agregarMensajeAUsuario($comentario->getDream()->getUsuario(),$this->getUser(),$dream,$em);
 				}else{
-					$this->agregarMensajeAUsuario($parent,$this->getUser(),$dream,$em);
+					$this->agregarMensajeAUsuario($parent->getUsuario(),$this->getUser(),$dream,$em);
 				}
                 $response = new JsonResponse(json_encode(array(
                     'html'=>'',
