@@ -33,6 +33,8 @@ class SecurityController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
+		
+		$session->set('irA','homepage');
 
         return $this->render(
             'FrontendBundle:Security:login.html.twig',

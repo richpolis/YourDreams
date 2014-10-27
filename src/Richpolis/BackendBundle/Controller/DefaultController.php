@@ -31,6 +31,8 @@ class DefaultController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
+		
+		$session->set('irA','usuarios');
 
         return $this->render(
             'BackendBundle:Default:login.html.twig',

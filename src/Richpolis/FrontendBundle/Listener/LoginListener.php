@@ -31,8 +31,12 @@ class LoginListener
         if (null != $this->usuario){
             if($this->usuario->getIsActive()) {
                 $session = $this->container->get('session');
+				$irA = $session->get('irA','');
                 if($this->contexto->isGranted('ROLE_USUARIO')){
-                    $irA = $this->router->generate('homepage');
+					if(strlen($irA)==0){
+						$irA = 'homepage';
+					}
+                    $irA = $this->router->generate($irA);
                 }else{
                     $irA = $this->router->generate('logout');
                 }

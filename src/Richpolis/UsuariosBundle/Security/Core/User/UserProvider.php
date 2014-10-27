@@ -16,31 +16,32 @@ class UserProvider extends BaseClass
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
-        $email = $response->getEmail();
-        $imagen = $response->getProfilePicture();
-        $nombre = $response->getRealName();
+ 
         //on connect - get the access token and the user ID
         $service = $response->getResourceOwner()->getName();
-        
+ 
         $setter = 'set'.ucfirst($service);
         $setter_id = $setter.'Id';
         $setter_token = $setter.'AccessToken';
  
         //we "disconnect" previously connected users
         
-        if (null !== $previousUser = $this->repository->findOneBy(array($this->getProperty($response) => $username))) {
+        if (null !== $previousUser = $this->repository->findOneBy(array($property => $username))) {
             $previousUser->$setter_id(null);
             $previousUser->$setter_token(null);
             $this->em->flush();
         }
+		
+		if($service == "facebook"){
+			$fbid = $username;
+			$user_fb = "https://graph.facebook.com/" .$fbid;
+			$picture = $user_fb."/picture?width=260&height=260";
+			$user->setImagen($picture);
+		}
  
         //we connect current user
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
-        
-        $user->setImagen($imagen);
-        $user->setEmail($email);
-        $user->setNombre($nombre);
  
         $this->em->flush();
     }
@@ -54,11 +55,13 @@ class UserProvider extends BaseClass
         $email = $response->getEmail();
         $imagen = $response->getProfilePicture();
         $nombre = $response->getRealName();
-        if(null !== $email){
-            $user = $this->repository->findOneBy(array('email' => $email));
+		//var_dump(compact('username','email','imagen','nombre')); die;
+        if(null == $email){
+			$user = $this->repository->findOneBy(array($this->getProperty($response) => $username));
         }else{
-            $user = $this->repository->findOneBy(array($this->getProperty($response) => $username));
+            $user = $this->repository->findOneBy(array('email' => $email));
         }
+		
         //when the user is registrating
         if (null === $user) {
             $service = $response->getResourceOwner()->getName();
@@ -71,7 +74,11 @@ class UserProvider extends BaseClass
             $user->$setter_token($response->getAccessToken());
             //I have set all requested data with the user's username
             //modify here with relevant data
-            $user->setEmail($email);
+            if(null != $email){
+            	$user->setEmail($email);
+			}else{
+				$user->setEmail($username);
+			}
             $user->setPassword($username);
             $user->setNombre($nombre);
             $user->setApellido("");
@@ -84,11 +91,18 @@ class UserProvider extends BaseClass
         }
  
         //if user exists - go with the HWIOAuth way
-        $user = parent::loadUserByOAuthUserResponse($response);
+        //$user = parent::loadUserByOAuthUserResponse($response);
  
         $serviceName = $response->getResourceOwner()->getName();
         $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
- 
+
+		if($serviceName == "facebook"){
+				$fbid = $username;
+				$user_fb = "https://graph.facebook.com/" .$fbid;
+				$picture = $user_fb."/picture?width=260&height=260";
+				$user->setImagen($picture);
+		}
+		
         //update access token
         $user->$setter($response->getAccessToken());
  

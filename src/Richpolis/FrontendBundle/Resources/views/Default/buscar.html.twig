@@ -20,7 +20,12 @@
                         <li class="item-dream">
                             <a href="{{path('share_dream',{'clave': dream.clave })}}">
                                 <div class="dream">
-                                    <h3 class="titulo-dream">{{dream.titulo}} - {{dream.usuario.nombreCompleto }}</h3>
+                                    <h3 class="titulo-dream">{{dream.titulo}} - 
+									
+									{% if dream.usuario.imagen | length > 0 %}
+										<img src="{{dream.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
+									{% endif %}
+									{{dream.usuario.nombreCompleto }}</h3>
                                     <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
                                 </div>
                             </a>

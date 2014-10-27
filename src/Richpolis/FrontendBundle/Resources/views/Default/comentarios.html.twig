@@ -1,7 +1,12 @@
 <div class="show-dream comentario-dream comentario-dream-nivel-{{comentario.nivel}}" style="padding-left: {{10*comentario.nivel}}px">
     <div class="comentario">
         <span class="fecha-comentario">{{ dream.createdAt|date('d M Y') }} a las {{ dream.createdAt | date('ha') }}</span>
-        <h3 class="titulo-comentario">{{comentario.usuario.nombreCompleto}}</h3>
+        <h3 class="titulo-comentario">
+		{% if comentario.usuario.imagen | length > 0 %}
+			<img src="{{comentario.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
+		{% endif %}
+		{{comentario.usuario.nombreCompleto}}
+		</h3>
         <p class="mensaje-comentario">
             {{ comentario.message }}
         </p>

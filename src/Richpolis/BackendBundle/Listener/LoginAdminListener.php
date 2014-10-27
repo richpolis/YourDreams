@@ -31,8 +31,12 @@ class LoginAdminListener
         if (null != $this->usuario){
             if($this->usuario->getIsActive()) {
                 $session = $this->container->get('session');
+				$irA = $session->get('irA','');
                 if($this->contexto->isGranted('ROLE_ADMIN')){
-                    $irA = $this->router->generate('usuarios');
+					if(strlen($irA)==0){
+						$irA = 'usuarios';
+					}
+                    $irA = $this->router->generate($irA);
                 }else{
                     $irA = $this->router->generate('homepage');
                 }
