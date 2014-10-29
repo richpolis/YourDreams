@@ -22,7 +22,9 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         
-        $session->set('redirigir', $request->query->get('return',$this->generateUrl('homepage')));
+		if(null != $this->getUser()){
+			return $this->redirect($this->generateUrl('homepage'));
+		}
 
         // obtiene el error de inicio de sesión si lo hay
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
