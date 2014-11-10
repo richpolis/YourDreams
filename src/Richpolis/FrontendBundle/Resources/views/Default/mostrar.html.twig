@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@yourdreams">
     <meta name="twitter:title" content="Mi sueño es {{dream.titulo}}">
-    <meta name="twitter:description" content="{{dream.dream}}.">
+    <meta name="twitter:description" content="{{dream.dream | striptags | truncate(150,true,'...') | raw}}.">
     <meta name="twitter:creator" content="@richpolis">
     <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
     <meta name="twitter:url" content="{{ urlCompartir }}">
