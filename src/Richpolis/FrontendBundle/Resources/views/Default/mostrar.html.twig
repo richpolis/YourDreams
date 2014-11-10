@@ -4,8 +4,10 @@
                      ~ app.request.server.get('SERVER_NAME')
                      ~ asset('images/logo.png') %}
 
+{% set urlCompartir = url('share_dream',{ 'clave': dream.clave }) %}                     
+                     
 {% block redes_sociales %}
-    <meta property="og:url" content="{{ url('share_dream',{ 'clave': dream.clave })}}" />
+    <meta property="og:url" content="{{ urlCompartir }}" />
     <meta property="og:title" content="Mi sueño es {{dream.titulo}}" />
     <meta property="og:description" content="{{dream.dream}}." />
     <meta property="og:image" content="{{urlAbsolutaFoto}}" />
@@ -19,7 +21,8 @@
     <meta name="twitter:description" content="{{dream.dream}}.">
     <meta name="twitter:creator" content="@richpolis">
     <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
-    <meta name="twitter:domain" content="{{ url('share_dream',{ 'clave': dream.clave })}}">
+    <meta name="twitter:url" content="{{ urlCompartir }}">
+    <meta name="twitter:domains" content="yourdreams.com">
 {% endblock %}
 
 
@@ -54,9 +57,11 @@
                 &nbsp; Compartir mi sueño
                 {% endif %}    
             </div>
-            {% if dream.usuario.id == app.user.id %} 
-            <button class="btn btn-lg" id="editDream">Editar</button>
-            <button class="btn btn-lg" id="deleteDream">Eliminar</button>
+            {% if app.user is not null %}
+                {% if dream.usuario.id == app.user.id %} 
+                <button class="btn btn-lg" id="editDream">Editar</button>
+                <button class="btn btn-lg" id="deleteDream">Eliminar</button>
+                {% endif %}
             {% endif %}
         </article>
         <br/>        
@@ -70,9 +75,15 @@
             {% include 'FrontendBundle:Default:comentarios.html.twig' with { 'comentario': comentario } %}
             {% endfor %}
             <footer class="show-dream footer-dream">
-            {% if dream.usuario.id != app.user.id %}
-                <a href="#modalFormComentario" class="crearComentario btn btn-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
-                    Enviar mensaje
+            {% if app.user is not null %}    
+                {% if dream.usuario.id != app.user.id %}
+                    <a href="#modalFormComentario" class="crearComentario btn btn-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
+                        Enviar mensaje
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('login',{'irA': urlCompartir }) }}" class="btn btn-lg">
+                    Registrarse
                 </a>
             {% endif %}
             </footer>

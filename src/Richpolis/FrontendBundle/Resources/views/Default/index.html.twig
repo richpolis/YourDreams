@@ -3,11 +3,11 @@
 {% block mensajes %}
 	<li class="white">
 	<a href="#" class="icon-user"></a>&nbsp;Mensajes
-    <ul>
-	 {% for mensaje in mensajes %}
-     <li><a href="{{path('share_dream',{'clave':mensaje.dream.clave})}}"><span class="icon-user"></span>&nbsp;{{mensaje.deUsuario.nombreCompleto}}</a></li>
-	 {% endfor %}
-    </ul>
+        <ul>
+            {% for mensaje in mensajes %}
+                <li><a href="{{path('share_dream',{'clave':mensaje.dream.clave})}}"><span class="icon-user"></span>&nbsp;{{mensaje.deUsuario.nombreCompleto}}</a></li>
+            {% endfor %}
+        </ul>
 	</li>
 {% endblock %}
 

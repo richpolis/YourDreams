@@ -17,26 +17,29 @@ class SecurityController extends Controller
      * @Template()
      */
     
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
-        
-		if(null != $this->getUser()){
-			return $this->redirect($this->generateUrl('homepage'));
-		}
+
+        if (null != $this->getUser()) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
 
         // obtiene el error de inicio de sesión si lo hay
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
+                    SecurityContext::AUTHENTICATION_ERROR
             );
         } else {
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-		
-		$session->set('irA','homepage');
+        if($requet->query->has('irA')){
+            $irA = $request->query->get('irA','homepage');
+        }else{
+            $irA = 'homepage';
+        }
+        $session->set('irA', $irA);
 
         return $this->render(
             'FrontendBundle:Security:login.html.twig',

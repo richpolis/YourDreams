@@ -19,9 +19,9 @@ class DreamFrontendType extends AbstractType
         $transformer = new UsuarioToNumberTransformer($em);
         
         $builder
-            ->add('titulo')
+            ->add('titulo',null,array('label'=>'Titulo'))
             ->add('dream',null,array('label'=>'Descripción'))
-            ->add('lugar','text',array('required'=>false))
+            ->add('lugar','text',array('required'=>false,'label'=>'Lugar'))
             ->add('compartir')
 	    ->add('file','file',array('label'=>'Archivos','required'=>false))
             ->add($builder->create('usuario', 'hidden')->addViewTransformer($transformer))
