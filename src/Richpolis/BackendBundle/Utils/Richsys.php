@@ -10,6 +10,8 @@ class Richsys
     const TIPO_ARCHIVO_LINK=3;
     const TIPO_ARCHIVO_MUSICA=4;
     const TIPO_ARCHIVO_FLASH=5;
+	
+	const DIR_AMAZON = '/apps/yourdreams/web';
         
     static public $sTipoArchivo=array(
         self::TIPO_ARCHIVO_IMAGEN=>'Imagen',
@@ -140,7 +142,7 @@ EOF
      
      static public function getArchivoViewImagen(array $opciones2){
         $opciones=array(
-            'path'      => 'http://'.$_SERVER['HTTP_HOST'].'/uploads',
+            'path'      => 'http://'.$_SERVER['HTTP_HOST'].DIR_AMAZON.'/uploads',
             'carpeta'   => 'galeria',
             'archivo'   =>'sin_imagen.jpg',
             'width'     =>'400',
@@ -176,7 +178,7 @@ EOF
      
      static public function getArchivoViewVideo(array $opciones2){
          $opciones=array(
-            'path' => 'http://'.$_SERVER['HTTP_HOST'].'/uploads', 
+            'path' => 'http://'.$_SERVER['HTTP_HOST'].DIR_AMAZON.'/uploads', 
             'carpeta' => 'videos',  
             'archivo'  => 'video.fly',
             'height'  => '330',
@@ -203,7 +205,7 @@ EOF;
      
      static public function getArchivoViewFlash(array $opciones2){
          $opciones=array(
-            'path' => 'http://'.$_SERVER['HTTP_HOST'].'/uploads', 
+            'path' => 'http://'.$_SERVER['HTTP_HOST'].DIR_AMAZON.'/uploads', 
             'carpeta' => 'swf',  
             'archivo'  => 'flahs.swf',
             'height'  => '400',

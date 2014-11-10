@@ -34,7 +34,7 @@ class SecurityController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-        if($requet->query->has('irA')){
+        if($request->query->has('irA')){
             $irA = $request->query->get('irA','homepage');
         }else{
             $irA = 'homepage';

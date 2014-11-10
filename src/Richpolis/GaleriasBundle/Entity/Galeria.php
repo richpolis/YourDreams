@@ -429,8 +429,7 @@ class Galeria
     
     protected function getUploadDir()
     {
-        $adicional = '';
-        return $adicional.'/uploads/galerias';
+        return '/uploads/galerias';
     }
 
     protected function getUploadRootDir()
@@ -446,7 +445,7 @@ class Galeria
     public function getWebPath()
     {
         if($this->getTipoArchivo()==RpsStms::TIPO_ARCHIVO_IMAGEN){
-            return null === $this->archivo ? null : $this->getUploadDir().'/'.$this->archivo;
+            return null === $this->archivo ? null : RpsStms::DIR_AMAZON.$this->getUploadDir().'/'.$this->archivo;
         }else if($this->getTipoArchivo()==RpsStms::TIPO_ARCHIVO_LINK){
             return $this->getArchivo();
         }
@@ -460,7 +459,7 @@ class Galeria
                     $this->crearThumbnail();
                 }
             }
-            return null === $this->thumbnail ? null : $this->getUploadDir().'/thumbnails/'.$this->thumbnail;
+            return null === $this->thumbnail ? null : RpsStms::DIR_AMAZON.$this->getUploadDir().'/thumbnails/'.$this->thumbnail;
         }else if($this->getTipoArchivo()==RpsStms::TIPO_ARCHIVO_LINK){
             return $this->getThumbnail();
         }
