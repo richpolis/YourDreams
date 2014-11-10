@@ -31,13 +31,15 @@
                         <li><a href="{{path('homepage')}}"><span class="icon-user"></span>&nbsp;Mis sueños</a></li>
                         <li><a href="{{path('create_dream')}}"><span class="icon-feather"></span>&nbsp;Nuevo</a></li>
                         <li><a href="{{path('find_dream')}}"><span class="icon-search"></span>&nbsp;Buscar</a></li>
-                        <li><a href="{{path('editar_usuario')}}">
-							{% if app.user.imagen | length > 0 %}
-							<img src="{{app.user.imagen}}" style="width: 20px" alt="Usuario"/>&nbsp;Perfil
-							{% else %}
-							<span class="icon-user"></span>&nbsp;Perfil
-							{% endif %}
-							</a></li>
+                        <li>
+                            <a href="{{path('editar_usuario')}}">
+                                {% if app.user.imagen | length > 0 %}
+                                    <img src="{{app.user.imagen}}" style="width: 20px" alt="Usuario"/>&nbsp;Perfil
+                                {% else %}
+                                    <span class="icon-user"></span>&nbsp;Perfil
+                                {% endif %}
+                            </a>
+                        </li>
                         <li><a href="{{path('logout')}}"><span class="icon-logout"></span>&nbsp;Salir</a></li>
                     </ul>
                 </li>
