@@ -208,6 +208,10 @@ p
 	margin 0 auto
 	padding 0px 5px
 
+.center
+	margin 0 auto
+	max-width 100%
+
 .wrap
 	min-width 390px
 	margin 0 auto
@@ -309,6 +313,39 @@ p
 	& li:hover ul
 		max-height 250px
 
+
+.mensajes-login
+	height 30px
+	width 100%
+	overflow hidden
+
+.formulario-nav
+	position relative
+	top 0px
+	left 0px
+	text-align center
+	background-color rgba(#313131, 0.4)
+	border-radius 0px 0px 25px 25px
+	.form-inline
+		& .form-group
+			display inline-block
+			vertical-align top
+			padding 0px
+			border-bottom 0px
+			margin 10px 5px
+			border-radius 5px
+			& input[type="email"]
+			& input[type="password"]
+			& button[type="submit"]
+				height 35px
+				margin 0px
+				background-color white
+				border-bottom none
+			& button[type="submit"]
+				width 100px
+
+
+
 .formulario
 	position relative
 	& .flecha-submit
@@ -356,6 +393,9 @@ p
 	font-family 'Helvetica'
 	& span
 		font-size .7em
+	&.grande
+		font-size 2em
+		margin 12px
 
 .form-signin .form-controlfocus 
 	z-index 2

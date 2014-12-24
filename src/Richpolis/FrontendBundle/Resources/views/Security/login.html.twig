@@ -2,38 +2,46 @@
 
 {% block content %}
     <div class="container row">
-        <div class="login-center">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.message | trans }}</div>
-            {% endif %}
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="flash-notice alert alert-success">
-                    {{ flashMessage }}
-                </div>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('error') %}
-                <div class="flash-notice alert alert-danger">
-                    {{ flashMessage }}
-                </div>
-            {% endfor %}
-            <div class="formulario"> 
-                <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post">
-                    <h1 class="form-signin-heading">YourDreams</h1>
+        <div class="center">
+            <div class="formulario-nav">
+                {% if error %}
+                    <div class="mensajes-login">
+                    <div class="alert alert-danger">{{ error.message | trans }}</div>
+                    </div>
+                {% endif %}
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="mensajes-login">
+                    <div class="flash-notice alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="mensajes-login">
+                    <div class="flash-notice alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                    </div>
+                {% endfor %}
+                <form class="form-inline" role="form" action="{{ path('login_check') }}" method="post">
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Password" name="_password" required>
                     </div>
-                    <button class="btn btn-lg btn-center" type="submit">Entrar</button>
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-center" type="submit">Entrar</button>
+                    </div>
                 </form>
-
             </div>
-            <p class="text-center">
+            <h1 class="form-signin-heading grande text-center">YourDreams</h1>    
+            <iframe style="margin: 0px 10%;" width="80%" height="400" src="//www.youtube.com/embed/_U_AQq6yEVc" frameborder="0" allowfullscreen></iframe>
+            <!--p class="text-center">
                 Si no eres usuario puedes registrarte <a href="{{path('registro')}}">aquí</a>
-            </p>
+            </p-->
             <p class="text-center">
-                o puedes utilizar las redes sociales: 
+                Registrate con alguna de estas redes sociales 
             </p>
             <p class="redes-sociales text-center">
                 <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Sign in with Facebook">
