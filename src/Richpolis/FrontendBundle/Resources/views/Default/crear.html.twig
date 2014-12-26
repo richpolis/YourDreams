@@ -18,7 +18,7 @@
             </p>
             <div class="formulario"> 
                 <form class="form-crear" role="form" action="{{ ((isNew)?path('create_dream'):path('update_dream',{'id':dream.id})) }}" method="post" {{ form_enctype(form) }}>
-                    <h1 class="form-signin-heading">{{titulo}}</h1>
+                    <h1 class="form-heading">{{titulo}}</h1>
                     <div class="form-group">
                         {{ form_errors(form.titulo)	}}
                         {{ form_widget(form.titulo,{'attr':{'class':'form-control','placeholder':'Titulo'}})	}}
@@ -53,7 +53,7 @@
                         </label>
                     </div>
                     {{form_rest(form)}}
-                    <button class="btn btn-lg btn-center" type="submit">Guardar</button>
+                    <button class="boton boton-lg boton-center" type="submit">Guardar</button>
                 </form>
             </div>       
         </article>        

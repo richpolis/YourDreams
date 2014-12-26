@@ -1,42 +1,61 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href="{{asset('css/main.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-    <div class="container row">
-        <div class="center">
-            <div class="formulario-nav">
-                {% if error %}
-                    <div class="mensajes-login">
-                    <div class="alert alert-danger">{{ error.message | trans }}</div>
-                    </div>
-                {% endif %}
-                {% for flashMessage in app.session.flashbag.get('notice') %}
-                    <div class="mensajes-login">
-                    <div class="flash-notice alert alert-success">
-                        {{ flashMessage }}
-                    </div>
-                    </div>
-                {% endfor %}
-                {% for flashMessage in app.session.flashbag.get('error') %}
-                    <div class="mensajes-login">
-                    <div class="flash-notice alert alert-danger">
-                        {{ flashMessage }}
-                    </div>
-                    </div>
-                {% endfor %}
-                <form class="form-inline" role="form" action="{{ path('login_check') }}" method="post">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" name="_password" required>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-lg btn-center" type="submit">Entrar</button>
-                    </div>
-                </form>
+    <section class="formulario-nav">
+        {% if error %}
+            <div class="mensajes-login">
+                <div class="alert alert-danger">{{ error.message | trans }}</div>
             </div>
-            <h1 class="form-signin-heading grande text-center">YourDreams</h1>    
-            <iframe style="margin: 0px 10%;" width="80%" height="400" src="//www.youtube.com/embed/_U_AQq6yEVc" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="mensajes-login">
+                <div class="flash-notice alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="mensajes-login">
+                <div class="flash-notice alert alert-danger">
+                    {{ flashMessage }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="container">
+        <form class="form-inline" role="form" action="{{ path('login_check') }}" method="post">
+            <div class="row">
+            <div class="col-md-2 col-xs-1"></div>
+            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="icon-user"></span></div>
+                    <input type="email" class="form-control" placeholder="Usuario" name="_username" value="{{ last_username }}" required autofocus>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-sm-4 col-xs-12 ">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="icon-login"></span></div>
+                    <input type="password" class="form-control" placeholder="Password" name="_password" required>
+                </div>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-xs-6">
+                <button class="btn btn-block btn-primary" type="submit">&nbsp;&nbsp;Entrar&nbsp;&nbsp;</button>
+            </div>
+            <div class="col-md-2 col-xs-1"></div>
+            </div>
+        </form>
+        </div>        
+    </section>
+    <section class="container row">
+        <div class="center">
+            <h1 class="form-heading grande text-center">YourDreams</h1>    
+            <iframe id="videoIntro" width="80%" height="400" src="//www.youtube.com/embed/_U_AQq6yEVc" frameborder="0" allowfullscreen></iframe>
             <!--p class="text-center">
                 Si no eres usuario puedes registrarte <a href="{{path('registro')}}">aquí</a>
             </p-->
@@ -52,6 +71,6 @@
                 </a>
             </p>        
         </div>        
-    </div> <!-- /container -->
+    </section> <!-- /container -->
 
 {% endblock %}

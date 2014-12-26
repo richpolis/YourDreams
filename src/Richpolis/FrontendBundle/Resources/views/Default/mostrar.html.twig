@@ -59,8 +59,8 @@
             </div>
             {% if app.user is not null %}
                 {% if dream.usuario.id == app.user.id %} 
-                <button class="btn btn-lg" id="editDream">Editar</button>
-                <button class="btn btn-lg" id="deleteDream">Eliminar</button>
+                <button class="boton boton-lg" id="editDream">Editar</button>
+                <button class="boton boton-lg" id="deleteDream">Eliminar</button>
                 {% endif %}
             {% endif %}
         </article>
@@ -77,12 +77,12 @@
             <footer class="show-dream footer-dream">
             {% if app.user is not null %}    
                 {% if dream.usuario.id != app.user.id %}
-                    <a href="#modalFormComentario" class="crearComentario btn btn-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
+                    <a href="#modalFormComentario" class="crearComentario boton boton-lg" data-url="{{path('create_dream_mensaje',{'id': dream.id })}}" data-parent="0">
                         Enviar mensaje
                     </a>
                 {% endif %}
             {% else %}
-                <a href="{{ path('login',{'irA': urlCompartir }) }}" class="btn btn-lg">
+                <a href="{{ path('login',{'irA': urlCompartir }) }}" class="boton boton-lg">
                     Registrarse
                 </a>
             {% endif %}
@@ -97,8 +97,8 @@
             
         </div>
         <div class="footer-form-comentario">
-            <a href="#cerrarForm" onclick="$.magnificPopup.close();" class="btn btn-cerrar">Cerrar</a>
-            <a href="#guardarForm" onclick="javascript:guardar()" class="btn btn-guardar">Enviar</a>
+            <a href="#cerrarForm" onclick="$.magnificPopup.close();" class="boton boton-cerrar">Cerrar</a>
+            <a href="#guardarForm" onclick="javascript:guardar()" class="boton boton-guardar">Enviar</a>
         </div>
     </div>
 {% endblock %}

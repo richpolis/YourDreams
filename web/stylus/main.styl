@@ -18,6 +18,9 @@ opacity(n)
 	if support-for-ie
 		filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
 
+
+fondo_oscuro_traslucido = rgba(#313131, 0.6)
+
 a
 	color #0b96db
 	text-decoration none
@@ -25,7 +28,7 @@ a
 		text-decoration underline
 
 body
-	background url('../images/nubes.jpg')
+	background url('../images/nubes3.jpg')
 	background-repeat no-repeat
 	background-size cover
 	background-attachment fixed
@@ -40,7 +43,7 @@ h1
 
 h2
 	font-weight normal
-	font-family 'Helvetica'
+	font-family 'Pacifico'
 	font-size 29px
 
 
@@ -63,9 +66,9 @@ textarea
 		outline 0px
 
 p
-	font-family 'Helvetica'
+	font-family 'Roboto'
 
-.btn
+.boton
 	background  #0b96db
 	background-image  linear-gradient(to bottom, #0b96db, #005886)
 	border-radius  0px
@@ -83,10 +86,10 @@ p
 		text-decoration  none
 		color white
 
-.btn-lg
+.boton-lg
 	width 200px
 
-.btn-center
+.boton-center
 	display block
 	margin 0 auto
 
@@ -102,7 +105,7 @@ p
 	overflow auto
 
 .encabezado
-	background rgba(#313131, 0.4)
+	background fondo_oscuro_traslucido
 	position relative
 	& > h1
 		font-weight normal
@@ -112,7 +115,7 @@ p
 		height 50px
 		line-height 50px
 		font-size 31px
-		font-family 'Helvetica'
+		font-family 'Pacifico'
 
 .form-group
 	background rgba(255,255,255,0.6)
@@ -126,7 +129,21 @@ p
 		text-align center
 		text-shadow none
 		font-weight bold
-		
+	
+.input-group-addon
+.form-control
+	display table-cell		
+
+.input-group-addon 
+	padding 6px 12px
+	font-size 14px
+	font-weight normal
+	line-height 1
+	color #555
+	text-align center
+	background-color #eee
+	border 1px solid #ccc
+	border-radius 4px
 
 .form-control 
 	height auto
@@ -177,10 +194,10 @@ p
 				text-decoration none
 		& .titulo-dream
 			font-size 22px
-			font-weight bold
+			font-weight normal
 			margin 0px 0px 5px 
 			line-height 25px
-			font-family 'Roboto'
+			font-family 'Pacifico'
 		& .fecha-dream
 			font-size 18px
 			color rgb(31, 17, 17)
@@ -234,7 +251,7 @@ p
 		background-position -55px -0px 
 		
 .show-dream
-	background rgba(#313131, 0.4)
+	background fondo_oscuro_traslucido
 	text-align center
 	font-weight normal
 	& p
@@ -306,13 +323,17 @@ p
 		width 180px
 		right 10px
 		top 70px
-		font bold 12px 'Open Sans Condensed', sans-serif;
+		font-family bold 12px 'Pacifico', sans-serif
 		max-height 0px 
 		overflow hidden 
 		transition max-height 0.4s linear
 	& li:hover ul
 		max-height 250px
 
+
+#videoIntro
+	width 100%
+	height 300px
 
 .mensajes-login
 	height 30px
@@ -324,8 +345,7 @@ p
 	top 0px
 	left 0px
 	text-align center
-	background-color rgba(#313131, 0.4)
-	border-radius 0px 0px 25px 25px
+	background-color fondo_oscuro_traslucido
 	.form-inline
 		& .form-group
 			display inline-block
@@ -336,15 +356,13 @@ p
 			border-radius 5px
 			& input[type="email"]
 			& input[type="password"]
-			& button[type="submit"]
 				height 35px
 				margin 0px
 				background-color white
 				border-bottom none
-			& button[type="submit"]
-				width 100px
 
 
+				
 
 .formulario
 	position relative
@@ -387,10 +405,10 @@ p
 	margin-bottom .9em
 	font-weight normal
 
-.form-signin-heading 
+.form-heading 
 	text-align center
 	font-size 1.5em
-	font-family 'Helvetica'
+	font-family 'Pacifico'
 	& span
 		font-size .7em
 	&.grande
@@ -429,21 +447,29 @@ p
 
 ::-webkit-input-placeholder
 	color rgba(0,0,0,0.6)
-
-:-moz-placeholder 
+	font-family "Pacifico",Helvetica
+	font-size .8em
+	
+::-moz-input-placeholder 
 	color rgba(0,0,0,0.6)
-
-::-moz-placeholder 
-	color rgba(0,0,0,0.6)
+	font-family "Pacifico",Helvetica
+	font-size .8em
 
 :-ms-input-placeholder 
 	color rgba(0,0,0,0.6)
+	font-family "Pacifico",Helvetica
+	font-size .8em
+	
 
 @media screen and (min-width 768px)
 	.wrap
-		.form-signin-heading 
+		.form-heading 
 			text-align left
-		.btn-center
+		.boton-center
 			margin 0px
 			float right
+	#videoIntro
+		margin 0px 10%
+		height 400px
+		width 80%
 
