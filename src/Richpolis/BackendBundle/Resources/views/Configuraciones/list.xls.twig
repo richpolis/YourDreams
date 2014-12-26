@@ -1,0 +1,36 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Configuracion</th>
+            <th>Tipo</th>
+            <th>Contenido</th>
+            <th>Activo?</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for configuracion in configuraciones %}
+            <tr>
+                <td>
+                    {{ dream.titulo }}
+                </td>
+                <td>
+                    {{ dream.lugar }}
+                </td>
+                <td>
+                    {{ dream.dream }}
+                </td>
+                <td>
+                    {{ (dream.compartir?'Si':'No') }}
+                </td>
+                <td>
+                    {{ dream.createdAt | date('d-m-Y') }}
+                </td>
+                <td>
+                    {{ dream.updatedAt | date('d-m-Y') }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody> 
+</table>

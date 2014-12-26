@@ -1,0 +1,74 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block body -%}
+    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'configuraciones' } %}
+    <div class="container">
+
+        <br>
+        <div class="container">
+            <form action="{{path('configuraciones')}}" role="search">  
+                <div class="form-group pull-left">
+                    <input placeholder="nombre del sueño, lugar, descripción" class="form-control" name="buscar"
+                           type="text">
+                </div>
+                <input type="submit" class="btn btn-default" value="Buscar" />
+            </form>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">
+                    Sueños
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Configuracion</th>
+                            <th>Tipo</th>
+                            <th>Contenido</th>
+                            <th>Activo?</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                            <tr id="registro-{{entity.id}}">
+                                <td><a href="{{ path('configuraciones_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.configuracion }}</td>
+                                <td>{{ entity.stringtipoconfiguracion }}</td>
+                                <td>
+                                    {% if entity.isImagen %}
+                                        <img src="{{ entity.webPath }}" style="max-width: 200px;"/>
+                                    {% else %}    
+                                        {{ entity.texto | raw }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if entity.isActive %}
+                                        <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                        <i class="fa fa-circle"></i>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ url('configuraciones_edit', { 'id' : dream.id }) }}" class="btn btn-success btn-xs">Editar</a>
+                                    <a href="{{ url('configuraciones_show', { 'id' : dream.id }) }}" class="btn btn-info btn-xs">Mostrar</a>                                     <!--a href="javascript: if (confirm('Desea elminar el sueño seleccionado?')) { location.href='{{ url('configuraciones_delete', { 'id' : dream.id }) }}';}" class="btn btn-danger btn-xs">Eliminar</a-->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container">
+            <a href="{{ path('configuraciones_new') }}" class="btn btn-primary btn-sm pull-right">Nuevo Sueño</a>
+            <a href="{{ path('configuraciones_export') }}" class="btn btn-default btn-sm pull-left">Exportar</a>
+        </div>
+        <div class="container text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}
+

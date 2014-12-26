@@ -1,0 +1,41 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block body %}
+    {% include 'BackendBundle:Default:navegador.html.twig' with {'tabActive': 'configuraciones' } %}
+    <div class="container">
+        <form action="{{ path('configuraciones_update',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+            <input name="_method" value="put" type="hidden"/>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">
+                        Editar configuracion "{{entity.configuracion}}"
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_errors(form) }}  
+                    <div class="form-group">
+                        {{ form_label(form.configuracion) }}
+                        {{ form_errors(form.configuracion) }}
+                        {{ form_widget(form.configuracion,{'read_only':true }) }}
+                    </div>
+                    {{form_widget(form)}}
+                    <br/>
+                    {% if entity.isImagen %}
+                        <img src="{{ entity.webPath }}" style="max-width: 200px;"/>
+                    {% else %}    
+                        {{ entity.texto | raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container">
+                <a href="{{path('configuraciones')}}" class="btn btn-success">Regresar</a>
+                <input type="submit" class="btn btn-primary btn-sm pull-right" name="botonGuardar" id="botonGuardar" value="Guardar Sueño"/>
+                {{ form_rest(form) }}
+            </div>
+            <div class="container text-center">
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
