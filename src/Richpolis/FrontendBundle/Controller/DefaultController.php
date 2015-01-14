@@ -31,19 +31,15 @@ class DefaultController extends Controller {
         $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
                 array('clave' => $clave)
         );
-
-        if (null == $dream) {
+        if(null == $dream){
             return $this->redirect($this->generateUrl('login'));
         }
-
         $comentarios = $em->getRepository('ComentariosBundle:Comentario')->findBy(
                 array('dream' => $dream), array('createdAt' => 'DESC')
         );
-
-        if (null !== $this->getUser()) {
+        if(null !== $this->getUser()){
             $this->findMensajeAUsuario($this->getUser(), $dream, $em);
         }
-
         return compact('dream', 'comentarios');
     }
 
@@ -167,7 +163,6 @@ class DefaultController extends Controller {
         $form = $this->createForm(new DreamFrontendType(), $dream, array(
             'em' => $em,
         ));
-        $isNew = true;
         if ($request->isMethod('POST')) {
             $parametros = $request->request->all();
             $form->handleRequest($request);
@@ -211,7 +206,6 @@ class DefaultController extends Controller {
         $form = $this->createForm(new DreamFrontendType(), $dream, array(
             'em' => $this->getDoctrine()->getManager(),
         ));
-        $isNew = false;
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -224,7 +218,7 @@ class DefaultController extends Controller {
             'form' => $form->createView(),
             'dream' => $dream,
             'titulo' => 'Editar sueño',
-            'isNew' => $isNew,
+            'isNew' => false,
         );
     }
 
@@ -258,6 +252,30 @@ class DefaultController extends Controller {
         $em->flush();
 
         return new JsonResponse(json_encode(array('accion' => 'ok', 'mensaje' => 'El registro fue eliminado')));
+    }
+    
+    /**
+     * @Route("/galeria/{id}",name="delete_galeria",requirements={"id": "\d+"})
+     * @Method({"DELETE"})
+     */
+    public function deleteGaleriaAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $dream = $em->getRepository('DreamsBundle:Dream')->findOneBy(
+                array('usuario' => $this->getUser(), 'id' => $request->request->get('dream'))
+        );
+        if (null == $dream) {
+            return new JsonResponse(json_encode(array('accion' => 'bat', 'mensaje' => 'El registro no existe')));
+        }
+
+        foreach ($dream->getGalerias() as $galeria) {
+            if($galeria->getId()==$id){
+                $dream->removeGaleria($galeria);
+                $em->remove($galeria);
+            }
+        }
+        $em->flush();
+
+        return new JsonResponse(json_encode(array('accion' => 'ok', 'mensaje' => 'Galeria eliminada')));
     }
 
     /**
@@ -416,10 +434,10 @@ class DefaultController extends Controller {
             /*             * ************************************************************** */
             //$file = $request->getParameter("qqfile");
             $max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
-            if ($max == null) {
+            if($max == null){
                 $max = 0;
             }
-            if (isset($result["success"])) {
+            if(isset($result["success"])){
                 $registro = new Galeria();
                 $registro->setArchivo($result["filename"]);
                 $registro->setThumbnail($result["filename"]);
@@ -433,7 +451,7 @@ class DefaultController extends Controller {
                 $dream->getGalerias()->add($registro);
                 $em->flush();
             }
-        } else {
+        }else{
             $result = $request->request->all();
             $registro = new Galeria();
             $registro->setArchivo($result["archivo"]);

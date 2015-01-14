@@ -11,7 +11,7 @@
     <section class="formulario-nav">
         {% if error %}
             <div class="mensajes-login">
-                <div class="alert alert-danger">{{ error.message | trans }}</div>
+                <div class="alert alert-danger" style="padding: 10px;">{{ error.message | trans }}</div>
             </div>
         {% endif %}
         {% for flashMessage in app.session.flashbag.get('notice') %}

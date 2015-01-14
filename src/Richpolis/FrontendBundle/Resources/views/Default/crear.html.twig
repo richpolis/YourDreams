@@ -42,13 +42,15 @@
                         {% for galeria in dream.galerias %}
                             <li class="dream-archivo">
                             {{ galeria.archivoView(200,200) | raw }}
-                            <span class="eliminar-imagen">x</span>
+                            <a href="#" class="archivo-eliminar" data-url="{{path('delete_galeria',{'id': galeria.id})}}">
+                                <img src="/images/cerrar.png"/>
+                            </a>
                             </li>
                         {% endfor %}    
                         </ul>
                     </div>
                     {% endif %}
-                    <div class="form-group">
+                    <div class="form-group load-files">
                         {{ form_errors(form.file)	}}
                         {{ form_widget(form.file,{'attr':{'class':'form-control','placeholder':'archivo(s)'}})	}}
                     </div>
@@ -61,11 +63,6 @@
                     {{form_rest(form)}}
                     <button class="boton boton-lg boton-center" type="submit">Guardar</button>
                 </form>
-                    
-                <input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
-                <div id="progress">
-                    <div class="bar" style="width: 0%;height: 18px; background: green;"></div>
-                </div>
             </div>       
         </article>        
     </section> <!-- /container -->
@@ -73,30 +70,22 @@
 {% endblock %}
 {% block javascripts %}
     {{parent()}}
-    <script src="/js/vendor/jquery.ui.widget.js"></script>
-    <script src="/js/jquery.iframe-transport.js"></script>
-    <script src="/js/jquery.fileupload.js"></script>
     <script>
     $(function () {
-        $('#fileupload').fileupload({
-            dataType: 'json',
-            add: function (e, data) {
-                data.context = $('<button/>').text('Upload')
-                    .appendTo(document.body)
-                    .click(function () {
-                        data.context = $('<p/>').text('Uploading...').replaceAll($(this));
-                        data.submit();
-                    });
-            },
-            done: function (e, data) {
-                data.context.text('Upload finished.');
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .bar').css(
-                    'width',
-                    progress + '%'
-                );
+        $(".archivo-eliminar").click(function(){
+           var url = $(this).data('url');
+           var self = $(this);
+           var dream = {{(isNew?0:dream.id)}};
+           if(confirm('Deseas eliminar el registro?')){
+                $.ajax({
+                   url: url,
+                   type: 'DELETE',
+                   dataType: 'json',
+                   data: {'dream': dream },
+                   success: function(data){
+                       self.parent().remove();
+                   }
+                });
             }
         });
     });

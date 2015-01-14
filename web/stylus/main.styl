@@ -171,9 +171,22 @@ p
 		display inline-block
 		vertical-align top 
 		list-style none
-
-
-
+		position relative
+		& .archivo-eliminar
+			padding 5px 5px 2px
+			font-size 1em
+			background-color white
+			color black
+			border-radius 50%
+			position absolute
+			top -5px
+			right -5px
+			z-index 1000
+			font-weight bolder
+			display none
+			transition all .5 ease
+		&:hover .archivo-eliminar
+			display block
 			
 .lista-dreams
 	list-style none
@@ -446,19 +459,25 @@ p
    
 
 ::-webkit-input-placeholder
-	color rgba(0,0,0,0.4)
+	color rgba(#747474,0.8)
 	font-family "Roboto",Helvetica
-	font-size .9em
+	font-size 1em
+	&:first-letter
+		text-transform uppercase
 	
 ::-moz-input-placeholder 
-	color rgba(0,0,0,0.4)
+	color rgba(#747474,0.8)
 	font-family "Roboto",Helvetica
-	font-size .9em
+	font-size 1em
+	&:first-letter
+		text-transform uppercase
 
 ::-ms-input-placeholder 
-	color rgba(0,0,0,0.4)
+	color rgba(#747474,0.8)
 	font-family "Roboto",Helvetica
-	font-size .9em
+	font-size 1em
+	&:first-letter
+		text-transform uppercase
 	
 input.placeholder-pacifico::-webkit-input-placeholder
 	font-family "Pacifico", Helvetica
