@@ -51,9 +51,9 @@ class DreamRepository extends EntityRepository
                     . "ORDER BY h.titulo ASC");
                 $consulta->setParameters(array(
                     'usuario' => $usuario->getId(),
-					'titulo' => "%".$buscar."%",
-                	'lugar' => "%".$buscar."%",
-                	'dream' => "%".$buscar."%"
+                    'titulo' => "%".$buscar."%",
+                    'lugar' => "%".$buscar."%",
+                    'dream' => "%".$buscar."%"
                 ));
             }
         }
@@ -64,4 +64,38 @@ class DreamRepository extends EntityRepository
         return $this->queryFindDreams($buscar,$usuario,$operador)->getResult();
     }
     
+    public function queryFindNewDreams() 
+    {
+        $em = $this->getEntityManager();
+        $consulta = $em->createQuery('SELECT h '
+                . 'FROM DreamsBundle:Dream h '
+                . 'WHERE h.compartir=:isCompartir '
+                . 'ORDER BY h.createdAt ASC');
+        $consulta->setParameters(array(
+            'isCompartir' => true,
+        ));
+        return $consulta;
+    }
+
+    public function findNewDreams($maxresults = 5){
+        return $this->queryFindNewDreams()->setMaxResults($maxresults)->getResult();
+    }
+    
+    public function queryFindForMoreComments() 
+    {
+        $em = $this->getEntityManager();
+        $consulta = $em->createQuery('SELECT h, SIZE(h.mensajes) AS HIDDEN contMensajes '
+                . 'FROM DreamsBundle:Dream h '
+                . 'JOIN h.mensajes m '
+                . 'WHERE h.compartir=:isCompartir '
+                . 'ORDER BY contMensajes DESC');
+        $consulta->setParameters(array(
+            'isCompartir' => true,
+        ));
+        return $consulta;
+    }
+
+    public function findForMoreComments($maxresults = 5){
+        return $this->queryFindForMoreComments()->setMaxResults($maxresults)->getResult();
+    }
 }

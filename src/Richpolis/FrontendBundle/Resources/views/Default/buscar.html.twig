@@ -14,24 +14,68 @@
                     </div>
                 </form>
             </div>
-            <div class="contenedor-dreams"> 
-                <ul class="lista-dreams">
-                    {% for dream in dreams %}
-                        <li class="item-dream">
-                            <a href="{{path('share_dream',{'clave': dream.clave })}}">
-                                <div class="dream">
-                                    <h3 class="titulo-dream">{{dream.titulo}} - 
-									
-									{% if dream.usuario.imagen | length > 0 %}
-										<img src="{{dream.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
-									{% endif %}
-									{{dream.usuario.nombreCompleto }}</h3>
-                                    <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
-                                </div>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <div class="contenedor-dreams">
+                {% if busqueda == true %}
+                    <h3>Resultados</h3>    
+                    <ul class="lista-dreams">
+                        {% for dream in dreams %}
+                            <li class="item-dream">
+                                <a href="{{path('share_dream',{'clave': dream.clave })}}">
+                                    <div class="dream">
+                                        <h3 class="titulo-dream">{{dream.titulo}} - 
+
+                                            {% if dream.usuario.imagen | length > 0 %}
+                                                <img src="{{dream.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
+                                            {% endif %}
+                                            {{dream.usuario.nombreCompleto }}</h3>
+                                        <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    {% if newDreams | length > 0 %}
+                    <h3>Nuevos sueños</h3>    
+                    <ul class="lista-dreams">
+                        {% for dream in newDreams %}
+                            <li class="item-dream">
+                                <a href="{{path('share_dream',{'clave': dream.clave })}}">
+                                    <div class="dream">
+                                        <h3 class="titulo-dream">{{dream.titulo}} - 
+
+                                            {% if dream.usuario.imagen | length > 0 %}
+                                                <img src="{{dream.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
+                                            {% endif %}
+                                            {{dream.usuario.nombreCompleto }}</h3>
+                                        <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if moreComments | length > 0 %}
+                    <h3>Los mas comentados</h3>    
+                    <ul class="lista-dreams">
+                        {% for dream in moreComments %}
+                            <li class="item-dream">
+                                <a href="{{path('share_dream',{'clave': dream.clave })}}">
+                                    <div class="dream">
+                                        <h3 class="titulo-dream">{{dream.titulo}} - 
+
+                                            {% if dream.usuario.imagen | length > 0 %}
+                                                <img src="{{dream.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
+                                            {% endif %}
+                                            {{dream.usuario.nombreCompleto }}</h3>
+                                        <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endif %}    
             </div>
         </article>        
     </section> <!-- /container -->

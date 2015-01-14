@@ -290,13 +290,24 @@ class DefaultController extends Controller {
 
         if (strlen($buscar) > 0) {
             $dreams = $em->getRepository('DreamsBundle:Dream')
-                    ->findDreams($buscar, $this->getUser(), "<>");
+                         ->findDreams($buscar, $this->getUser(), "<>");
+            $newDreams = array();
+            $moreComments = array();
+            $busqueda = true;
         } else {
             $dreams = array();
+            $newDreams = $em->getRepository('DreamsBundle:Dream')
+                         ->findNewDreams();
+            $moreComments = $em->getRepository('DreamsBundle:Dream')
+                         ->findForMoreComments();
+            $busqueda = false;
         }
 
         return array(
             'dreams' => $dreams,
+            'newDreams' =>$newDreams,
+            'moreComments'=>$moreComments,
+            'busqueda'=>$busqueda,
         );
     }
 
@@ -492,6 +503,21 @@ class DefaultController extends Controller {
         $response = new \Symfony\Component\HttpFoundation\JsonResponse();
         $response->setData($parameters);
         return $response;
+    }
+    
+    /**
+     * @Route("/usuario/{id}",name="show_usuario",requirements={"id": "\d+"})
+     * @Template()
+     */
+    public function showRegistroAction(Request $request,$id) {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('UsuariosBundle:Usuario')->find($id);
+        if (null == $usuario) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+        return array(
+            'usuario' => $usuario,
+        );
     }
 
 }

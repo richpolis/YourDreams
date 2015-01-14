@@ -24,7 +24,7 @@ class Mensaje
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
+     * @ORM\ManyToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
      * @ORM\JoinColumn(name="de_usuario_id", referencedColumnName="id")
      */
     private $deUsuario;
@@ -32,7 +32,7 @@ class Mensaje
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
+     * @ORM\ManyToOne(targetEntity="Richpolis\UsuariosBundle\Entity\Usuario")
      * @ORM\JoinColumn(name="para_usuario_id", referencedColumnName="id")
      */
     private $paraUsuario;

@@ -37,10 +37,17 @@
             <header class="show-dream header-dream">
                 <hgroup>
                     <h2 class="titulo-dream">{{dream.titulo}}</h2>
-                    <h4 class="fecha-dream">Creado el: {{ dream.createdAt | date('d/m/Y')}} a las {{dream.createdAt | date('h')}}</h4>
+                    <h4 class="fecha-dream">Creado el: {{ dream.createdAt | date('d/m/Y')}} a las {{dream.createdAt | date('ha')}}</h4>
                 </hgroup>
             </header>
             <div class="show-dream description-dream">
+                <p style="text-align: left; margin-left: 20px;">
+                    {% if dream.usuario.imagen | length > 0 %}
+                        Soñador: <a href="{{path('show_usuario',{'id':dream.usuario.id})}}"><img src="{{dream.usuario.imagen}}" style="width: 20px;" alt="Usuario"/>&nbsp;{{dream.usuario.nombreCompleto}}</a>
+                    {% else %}
+                        Soñador: <a href="{{path('show_usuario',{'id':dream.usuario.id})}}"><span class="icon-user"></span>&nbsp;{{dream.usuario.nombreCompleto}}</a>
+                    {% endif %}
+                </p>
                 <p>{{dream.dream}}</p>
             </div>
             <div class="show-dream file-dream">

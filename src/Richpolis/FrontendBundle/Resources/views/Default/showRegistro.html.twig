@@ -1,0 +1,43 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <section class="container">
+        <article class="wrap">
+            <h1 class="form-heading">Registro de usuario</h1>
+            <div class="show-dream text-left padding">
+                <strong>Nombre:</strong> {{ usuario.nombre}}
+            </div>
+            <div class="show-dream text-left padding">
+                <strong>Apellido:</strong> {{ usuario.apellido}}
+            </div>
+            <div class="show-dream text-left padding">
+                <strong>Email:</strong> {{ usuario.email}}
+            </div>
+            <div class="show-dream text-left padding">
+                <strong>Telefono:</strong> {{ usuario.telefono}}
+            </div>
+            <div class="show-dream text-left padding">
+               <strong>Observaciones:</strong> {{ usuario.observaciones}}
+            </div>       
+        </article>
+        <article class="wrap">
+            <div class="contenedor-dreams">
+                <h3>Sueños</h3>    
+                <ul class="lista-dreams">
+                    {% for dream in usuario.dreams if dream.compartir == true %}
+                        <li class="item-dream">
+                            <a href="{{path('share_dream',{'clave': dream.clave })}}">
+                                <div class="dream">
+                                    <h3 class="titulo-dream"> {{dream.titulo}} </h3>
+                                    <span class="fecha-dream">Creado: {{dream.createdAt|date('d M Y')}}</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </article>    
+    </section> <!-- /container -->
+
+{% endblock %}

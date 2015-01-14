@@ -2,10 +2,11 @@
     <div class="comentario">
         <span class="fecha-comentario">{{ dream.createdAt|date('d M Y') }} a las {{ dream.createdAt | date('ha') }}</span>
         <h3 class="titulo-comentario">
-		{% if comentario.usuario.imagen | length > 0 %}
-			<img src="{{comentario.usuario.imagen}}" style="width: 30px" alt="Usuario"/>
-		{% endif %}
-		{{comentario.usuario.nombreCompleto}}
+            {% if comentario.usuario.imagen | length > 0 %}
+                <a href="{{path('show_usuario',{'id':comentario.usuario.id})}}"><img src="{{comentario.usuario.imagen}}" style="width: 20px;" alt="Usuario"/>&nbsp;{{comentario.usuario.nombreCompleto}}</a>
+                {% else %}
+                <a href="{{path('show_usuario',{'id':comentario.usuario.id})}}"><span class="icon-user"></span>&nbsp;{{comentario.usuario.nombreCompleto}}</a>
+            {% endif %}
 		</h3>
         <p class="mensaje-comentario">
             {{ comentario.message }}
