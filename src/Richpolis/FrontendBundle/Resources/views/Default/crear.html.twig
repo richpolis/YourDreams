@@ -1,5 +1,10 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{asset('css/main.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <section class="container">
         <article class="wrap">
@@ -37,6 +42,7 @@
                         {% for galeria in dream.galerias %}
                             <li class="dream-archivo">
                             {{ galeria.archivoView(200,200) | raw }}
+                            <span class="eliminar-imagen">x</span>
                             </li>
                         {% endfor %}    
                         </ul>
@@ -55,8 +61,44 @@
                     {{form_rest(form)}}
                     <button class="boton boton-lg boton-center" type="submit">Guardar</button>
                 </form>
+                    
+                <input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+                <div id="progress">
+                    <div class="bar" style="width: 0%;height: 18px; background: green;"></div>
+                </div>
             </div>       
         </article>        
     </section> <!-- /container -->
 
 {% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script src="/js/vendor/jquery.ui.widget.js"></script>
+    <script src="/js/jquery.iframe-transport.js"></script>
+    <script src="/js/jquery.fileupload.js"></script>
+    <script>
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            add: function (e, data) {
+                data.context = $('<button/>').text('Upload')
+                    .appendTo(document.body)
+                    .click(function () {
+                        data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                        data.submit();
+                    });
+            },
+            done: function (e, data) {
+                data.context.text('Upload finished.');
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        });
+    });
+    </script>    
+{% endblock %}    

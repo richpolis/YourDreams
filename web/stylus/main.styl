@@ -58,7 +58,7 @@ textarea
 	border-top none
 	border-left none
 	border-right none
-	border-bottom 1px solid rgba(0,0,0,0.8)
+	border-bottom 1px solid transparent
 	background none
 	border-radius 3px
 	font-family 'Roboto'
@@ -446,20 +446,28 @@ p
    
 
 ::-webkit-input-placeholder
-	color rgba(0,0,0,0.6)
-	font-family "Pacifico",Helvetica
-	font-size .8em
+	color rgba(0,0,0,0.4)
+	font-family "Roboto",Helvetica
+	font-size .9em
 	
 ::-moz-input-placeholder 
-	color rgba(0,0,0,0.6)
-	font-family "Pacifico",Helvetica
-	font-size .8em
+	color rgba(0,0,0,0.4)
+	font-family "Roboto",Helvetica
+	font-size .9em
 
-:-ms-input-placeholder 
-	color rgba(0,0,0,0.6)
-	font-family "Pacifico",Helvetica
-	font-size .8em
+::-ms-input-placeholder 
+	color rgba(0,0,0,0.4)
+	font-family "Roboto",Helvetica
+	font-size .9em
 	
+input.placeholder-pacifico::-webkit-input-placeholder
+	font-family "Pacifico", Helvetica
+
+input.placeholder-pacifico::-moz-input-placeholder
+	font-family "Pacifico", Helvetica
+
+input.placeholder-pacifico::-ms-input-placeholder
+	font-family "Pacifico", Helvetica	
 
 @media screen and (min-width 768px)
 	.wrap

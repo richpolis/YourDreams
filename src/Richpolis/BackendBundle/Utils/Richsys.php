@@ -11,7 +11,7 @@ class Richsys
     const TIPO_ARCHIVO_MUSICA=4;
     const TIPO_ARCHIVO_FLASH=5;
 	
-    const DIR_AMAZON = '/apps/yourdreams/web';
+    const DIR_AMAZON = ''; //'/apps/yourdreams/web';
         
     static public $sTipoArchivo=array(
         self::TIPO_ARCHIVO_IMAGEN=>'Imagen',
